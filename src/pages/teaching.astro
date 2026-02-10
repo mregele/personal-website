@@ -1,0 +1,118 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import CourseCard from "../components/CourseCard.astro";
+import courses from "../data/courses.json";
+---
+
+<PageLayout
+  title="Teaching | Matthew D. Regele"
+  description="Teaching philosophy, courses, and pedagogical innovations by Matthew D. Regele in entrepreneurship, management, and strategy at Xavier University."
+>
+  <h1 class="text-3xl sm:text-4xl font-bold text-navy-900 mb-4">Teaching</h1>
+
+  <!-- Teaching Record Highlights -->
+  <div class="flex flex-wrap gap-4 mb-10">
+    <div class="bg-navy-50 rounded-lg px-5 py-3 text-center">
+      <span class="block text-2xl font-bold text-navy-800">30+</span>
+      <span class="text-xs text-slate-600 uppercase tracking-wider">Sections Taught</span>
+    </div>
+    <div class="bg-navy-50 rounded-lg px-5 py-3 text-center">
+      <span class="block text-2xl font-bold text-navy-800">4.16/5.00</span>
+      <span class="text-xs text-slate-600 uppercase tracking-wider">Avg. Evaluation</span>
+    </div>
+    <div class="bg-navy-50 rounded-lg px-5 py-3 text-center">
+      <span class="block text-2xl font-bold text-navy-800">3</span>
+      <span class="text-xs text-slate-600 uppercase tracking-wider">Levels</span>
+    </div>
+    <div class="bg-navy-50 rounded-lg px-5 py-3 text-center">
+      <span class="block text-2xl font-bold text-navy-800">160+</span>
+      <span class="text-xs text-slate-600 uppercase tracking-wider">OL Majors Enrolled</span>
+    </div>
+  </div>
+
+  <!-- Teaching Philosophy -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-navy-900 mb-4">Teaching Philosophy</h2>
+    <div class="space-y-4 text-slate-700 leading-relaxed">
+      <p>
+        My teaching philosophy is grounded in the belief that entrepreneurship must be learned
+        through action under uncertainty. Students do not become entrepreneurs, innovators, or
+        effective organizational leaders by mastering static frameworks. They develop these
+        capabilities by making real decisions with incomplete information, navigating ambiguity, and
+        learning to reflect on both success and failure.
+      </p>
+      <p>
+        In each setting, the goal is to help students learn how to think and act when the right
+        answer is not obvious and when decisions carry real risk. Rather than relying on static
+        cases, I emphasize dynamic projects, simulations, and field-based work that mirror the
+        realities students will face after graduation.
+      </p>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-navy-900 mb-6">Courses</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {courses.map((course) => (
+        <CourseCard {...course} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Pedagogical Highlights -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-navy-900 mb-4">Pedagogical Highlights</h2>
+    <div class="space-y-4 text-slate-700 leading-relaxed">
+      <div class="border-l-3 border-gold-500 pl-4">
+        <h3 class="font-serif font-bold text-navy-800 mb-1">Experiential Learning</h3>
+        <p class="text-sm">
+          Student teams partner with local nonprofits such as food pantries and furniture banks to
+          identify operational challenges, test solutions, and present recommendations directly to
+          organizational leaders. MBA students manage simulated startups with strategic tradeoffs in
+          pricing, product development, and financing under competitive pressure.
+        </p>
+      </div>
+      <div class="border-l-3 border-gold-500 pl-4">
+        <h3 class="font-serif font-bold text-navy-800 mb-1">AI Integration</h3>
+        <p class="text-sm">
+          I have integrated responsible uses of generative AI into multiple courses — not as a
+          shortcut, but as a tool for market research, customer discovery, and rapid prototyping.
+          Students learn to evaluate AI-generated outputs critically and maintain accountability for
+          final decisions.
+        </p>
+      </div>
+      <div class="border-l-3 border-gold-500 pl-4">
+        <h3 class="font-serif font-bold text-navy-800 mb-1">Program Development</h3>
+        <p class="text-sm">
+          At Miami University, I led the design and launch of the Organizational Leadership major —
+          an interdisciplinary program spanning three colleges, now enrolling 160+ students. At
+          Xavier, I co-led a comprehensive revision of the Entrepreneurship major and minor, aligning
+          course sequencing with experiential components and Jesuit values.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaching Experience Summary -->
+  <section>
+    <h2 class="text-2xl font-bold text-navy-900 mb-4">Teaching Experience</h2>
+    <div class="space-y-3 text-sm text-slate-700">
+      <div>
+        <h3 class="font-serif font-bold text-navy-800">Xavier University</h3>
+        <p class="text-slate-600">
+          Associate Professor (Spring 2025 – Present) · Assistant Professor (Fall 2019 – Spring
+          2025). Courses across entrepreneurship (ENTR 311, 335, 611), management (MGMT 200, 300),
+          strategy (MGMT 550), and creativity &amp; innovation (ENTR/MGMT 305).
+        </p>
+      </div>
+      <div>
+        <h3 class="font-serif font-bold text-navy-800">Miami University</h3>
+        <p class="text-slate-600">
+          Assistant Professor of Organizations &amp; Sociology (Fall 2018 – Spring 2019). Courses in
+          economy &amp; society, research methods, and innovation in organizations.
+        </p>
+      </div>
+    </div>
+  </section>
+</PageLayout>

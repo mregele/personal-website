@@ -1,0 +1,31 @@
+---
+interface Props {
+  authors: string;
+  year: number;
+  title: string;
+  journal: string;
+  volume?: string;
+  pages?: string;
+  doi?: string;
+  note?: string;
+}
+
+const { authors, year, title, journal, volume, pages, doi, note } = Astro.props;
+---
+
+<div class="border-l-3 border-navy-200 pl-4 py-2 hover:border-gold-500 transition-colors">
+  <p class="text-sm text-slate-600 mb-1">{authors} ({year})</p>
+  <h3 class="font-serif font-bold text-navy-900 leading-snug">
+    {doi ? (
+      <a href={doi} target="_blank" rel="noopener noreferrer" class="hover:text-navy-600 transition-colors">
+        {title}
+      </a>
+    ) : (
+      title
+    )}
+  </h3>
+  <p class="text-sm text-slate-500 mt-1 italic">
+    {journal}{volume ? `, ${volume}` : ""}{pages ? `: ${pages}` : ""}
+  </p>
+  {note && <p class="text-xs text-gold-600 mt-1">{note}</p>}
+</div>

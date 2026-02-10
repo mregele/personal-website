@@ -1,0 +1,48 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-navy-950 text-slate-300 mt-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Contact -->
+      <div>
+        <h3 class="font-serif font-bold text-white text-sm uppercase tracking-wider mb-3">Contact</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="mailto:regelem@xavier.edu" class="hover:text-gold-400 transition-colors">regelem@xavier.edu</a>
+          </li>
+          <li>Department of Management &amp; Entrepreneurship</li>
+          <li>Williams College of Business</li>
+          <li>Xavier University</li>
+          <li>3800 Victory Parkway</li>
+          <li>Cincinnati, OH 45207</li>
+        </ul>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="font-serif font-bold text-white text-sm uppercase tracking-wider mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/research" class="hover:text-gold-400 transition-colors">Research</a></li>
+          <li><a href="/teaching" class="hover:text-gold-400 transition-colors">Teaching</a></li>
+          <li><a href="/blog" class="hover:text-gold-400 transition-colors">Blog</a></li>
+        </ul>
+      </div>
+
+      <!-- Affiliations -->
+      <div>
+        <h3 class="font-serif font-bold text-white text-sm uppercase tracking-wider mb-3">Affiliations</h3>
+        <ul class="space-y-2 text-sm">
+          <li>Academy of Management</li>
+          <li>The Business History Conference</li>
+          <li>USASBE</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-slate-700 mt-10 pt-6 text-center text-xs text-slate-500">
+      &copy; {currentYear} Matthew D. Regele. All rights reserved.
+    </div>
+  </div>
+</footer>

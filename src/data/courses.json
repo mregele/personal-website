@@ -1,0 +1,34 @@
+[
+  {
+    "code": "ENTR 335",
+    "title": "Social Entrepreneurship & Innovation",
+    "level": "Undergraduate",
+    "description": "Required course for entrepreneurship majors and minors combining field projects with local nonprofits, design thinking, and critical analysis of impact ventures. Student teams partner with organizations such as food pantries and furniture banks to identify operational challenges, test solutions, and present recommendations to organizational leaders.",
+    "designed": true
+  },
+  {
+    "code": "ENTR 611",
+    "title": "New Venture Creation",
+    "level": "MBA",
+    "description": "Graduate-level venture strategy course where students manage a simulated startup over multiple rounds, making strategic tradeoffs related to pricing, product development, financing, and growth under competitive pressure. Emphasizes decision-making under uncertainty and real-world venture dynamics.",
+    "designed": true
+  },
+  {
+    "code": "ENTR 311",
+    "title": "New Venture Planning",
+    "level": "Undergraduate",
+    "description": "Core entrepreneurship course focused on opportunity recognition, business model development, and venture feasibility analysis. Students develop and refine business plans through iterative customer discovery and market validation exercises."
+  },
+  {
+    "code": "MGMT 200",
+    "title": "Organizational Management",
+    "level": "Undergraduate",
+    "description": "Introductory management course where students analyze organizational failures and ethical breakdowns to understand how incentives, governance structures, and power dynamics shape organizational outcomes. Covers foundational management theory through applied case analysis."
+  },
+  {
+    "code": "MGMT 550",
+    "title": "Strategy & Organizations",
+    "level": "MBA",
+    "description": "Graduate strategy course examining how firms create, capture, and sustain competitive advantage. Students explore strategic decision-making through complex case analyses and simulations, with emphasis on governance, industry dynamics, and organizational design."
+  }
+]

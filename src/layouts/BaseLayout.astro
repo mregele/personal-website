@@ -1,0 +1,76 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteName = "Matthew D. Regele";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Matthew D. Regele" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteName} />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Person Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Matthew D. Regele",
+      "jobTitle": "Associate Professor of Management & Entrepreneurship",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Xavier University",
+        "department": "Williams College of Business"
+      },
+      "url": "https://matthewregele.com",
+      "email": "regelem@xavier.edu",
+      "alumniOf": [
+        { "@type": "CollegeOrUniversity", "name": "Yale University" },
+        { "@type": "CollegeOrUniversity", "name": "Babson College" },
+        { "@type": "CollegeOrUniversity", "name": "Bowdoin College" },
+        { "@type": "CollegeOrUniversity", "name": "London School of Economics" }
+      ],
+      "sameAs": [
+        "https://scholar.google.com/citations?user=PLACEHOLDER"
+      ]
+    })} />
+  </head>
+  <body class="bg-white text-slate-800 font-sans antialiased">
+    <slot />
+  </body>
+</html>

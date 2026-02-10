@@ -1,0 +1,36 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import BlogPostCard from "../../components/BlogPostCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<PageLayout
+  title="Blog | Matthew D. Regele"
+  description="Blog posts by Matthew D. Regele on entrepreneurship, organizational strategy, higher education, and academic life."
+>
+  <h1 class="text-3xl sm:text-4xl font-bold text-navy-900 mb-4">Blog</h1>
+  <p class="text-slate-600 leading-relaxed mb-10 max-w-2xl">
+    Reflections on research in progress, teaching experiments, and broader questions about how
+    organizations work and why they sometimes don't.
+  </p>
+
+  {posts.length === 0 ? (
+    <p class="text-slate-500 italic">No posts yet. Check back soon.</p>
+  ) : (
+    <div class="space-y-4">
+      {posts.map((post) => (
+        <BlogPostCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate.toISOString()}
+          slug={post.id}
+          tags={post.data.tags}
+        />
+      ))}
+    </div>
+  )}
+</PageLayout>

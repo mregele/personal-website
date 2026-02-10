@@ -1,0 +1,99 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="Matthew D. Regele | Associate Professor & Director of Assessment"
+  description="Academic website of Matthew D. Regele, Associate Professor of Management & Entrepreneurship and Director of Assessment at Xavier University's Williams College of Business."
+>
+  <!-- Hero -->
+  <section class="flex flex-col md:flex-row items-center gap-8 mb-16">
+    <img
+      src="/images/headshot.png"
+      alt="Matthew D. Regele"
+      class="w-40 h-40 rounded-full object-cover shadow-lg ring-4 ring-navy-100"
+    />
+    <div>
+      <h1 class="text-3xl sm:text-4xl font-bold text-navy-900 mb-2">Matthew D. Regele</h1>
+      <p class="text-lg text-slate-600 mb-1">
+        Associate Professor of Management &amp; Entrepreneurship
+      </p>
+      <p class="text-lg text-slate-600 mb-1">
+        Director of Assessment, Williams College of Business
+      </p>
+      <p class="text-base text-slate-500">Xavier University &middot; Cincinnati, OH</p>
+      <p class="text-sm text-gold-600 mt-3 italic">
+        Studying how narratives about purpose, power, and profit shape strategy, careers, and venture outcomes.
+      </p>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-navy-900 mb-4">About</h2>
+    <div class="space-y-4 text-slate-700 leading-relaxed">
+      <p>
+        My research examines how the stories organizations tell about purpose, power, and profit
+        shape strategic choices, individual careers, and venture outcomes. Across a range of
+        settings, I study how these narratives become embedded in governance structures, incentive
+        systems, and everyday work practices — and how they ultimately determine who bears risk and
+        who captures value.
+      </p>
+      <p>
+        I rely on qualitative approaches including ethnography, interviews, archival research, and
+        netnography to surface the mechanisms that connect narrative to organizational design and
+        performance. My work sits at the intersection of strategy, entrepreneurship, and sociology,
+        contributing to research on venture legitimacy, labor markets, organizational purpose, and
+        entrepreneurial careers.
+      </p>
+      <p>
+        Alongside my academic work, I serve as Chief Operating Officer of Habit Technology, LLC,
+        where I am actively engaged in the challenges of early-stage venture development. I view
+        practice as a testing ground for ideas about incentives, governance, and strategic choice
+        that also inform my teaching and research.
+      </p>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-navy-900 mb-6">Education</h2>
+    <div class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+        <span class="font-serif font-bold text-navy-800 sm:w-56 shrink-0">Yale University</span>
+        <span class="text-slate-700">Ph.D., Organizations &amp; Management, 2018</span>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+        <span class="font-serif font-bold text-navy-800 sm:w-56 shrink-0">Babson College</span>
+        <span class="text-slate-700">MBA, <em>summa cum laude</em>, 2012</span>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+        <span class="font-serif font-bold text-navy-800 sm:w-56 shrink-0">Bowdoin College</span>
+        <span class="text-slate-700">AB, Economics, 2006</span>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+        <span class="font-serif font-bold text-navy-800 sm:w-56 shrink-0">London School of Economics</span>
+        <span class="text-slate-700">The General Course, 2005</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section>
+    <h2 class="text-2xl font-bold text-navy-900 mb-6">Explore</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <a href="/research" class="group block bg-navy-50 rounded-lg p-6 hover:bg-navy-100 transition-colors">
+        <h3 class="font-serif font-bold text-navy-800 group-hover:text-navy-600 mb-2">Research</h3>
+        <p class="text-sm text-slate-600">Publications, working papers, and active projects across entrepreneurship and strategy.</p>
+      </a>
+      <a href="/teaching" class="group block bg-navy-50 rounded-lg p-6 hover:bg-navy-100 transition-colors">
+        <h3 class="font-serif font-bold text-navy-800 group-hover:text-navy-600 mb-2">Teaching</h3>
+        <p class="text-sm text-slate-600">Courses in entrepreneurship, management, and strategy at undergraduate and MBA levels.</p>
+      </a>
+      <a href="/blog" class="group block bg-navy-50 rounded-lg p-6 hover:bg-navy-100 transition-colors">
+        <h3 class="font-serif font-bold text-navy-800 group-hover:text-navy-600 mb-2">Blog</h3>
+        <p class="text-sm text-slate-600">Reflections on research, teaching, and organizational life.</p>
+      </a>
+    </div>
+  </section>
+</PageLayout>
