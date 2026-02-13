@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stakeholder Power/Interest Matrix — Drag Activity</title>
+  <style>
+    :root {
+      --ink: #161616;
+      --muted: #6b6b6b;
+      --bg: #f6f4ef;
+      --panel: #ffffff;
+      --accent: #0f6b68;
+      --accent-2: #c04b2e;
+      --grid: #d9d5cb;
+      --shadow: 0 10px 30px rgba(0,0,0,0.12);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Futura", "Optima", "Gill Sans", "Trebuchet MS", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(1200px 500px at 15% 10%, #fdf9f0 0%, var(--bg) 60%, #efe8db 100%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 12px 24px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(26px, 3vw, 36px);
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 40% 40%, rgba(15,107,104,0.25), transparent 60%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+
+    .instructions {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.35;
+    }
+
+    .bank {
+      display: grid;
+      gap: 10px;
+    }
+
+    .card {
+      background: #fff9f4;
+      border: 1px solid #f0e3d7;
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      cursor: grab;
+      font-size: 15px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .card:active { cursor: grabbing; }
+
+    .card.dragging {
+      opacity: 0.55;
+      transform: scale(0.98);
+    }
+
+    .matrix {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0;
+      min-height: 520px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 2px solid var(--grid);
+      background:
+        linear-gradient(0deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03)),
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(0,0,0,0.03) 24px 25px),
+        repeating-linear-gradient(0deg, transparent 0 24px, rgba(0,0,0,0.03) 24px 25px);
+    }
+
+    .quadrant {
+      padding: 14px;
+      border-right: 2px solid var(--grid);
+      border-bottom: 2px solid var(--grid);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .quadrant:nth-child(2), .quadrant:nth-child(4) { border-right: none; }
+    .quadrant:nth-child(3), .quadrant:nth-child(4) { border-bottom: none; }
+
+    .q-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .dropzone {
+      flex: 1;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding: 6px;
+      border-radius: 12px;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .dropzone.over {
+      background: rgba(15,107,104,0.08);
+      box-shadow: inset 0 0 0 2px rgba(15,107,104,0.3);
+    }
+
+    .axis {
+      position: absolute;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .axis.y {
+      left: 10px;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      background: rgba(255,255,255,0.8);
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--grid);
+    }
+
+    .axis.x {
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.8);
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--grid);
+    }
+
+    .axis .end {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      background: var(--accent);
+      color: white;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    button.secondary {
+      background: #ece6dd;
+      color: #2d2d2d;
+      box-shadow: none;
+      border: 1px solid var(--grid);
+    }
+
+    button:hover { transform: translateY(-1px); }
+
+    .prompt {
+      margin-top: 18px;
+      background: #fff;
+      border: 1px solid #f0e3d7;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      font-style: italic;
+      color: #2a2a2a;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(192,75,46,0.1);
+      color: var(--accent-2);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+
+    .card.correct {
+      border-color: #2e8b57;
+      background: #eef8f1;
+    }
+
+    .card.incorrect {
+      border-color: #c04b2e;
+      background: #fff1ec;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid #f0e3d7;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .feedback.hidden { display: none; }
+
+    .feedback .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px dashed #e6dccf;
+    }
+
+    .feedback .row:last-child { border-bottom: none; }
+
+    .pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .pill.correct { background: rgba(46,139,87,0.12); color: #2e8b57; }
+    .pill.incorrect { background: rgba(192,75,46,0.12); color: #c04b2e; }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .matrix { min-height: 440px; }
+      .axis.y { left: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Homelessness Venture — Stakeholder Power / Interest Matrix</h1>
+      <div class="subtitle">Context: You’re designing a social venture addressing homelessness. Map the stakeholders below by power and interest, then be ready to justify your choices.</div>
+    </header>
+
+    <div class="layout">
+      <section class="panel" aria-labelledby="bank-title">
+        <h2 id="bank-title">Stakeholders <span class="tag">Drag me</span></h2>
+        <div class="instructions">
+          Purpose: Visualize who can influence outcomes and who cares most about the venture. This helps prioritize engagement and anticipate conflict around “success.” Use “Check Placements” to compare against a suggested key.
+        </div>
+        <div id="bank" class="bank dropzone" aria-label="Stakeholder bank">
+          <div class="card" draggable="true" id="card-unhoused">Unhoused individuals</div>
+          <div class="card" draggable="true" id="card-business">Business owners</div>
+          <div class="card" draggable="true" id="card-police">Police</div>
+          <div class="card" draggable="true" id="card-nonprofits">Outreach nonprofits</div>
+          <div class="card" draggable="true" id="card-city">City government</div>
+          <div class="card" draggable="true" id="card-residents">Residents</div>
+        </div>
+        <div class="controls">
+          <button id="reset">Reset</button>
+          <button id="check">Check Placements</button>
+          <button id="shuffle" class="secondary">Shuffle</button>
+        </div>
+        <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="matrix-title">
+        <h2 id="matrix-title">Power / Interest Matrix</h2>
+        <div class="matrix" role="application" aria-label="Power and interest matrix">
+          <div class="axis y">Power: <span class="end">High</span> ↑</div>
+          <div class="axis x">Interest: Low → <span class="end">High</span></div>
+
+          <div class="quadrant">
+            <div class="q-label">High Power / Low Interest</div>
+            <div class="dropzone" data-quadrant="hp-li"></div>
+          </div>
+          <div class="quadrant">
+            <div class="q-label">High Power / High Interest</div>
+            <div class="dropzone" data-quadrant="hp-hi"></div>
+          </div>
+          <div class="quadrant">
+            <div class="q-label">Low Power / Low Interest</div>
+            <div class="dropzone" data-quadrant="lp-li"></div>
+          </div>
+          <div class="quadrant">
+            <div class="q-label">Low Power / High Interest</div>
+            <div class="dropzone" data-quadrant="lp-hi"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="prompt">
+      “If these stakeholders disagree on what ‘success’ looks like, whose definition wins?”
+    </div>
+  </div>
+
+  <script>
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const dropzones = Array.from(document.querySelectorAll('.dropzone'));
+    const bank = document.getElementById('bank');
+    const resetBtn = document.getElementById('reset');
+    const checkBtn = document.getElementById('check');
+    const shuffleBtn = document.getElementById('shuffle');
+    const feedback = document.getElementById('feedback');
+
+    const answerKey = {
+      'card-unhoused': 'lp-hi',
+      'card-business': 'hp-hi',
+      'card-police': 'hp-li',
+      'card-nonprofits': 'lp-hi',
+      'card-city': 'hp-li',
+      'card-residents': 'lp-hi'
+    };
+
+    cards.forEach(card => {
+      card.addEventListener('dragstart', (e) => {
+        card.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', card.id);
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+      });
+    });
+
+    dropzones.forEach(zone => {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('over');
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('over');
+      });
+
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('over');
+        const id = e.dataTransfer.getData('text/plain');
+        const card = document.getElementById(id);
+        if (card) {
+          card.classList.remove('correct', 'incorrect');
+          zone.appendChild(card);
+        }
+      });
+    });
+    const quadrantNames = {
+      'hp-li': 'High Power / Low Interest',
+      'hp-hi': 'High Power / High Interest',
+      'lp-li': 'Low Power / Low Interest',
+      'lp-hi': 'Low Power / High Interest'
+    };
+
+    function getPlacement(card) {
+      const zone = card.closest('.dropzone');
+      return zone ? zone.getAttribute('data-quadrant') : null;
+    }
+
+    function renderFeedback(results) {
+      feedback.innerHTML = results.map(r => (
+        `<div class="row">
+          <div>${r.label}</div>
+          <div class="pill ${r.correct ? 'correct' : 'incorrect'}">${r.correct ? 'Matches key' : 'Check'} </div>
+        </div>`
+      )).join('');
+      feedback.classList.remove('hidden');
+    }
+
+    checkBtn.addEventListener('click', () => {
+      const results = cards.map(card => {
+        const placement = getPlacement(card);
+        const expected = answerKey[card.id];
+        const correct = placement === expected;
+        card.classList.remove('correct', 'incorrect');
+        card.classList.add(correct ? 'correct' : 'incorrect');
+        return {
+          label: card.textContent + (placement ? ` → ${quadrantNames[placement] || 'Unplaced'}` : ' → Unplaced'),
+          correct
+        };
+      });
+      renderFeedback(results);
+    });
+
+    resetBtn.addEventListener('click', () => {
+      feedback.classList.add('hidden');
+      feedback.innerHTML = '';
+      cards.forEach(card => {
+        card.classList.remove('correct', 'incorrect');
+        bank.appendChild(card);
+      });
+    });
+
+    shuffleBtn.addEventListener('click', () => {
+      feedback.classList.add('hidden');
+      feedback.innerHTML = '';
+      const shuffled = [...cards].sort(() => Math.random() - 0.5);
+      shuffled.forEach(card => {
+        card.classList.remove('correct', 'incorrect');
+        bank.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>

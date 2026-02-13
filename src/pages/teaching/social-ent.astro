@@ -1,0 +1,238 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+
+const tagStyle: Record<string, string> = {
+  Slides: "bg-navy-100 text-navy-800",
+  Reading: "bg-slate-100 text-slate-700",
+  Activity: "bg-gold-400/20 text-gold-600",
+  Case: "bg-rose-50 text-rose-700",
+  Template: "bg-navy-50 text-navy-600",
+  Worksheet: "bg-navy-50 text-navy-600",
+  Example: "bg-slate-50 text-slate-600",
+  Guide: "bg-navy-50 text-navy-600",
+  Syllabus: "bg-gold-400/15 text-gold-600",
+};
+
+const formatBadge: Record<string, string> = {
+  pdf: "text-rose-500",
+  docx: "text-blue-500",
+  html: "text-emerald-600",
+};
+
+interface FileEntry {
+  label: string;
+  href: string;
+  tag: string;
+  format: string;
+}
+
+interface Module {
+  number: number;
+  title: string;
+  files: FileEntry[];
+}
+
+const base = "/files/soc-ent";
+
+const modules: Module[] = [
+  {
+    number: 1,
+    title: "Start Here",
+    files: [
+      { label: "Course Syllabus — Spring 2026", href: `${base}/1_Start_Here/syllabus-spring2026.pdf`, tag: "Syllabus", format: "pdf" },
+    ],
+  },
+  {
+    number: 2,
+    title: "Course Introduction",
+    files: [
+      { label: "Course Introduction", href: `${base}/2_Course_Intro/presentation-intro.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Course Syllabus — Spring 2026", href: `${base}/2_Course_Intro/syllabus-spring2026.pdf`, tag: "Syllabus", format: "pdf" },
+      { label: "Draw an Entrepreneur", href: `${base}/2_Course_Intro/activity-draw-entrepreneur%20.docx`, tag: "Activity", format: "docx" },
+      { label: "Draw a Social Entrepreneur", href: `${base}/2_Course_Intro/activity-draw-social-entrepreneur.docx`, tag: "Activity", format: "docx" },
+    ],
+  },
+  {
+    number: 3,
+    title: "Defining Social Entrepreneurship",
+    files: [
+      { label: "Understanding Social Entrepreneurship", href: `${base}/3_Defining_Social_Entrepreneurship/presentation-understanding-social-entre.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Dees (1998) — The Meaning of Social Entrepreneurship", href: `${base}/3_Defining_Social_Entrepreneurship/reading-dees1998-meaning-social-entrep.pdf`, tag: "Reading", format: "pdf" },
+    ],
+  },
+  {
+    number: 4,
+    title: "Dark Sides of Entrepreneurship",
+    files: [
+      { label: "Dark Sides of Entrepreneurship", href: `${base}/4_Dark_Sides_of_Entrepreneurship/presentation-darksides-entr.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Facing the Music — Case Study", href: `${base}/4_Dark_Sides_of_Entrepreneurship/case-facing-the-music.pdf`, tag: "Case", format: "pdf" },
+      { label: "Aspiring to Be Silicon Valley", href: `${base}/4_Dark_Sides_of_Entrepreneurship/reading-aspiring-to-be-silicon-valley.html`, tag: "Reading", format: "html" },
+      { label: "Tales of Startup Employment", href: `${base}/4_Dark_Sides_of_Entrepreneurship/reading-tales-of-startup-employment.pdf`, tag: "Reading", format: "pdf" },
+    ],
+  },
+  {
+    number: 5,
+    title: "Systems Thinking",
+    files: [
+      { label: "Systems Thinking", href: `${base}/5_Systems_Thinking/presentation-systems-thinking.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Meadows (1999) — Leverage Points", href: `${base}/5_Systems_Thinking/reading-meadows1999-leverage-points.pdf`, tag: "Reading", format: "pdf" },
+      { label: "Meadows (2008) — Thinking in Systems, Intro & Ch. 1", href: `${base}/5_Systems_Thinking/reading-meadows2008-thinking-in-systems%20Intro%20and%20Ch.%201.pdf`, tag: "Reading", format: "pdf" },
+      { label: "Systems Mapping Example", href: `${base}/5_Systems_Thinking/example-systems-mapping-example.docx`, tag: "Example", format: "docx" },
+      { label: "Systems Mapping Template", href: `${base}/5_Systems_Thinking/template-systems-mapping.docx`, tag: "Template", format: "docx" },
+    ],
+  },
+  {
+    number: 6,
+    title: "Problem Framing",
+    files: [
+      { label: "Problem Framing", href: `${base}/6_Problem_Framing/presentation-problem-framing.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Design Thinking Process Guide", href: `${base}/6_Problem_Framing/reading-design-thinking-process-guide.pdf`, tag: "Reading", format: "pdf" },
+      { label: "The Water of Systems Change", href: `${base}/6_Problem_Framing/reading-water-of-systems-change.pdf`, tag: "Reading", format: "pdf" },
+    ],
+  },
+  {
+    number: 7,
+    title: "Field Observation for Problem Understanding",
+    files: [
+      { label: "Field Observation", href: `${base}/7_Field_Observation_for_Problem_Understanding/presentation-field-observation.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Writing Ethnographic Field Notes, Ch. 2", href: `${base}/7_Field_Observation_for_Problem_Understanding/reading-writing-ethnographic-field-notesh.2.pdf`, tag: "Reading", format: "pdf" },
+      { label: "Field Notes Example", href: `${base}/7_Field_Observation_for_Problem_Understanding/example-field-notes.docx`, tag: "Example", format: "docx" },
+    ],
+  },
+  {
+    number: 8,
+    title: "Building and Testing Initial Ideas",
+    files: [
+      { label: "Building and Testing Ideas", href: `${base}/8_Building_and_Testing_Initial_Ideas/presentation-building-and-testing-ideas.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Design Thinking Process Guide", href: `${base}/8_Building_and_Testing_Initial_Ideas/reading-design-thinking-process-guide.pdf`, tag: "Reading", format: "pdf" },
+      { label: "Field Notes Example", href: `${base}/8_Building_and_Testing_Initial_Ideas/example-field-notes.docx`, tag: "Example", format: "docx" },
+      { label: "Experiment Design Template", href: `${base}/8_Building_and_Testing_Initial_Ideas/template-experiment-design.docx`, tag: "Template", format: "docx" },
+    ],
+  },
+  {
+    number: 9,
+    title: "Venture Proposal Workshop",
+    files: [
+      { label: "Venture Concept Workshop", href: `${base}/9_Venture_Proposal_Workshop/presentation-venture-concept%20Workshop.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Venture Concept Summary Example", href: `${base}/9_Venture_Proposal_Workshop/example-venture-concept-summary.docx`, tag: "Example", format: "docx" },
+      { label: "Venture Concept Proposal Worksheet", href: `${base}/9_Venture_Proposal_Workshop/worksheet-VCP.docx`, tag: "Worksheet", format: "docx" },
+    ],
+  },
+  {
+    number: 10,
+    title: "Stakeholder Mapping and Engagement Strategies",
+    files: [
+      { label: "Stakeholder Mapping and Engagement", href: `${base}/10_Stakeholder_Mapping_and_Engagement_Strategies/presentation-stakeholder-mapping-and-engagement.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Stakeholder Mapping", href: `${base}/10_Stakeholder_Mapping_and_Engagement_Strategies/reading-stakeholder-mapping.pdf`, tag: "Reading", format: "pdf" },
+      { label: "Stakeholder Power-Interest Matrix", href: `${base}/10_Stakeholder_Mapping_and_Engagement_Strategies/activity-stakeholder-power-interest-matrix.html`, tag: "Activity", format: "html" },
+      { label: "Stakeholder Mapping Template", href: `${base}/10_Stakeholder_Mapping_and_Engagement_Strategies/template-stakeholder-mapping.pdf`, tag: "Template", format: "pdf" },
+      { label: "AI Prompt: Stakeholder Challenge", href: `${base}/10_Stakeholder_Mapping_and_Engagement_Strategies/guide-ai-prompt-stakeholder-challenge.docx`, tag: "Guide", format: "docx" },
+      { label: "Stakeholder Challenger Worksheet", href: `${base}/10_Stakeholder_Mapping_and_Engagement_Strategies/worksheet-stakeholder-challenger.docx`, tag: "Worksheet", format: "docx" },
+    ],
+  },
+  {
+    number: 11,
+    title: "Designing Stakeholder Outreach",
+    files: [
+      { label: "Designing Effective Stakeholder Outreach", href: `${base}/11_Designing_Stakeholder_Outreach/presentation-designing-effective-stakeholder-outreach.pdf`, tag: "Slides", format: "pdf" },
+      { label: "Interview Guide Example", href: `${base}/11_Designing_Stakeholder_Outreach/example-interview-guide.docx`, tag: "Example", format: "docx" },
+    ],
+  },
+  {
+    number: 12,
+    title: "Theory of Change and Logic Models",
+    files: [
+      { label: "Theory of Change and Logic Models", href: `${base}/12_ToC_and_Logic_Models/reading-toc-and-logicmodels.pdf`, tag: "Reading", format: "pdf" },
+    ],
+  },
+];
+
+const upcomingModules = [
+  "Asynchronous Stakeholder Outreach Check-In",
+  "Logic Model Workshop",
+  "Field Research for Social Ventures",
+  "Field Research Planning and Practice",
+  "Asynchronous Field Research",
+  "Field Research Synthesis Workshop",
+  "Applying Field Research to Venture Redesign",
+  "Financing the Mission",
+  "Storytelling for Social Change",
+  "Preparing for External Touchpoints",
+  "Organizational and Legal Forms",
+  "Asynchronous External Touchpoint Engagement",
+  "External Touchpoint Reflection and Design Iteration",
+  "Scaling Social Ventures",
+  "Final Presentation Workshop",
+];
+---
+
+<PageLayout
+  title="ENTR 335: Social Entrepreneurship — Course Materials"
+  description="Student portal for ENTR 335: Social Entrepreneurship course materials at Xavier University."
+>
+  <div class="mb-8">
+    <h1 class="text-3xl sm:text-4xl font-bold text-navy-900 mb-2">Social Entrepreneurship</h1>
+    <p class="text-slate-500 text-lg">ENTR 335 &middot; Spring 2026 &middot; Xavier University</p>
+  </div>
+
+  <div class="bg-navy-50 border border-navy-200 rounded-lg px-4 py-3 mb-10 text-sm text-navy-800">
+    This is a private portal for enrolled students. Materials are organized by module in the order they appear in the course. Download files by clicking the links below.
+  </div>
+
+  <!-- Modules with materials -->
+  <div class="space-y-4">
+    {modules.map((mod) => (
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="flex items-center gap-3 px-4 py-3 cursor-pointer select-none bg-white hover:bg-slate-50 transition-colors">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-navy-100 text-navy-700 flex items-center justify-center text-sm font-bold">
+            {mod.number}
+          </span>
+          <span class="font-serif font-bold text-navy-900 text-sm sm:text-base">{mod.title}</span>
+          <span class="ml-auto text-xs text-slate-400">{mod.files.length} {mod.files.length === 1 ? "file" : "files"}</span>
+          <svg class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-90 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </summary>
+        <div class="border-t border-slate-100 bg-slate-50/50 px-4 py-3">
+          <ul class="space-y-2">
+            {mod.files.map((file) => (
+              <li>
+                <a
+                  href={file.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white transition-colors group/file"
+                >
+                  <span class:list={["text-xs font-semibold uppercase tracking-wide px-2 py-0.5 rounded", tagStyle[file.tag] || "bg-slate-100 text-slate-600"]}>
+                    {file.tag}
+                  </span>
+                  <span class="text-sm text-slate-700 group-hover/file:text-navy-700 transition-colors">
+                    {file.label}
+                  </span>
+                  <span class:list={["ml-auto text-[11px] font-mono uppercase flex-shrink-0", formatBadge[file.format] || "text-slate-400"]}>
+                    {file.format}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </details>
+    ))}
+  </div>
+
+  <!-- Upcoming modules -->
+  <div class="mt-12">
+    <h2 class="text-lg font-bold text-navy-900 mb-4">Upcoming Modules</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      {upcomingModules.map((title, i) => (
+        <div class="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-50 text-slate-400">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold">
+            {i + 13}
+          </span>
+          <span class="text-sm">{title}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</PageLayout>

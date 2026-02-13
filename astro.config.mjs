@@ -4,7 +4,11 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://matthewregele.com",
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes("/teaching/social-ent"),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

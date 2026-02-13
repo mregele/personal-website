@@ -17,3 +17,4 @@ Thumbs.db
 
 # Source documents (not for public repo)
 *.docx
+!public/files/**/*.docx
