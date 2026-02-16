@@ -145,11 +145,21 @@ const modules: Module[] = [
       { label: "Theory of Change and Logic Models", href: `${base}/12_ToC_and_Logic_Models/reading-toc-and-logicmodels.pdf`, tag: "Reading", format: "pdf" },
     ],
   },
+  {
+    number: 13,
+    title: "Asynchronous Stakeholder Outreach Check-In",
+    files: [],
+  },
+  {
+    number: 14,
+    title: "Logic Model Workshop",
+    files: [
+      { label: "Logic Model Workshop", href: `${base}/14_Logic_Model_Workshop/slides-logic-model-workshop.html`, tag: "Slides", format: "html" },
+    ],
+  },
 ];
 
 const upcomingModules = [
-  "Asynchronous Stakeholder Outreach Check-In",
-  "Logic Model Workshop",
   "Field Research for Social Ventures",
   "Field Research Planning and Practice",
   "Asynchronous Field Research",
@@ -228,7 +238,7 @@ const upcomingModules = [
       {upcomingModules.map((title, i) => (
         <div class="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-50 text-slate-400">
           <span class="flex-shrink-0 w-7 h-7 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold">
-            {i + 13}
+            {i + 15}
           </span>
           <span class="text-sm">{title}</span>
         </div>
