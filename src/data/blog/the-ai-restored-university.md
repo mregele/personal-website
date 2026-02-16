@@ -8,7 +8,7 @@ tags: ["higher-ed", "AI", "liberal-arts", "entrepreneurship"]
 # The AI-Restored University: Returning to the Faculty Core
 
 ## Introduction
-For decades, American universities have drifted toward a model defined by administrative expansion. Much of it began with reasonable intentions: support services, compliance, accreditation, career placement, and the complex infrastructure of a modern institution. But the [accumulated result](https://www.forbes.com/sites/carolinesimon/2017/09/05/bureaucrats-galore-why-is-higher-education-so-expensive/) is a system defined by layers and process, often at the expense of the sustained, high-quality teaching and mentoring that families believe they are paying for.
+For decades, American universities have drifted toward a model defined by administrative expansion. Much of it began with reasonable intentions: support services, compliance, accreditation, career placement, and the complex infrastructure of a modern institution. But the [accumulated result](https://www.chronicle.com/article/why-your-university-has-so-many-administrators) is a system defined by layers and process, often at the expense of the sustained, high-quality teaching and mentoring that families believe they are paying for.
 
 This drift takes us further away from the traditional promise of a liberal arts education: the development of an intellectual portability that allows a student to navigate unfamiliar contexts with judgment and agency. It is a promise to help students feel "at home in all lands and all ages"—to carry the keys of the world's library in their pocket and to cooperate with others for common ends.
 
@@ -17,7 +17,7 @@ Agentic AI presents a once-in-a-generation opportunity to return to this kind of
 ## A moment of candor
 I don't think AI automates everything today. But I can see what's coming.
 
-I recently felt it while working on a major course revision. An instructional designer mentioned that her team already has access to [AI-powered design tools](https://www.instructure.com/canvas/generative-ai) integrated into our LMS. In a moment of candor, she "joked" that the AI might replace her in a few years.
+I recently felt it while working on a major course revision. An instructional designer mentioned that her team already has access to [AI-powered design tools](https://www.instructure.com/resources/artificial-intelligence) integrated into our LMS. In a moment of candor, she "joked" that the AI might replace her in a few years.
 
 I don't think it was a joke. If a tool can generate module structures, draft rubrics, and iterate rapidly based on feedback, then a meaningful chunk of the work that currently requires specialized staff becomes easier to scale. This forces a question: When the managerial layer becomes automated, what is the university's true value-add?
 
@@ -36,7 +36,7 @@ As AI capabilities improve, universities face a fork in the road:
 ## What becomes scarce in an AI-rich world
 In an AI-rich world, information and drafts become commodities. What becomes scarce are uniquely human qualities: judgment, taste, moral courage, and the ability to cooperate under real stakes.
 
-Interestingly, this isn't just a plea for nostalgia; it is a forecast from the architects of the technology itself. Anthropic President [Daniela Amodei recently argued](https://www.youtube.com/watch?v=qUDG06BvWxc) that a background in the liberal arts will be "more important than ever" because AI is already so proficient at STEM. As technical outputs become automated, the human ability to empathize and navigate social friction becomes the high-value currency.
+Interestingly, this isn't just a plea for nostalgia; it is a forecast from the architects of the technology itself. Anthropic President [Daniela Amodei recently argued](https://fortune.com/2026/02/07/anthropic-cofounder-daniela-amodei-humanities-majors-soft-skills-hiring-ai-stem/) that a background in the liberal arts will be "more important than ever" because AI is already so proficient at STEM. As technical outputs become automated, the human ability to empathize and navigate social friction becomes the high-value currency.
 
 This is the essence of being "at home in all lands." It describes an intellectual portability that an algorithm cannot replicate. This portability is what the liberal arts—and fields like entrepreneurship and management—strive to develop. AI can process data from any "land" or "age," but it cannot inhabit them or bear the consequences of the choices made within them.
 
