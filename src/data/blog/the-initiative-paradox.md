@@ -20,7 +20,7 @@ Good strategy is, by definition, an exercise in focus. It is the application of 
 In Rumelt's framework, strategy requires a "kernel": a diagnosis of the challenge, a guiding policy to deal with it, and a set of coherent actions. A triple-digit to-do list skips the diagnosis and moves straight to a flurry of uncoordinated actions that compete for the same pool of money and attention.
 
 ## The Illusion of Productivity
-Why do intelligent administrators fall for this sprawl? Part of the answer lies in the delivery. These projects are often managed by teams from elite firms, cranking out endless PowerPoints and complex waterfall reports.
+Why do intelligent administrators fall for this sprawl? Part of the answer lies in the delivery. These projects are often managed by teams from elite consulting firms, cranking out endless PowerPoints and complex waterfall reports.
 
 This creates a powerful illusion of productivity. If there are dozens of status updates to review and a swarm of committees meeting weekly, it *feels* like the university is moving. In reality, it is often just spinning its wheels. This "fluff" masks the absence of a real diagnosis and substitutes activity for achievement.
 
