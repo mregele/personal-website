@@ -2,6 +2,7 @@
 title: "The AI-Restored University: Returning to the Faculty Core"
 description: "Why agentic AI offers a once-in-a-generation opportunity to strip away administrative bloat and return to the core mission of human formation."
 pubDate: 2026-02-15
+image: "/images/ai_highered_restoration.png"
 tags: ["higher-ed", "AI", "liberal-arts", "entrepreneurship"]
 ---
 
