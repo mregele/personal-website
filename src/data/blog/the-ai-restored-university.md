@@ -1,9 +1,9 @@
 ---
 title: "The AI-Restored University: Returning to the Faculty Core"
-description: "Why agentic AI offers a once-in-a-generation opportunity to strip away administrative bloat and return to the core mission of human formation."
+description: "How AI can be the catalyst for stripping away administrative sprawl and returning the university to its essential foundation: the relationship between faculty and students."
 pubDate: 2026-02-15
 image: "/images/ai_highered_restoration.png"
-tags: ["higher-ed", "AI", "liberal-arts", "entrepreneurship"]
+tags: ["higher-ed", "AI", "strategy", "faculty"]
 ---
 
 # The AI-Restored University: Returning to the Faculty Core
@@ -11,7 +11,7 @@ tags: ["higher-ed", "AI", "liberal-arts", "entrepreneurship"]
 ## Introduction
 For decades, American universities have drifted toward a model defined by administrative expansion. Much of it began with reasonable intentions: support services, compliance, accreditation, career placement, and the complex infrastructure of a modern institution. But the [accumulated result](https://www.chronicle.com/article/why-your-university-has-so-many-administrators) is a system defined by layers and process, often at the expense of the sustained, high-quality teaching and mentoring that families believe they are paying for.
 
-This drift takes us further away from the traditional promise of a liberal arts education: the development of an intellectual portability that allows a student to navigate unfamiliar contexts with judgment and agency. It is a promise to help students feel "at home in all lands and all ages"—to carry the keys of the world's library in their pocket and to cooperate with others for common ends.
+This drift takes us further away from the traditional promise of a liberal arts education: the development of an intellectual portability that allows a student to navigate unfamiliar contexts with judgment and agency. It is a promise to help students feel [**"at home in all lands and all ages"**](https://www.bowdoin.edu/about/the-offer/index.html)—to carry the keys of the world's library in their pocket and to cooperate with others for common ends.[^1]
 
 Agentic AI presents a once-in-a-generation opportunity to return to this kind of core mission. Its deeper potential is to automate a large share of the university's administrative machinery, making it possible to redirect money and time back to the faculty-student relationship, where the core educational value is actually created.
 
@@ -52,3 +52,9 @@ If we use AI for compression rather than expansion, we could see:
 This is an early-stage provocation, but it is one I intend to explore through my work as an educator and researcher. We should not be asking only how AI will "disrupt" the classroom. We should be asking how AI can make the rest of the university's bureaucracy obsolete so we can afford a genuinely human education again.
 
 The AI-restored university is not a world without support or care. It's a university that finally stops confusing complexity with quality and re-centers itself around the work that cannot be automated: human formation through sustained, in-person learning.
+
+---
+
+**Footnotes**
+
+[^1]: A nod to my alma mater, Bowdoin College, which articulates this mission so eloquently in "The Offer of the College." It's a vision for higher education that has stayed with me ever since I first arrived on campus.
