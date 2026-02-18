@@ -40,21 +40,7 @@ const posts = (await getCollection("blog"))
     <p class="text-slate-600 mb-6 max-w-lg">
       Get new posts delivered straight to your inbox. No spam—just new writing when it's ready.
     </p>
-    <form action="https://matthewregele.substack.com/embed" method="post" class="flex flex-col sm:flex-row gap-3 max-w-md">
-      <input
-        type="email"
-        name="email"
-        placeholder="your@email.com"
-        required
-        class="flex-1 px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-navy-500 text-sm"
-      />
-      <button
-        type="submit"
-        class="px-6 py-2 bg-navy-800 text-white text-sm font-semibold rounded-lg hover:bg-navy-700 transition-colors"
-      >
-        Subscribe
-      </button>
-    </form>
+    <iframe src="https://matthewregele.substack.com/embed" width="100%" height="320" style="border: 1px solid #EEE; background: white;" frameborder="0" scrolling="no"></iframe>
     <p class="mt-4 text-xs text-slate-500">
       Prefer RSS? <a href="/rss.xml" class="underline hover:text-navy-700 transition-colors">Subscribe via feed.</a>
     </p>
