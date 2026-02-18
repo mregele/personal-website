@@ -40,7 +40,8 @@ const posts = (await getCollection("blog"))
     <p class="text-slate-600 mb-6 max-w-lg">
       Get new posts delivered straight to your inbox. No spam—just new writing when it's ready.
     </p>
-    <form action="#" method="post" class="flex flex-col sm:flex-row gap-3 max-w-md">
+    <form action="https://buttondown.com/api/emails/embed-subscribe/mregele" method="post" class="flex flex-col sm:flex-row gap-3 max-w-md">
+      <input type="hidden" value="1" name="embed" />
       <input
         type="email"
         name="email"
