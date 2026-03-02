@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Field Research Plan Builder — ENTR 335</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #0C2340;
+      --navy-700:  #1a3a5c;
+      --navy-100:  #dde5ef;
+      --navy-50:   #f0f3f7;
+      --gold:      #B3A369;
+      --gold-bg:   #f8f5ec;
+      --white:     #ffffff;
+      --gray-100:  #f1f5f9;
+      --gray-200:  #e2e8f0;
+      --gray-400:  #94a3b8;
+      --gray-500:  #64748b;
+      --gray-700:  #334155;
+      --text:      #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--navy-50);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 22px 24px 20px;
+      border-bottom: 3px solid var(--gold);
+    }
+    .header-inner { max-width: 780px; margin: 0 auto; }
+    .header-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+    header h1 {
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    header p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 5px;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 28px 16px 100px;
+    }
+
+    /* ── Student info row ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Section card ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .card-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 13px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .card-title { font-size: 15px; font-weight: 600; }
+    .card-body { padding: 20px; }
+
+    /* ── Subsection ── */
+    .sub { margin-bottom: 24px; }
+    .sub:last-child { margin-bottom: 0; }
+    .sub-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.9px;
+      text-transform: uppercase;
+      color: var(--navy);
+      padding-bottom: 7px;
+      margin-bottom: 14px;
+      border-bottom: 2px solid var(--gold-bg);
+    }
+
+    /* ── Form elements ── */
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-700);
+      margin-bottom: 6px;
+    }
+    .hint {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--gray-400);
+      margin-left: 3px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(12,35,64,0.08);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.55;
+    }
+    textarea.tall { min-height: 130px; }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+    /* Radio group */
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      margin-bottom: 10px;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+    input[type="radio"] { accent-color: var(--navy); width: 15px; height: 15px; }
+
+    /* ── Sticky download bar ── */
+    .dl-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.09);
+      z-index: 50;
+    }
+    .dl-hint {
+      font-size: 12px;
+      color: var(--gray-500);
+      line-height: 1.5;
+    }
+    .btn-dl {
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 11px 22px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-dl:hover { background: var(--navy-700); }
+    .btn-dl:active { transform: scale(0.98); }
+    .btn-dl svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--navy);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      border-left: 3px solid var(--gold);
+      z-index: 100;
+      white-space: nowrap;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">ENTR 335 &middot; Spring 2026 &middot; Xavier University</div>
+    <h1>Field Research Plan Builder</h1>
+    <p>Complete each section, then download your plan as a formatted PDF.</p>
+  </div>
+</header>
+
+<main>
+  <form id="planForm" autocomplete="off">
+
+    <!-- Student info -->
+    <div class="two-col">
+      <div class="field">
+        <label for="studentName">Your Name</label>
+        <input type="text" id="studentName" placeholder="e.g. Jordan Smith" />
+      </div>
+      <div class="field">
+        <label for="projectTitle">Project / Venture Name</label>
+        <input type="text" id="projectTitle" placeholder="e.g. Campus Food Recovery" />
+      </div>
+    </div>
+
+    <!-- ── Section 1: Learning Goals ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-num">1</span>
+        <span class="card-title">Learning Goals</span>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label for="researchQuestion">Central Research Question <span class="hint">— What do you most need to understand?</span></label>
+          <textarea id="researchQuestion" placeholder="e.g. How do food pantry clients decide whether to access services on a given week?"></textarea>
+        </div>
+        <div class="field">
+          <label for="subQuestions">Supporting Questions <span class="hint">— 2–3 specific things you want to learn</span></label>
+          <textarea id="subQuestions" class="tall" placeholder="1.&#10;2.&#10;3."></textarea>
+        </div>
+        <div class="field">
+          <label for="assumptions">Current Assumptions <span class="hint">— What do you already believe or assume about this topic?</span></label>
+          <textarea id="assumptions" placeholder="Write honestly — surfacing assumptions helps you notice when fieldwork challenges them."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Section 2: Research Protocol ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-num">2</span>
+        <span class="card-title">Research Protocol</span>
+      </div>
+      <div class="card-body">
+
+        <!-- 2A: Method -->
+        <div class="sub">
+          <div class="sub-title">A &mdash; Method</div>
+          <div class="field-row">
+            <div class="field">
+              <label for="method">Primary Method</label>
+              <select id="method">
+                <option value="" disabled selected>Select a method…</option>
+                <option>Interviews (one-on-one)</option>
+                <option>Focus Group</option>
+                <option>Observation / Shadowing</option>
+                <option>Surveys</option>
+                <option>Document / Artifact Analysis</option>
+                <option>Mixed Methods</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sessionCount">Planned Sessions or Interactions</label>
+              <input type="number" id="sessionCount" min="1" placeholder="e.g. 5" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="methodRationale">Why is this method appropriate for your question?</label>
+            <textarea id="methodRationale" placeholder="Connect the method to what you need to learn and the context you'll be working in."></textarea>
+          </div>
+        </div>
+
+        <!-- 2B: Participants -->
+        <div class="sub">
+          <div class="sub-title">B &mdash; Participants</div>
+          <div class="field">
+            <label for="whoParticipants">Who will you engage? <span class="hint">— Role, relationship to the problem</span></label>
+            <textarea id="whoParticipants" placeholder="e.g. Clients who visit the pantry at least once a month; volunteer staff; pantry director"></textarea>
+          </div>
+          <div class="field">
+            <label for="accessStrategy">How will you access or recruit them?</label>
+            <textarea id="accessStrategy" placeholder="e.g. Partner org will introduce us; we'll attend Thursday distribution hours"></textarea>
+          </div>
+        </div>
+
+        <!-- 2C: Guide -->
+        <div class="sub">
+          <div class="sub-title">C &mdash; Interview / Observation Guide</div>
+          <div class="field">
+            <label for="guideQuestions">Key Questions or Observation Prompts <span class="hint">— Aim for 5–8 open-ended prompts</span></label>
+            <textarea id="guideQuestions" class="tall" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5."></textarea>
+          </div>
+          <div class="field">
+            <label for="probes">Follow-up Probes <span class="hint">— Optional: questions to go deeper</span></label>
+            <textarea id="probes" placeholder="e.g. Can you say more about that? / What happened next? / How did that feel?"></textarea>
+          </div>
+        </div>
+
+        <!-- 2D: Logistics -->
+        <div class="sub">
+          <div class="sub-title">D &mdash; Logistics</div>
+          <div class="field-row">
+            <div class="field">
+              <label for="timing">When will you conduct research?</label>
+              <input type="text" id="timing" placeholder="e.g. March 10–14, 2026" />
+            </div>
+            <div class="field">
+              <label for="location">Where will it take place?</label>
+              <input type="text" id="location" placeholder="e.g. On-site at partner organization" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="materials">Tools &amp; Materials Needed</label>
+            <textarea id="materials" placeholder="e.g. Printed consent forms, voice recorder app, observation notes template, laptop"></textarea>
+          </div>
+        </div>
+
+        <!-- 2E: Ethics -->
+        <div class="sub">
+          <div class="sub-title">E &mdash; Ethics &amp; Positionality</div>
+          <div class="field">
+            <label for="privacy">How will you protect participant privacy and confidentiality?</label>
+            <textarea id="privacy" placeholder="e.g. Names will not be recorded; quotes will be anonymized in all written deliverables"></textarea>
+          </div>
+          <div class="field">
+            <label for="biases">What biases or assumptions might affect your observations or interpretations?</label>
+            <textarea id="biases" placeholder="Reflect honestly on your identity, background, and prior assumptions about this community or problem."></textarea>
+          </div>
+          <div class="field">
+            <label>Do you have the necessary permissions or access agreements in place?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="permissions" value="Yes" /> Yes</label>
+              <label><input type="radio" name="permissions" value="No — still in progress" /> No — still in progress</label>
+              <label><input type="radio" name="permissions" value="N/A" /> N/A</label>
+            </div>
+            <textarea id="permissionsDetail" placeholder="Add details about consent forms, partner agreements, or steps still needed…"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Section 3: Contingency Plan ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-num">3</span>
+        <span class="card-title">Contingency Plan</span>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label for="risks">What could go wrong? <span class="hint">— List realistic risks</span></label>
+          <textarea id="risks" placeholder="e.g. Participants cancel; partner site is unavailable; language barriers; low survey response rate"></textarea>
+        </div>
+        <div class="field">
+          <label for="backup">What is your backup plan?</label>
+          <textarea id="backup" placeholder="e.g. If on-site observation isn't possible, we'll conduct phone interviews with at least 3 clients who have previously participated."></textarea>
+        </div>
+        <div class="field">
+          <label for="successLook">What does "enough data" look like for your team? <span class="hint">— Minimum viable evidence</span></label>
+          <textarea id="successLook" placeholder="e.g. At least 4 completed interviews + 1 observation session that lets us identify at least 2 recurring themes"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</main>
+
+<!-- Download bar -->
+<div class="dl-bar">
+  <p class="dl-hint">Your data stays in your browser.<br>Nothing is submitted or saved to a server.</p>
+  <button type="button" class="btn-dl" onclick="downloadPDF()">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    Download My Plan
+  </button>
+</div>
+
+<div class="toast" id="toast">PDF downloaded!</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+  function radioVal(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const margin = 50;
+    const contentW = pageW - margin * 2;
+    let y = 0;
+
+    const NAVY  = [12, 35, 64];
+    const GOLD  = [179, 163, 105];
+    const WHITE = [255, 255, 255];
+    const GRAY  = [100, 116, 139];
+    const LGRAY = [226, 232, 240];
+    const TEXT  = [30, 41, 59];
+    const GOLDBG = [248, 245, 236];
+
+    function newPage() { doc.addPage(); y = margin; }
+    function checkPage(needed) { if (y + needed > pageH - margin) newPage(); }
+
+    // ── Header ──
+    doc.setFillColor(...NAVY);
+    doc.rect(0, 0, pageW, 70, 'F');
+    doc.setFillColor(...GOLD);
+    doc.rect(0, 70, pageW, 3, 'F');
+    doc.setTextColor(...WHITE);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.text('Field Research Plan', margin, 34);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text('ENTR 335: Social Entrepreneurship  \u00B7  Xavier University', margin, 54);
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    doc.text(today, pageW - margin, 54, { align: 'right' });
+
+    y = 88;
+
+    // ── Student info ──
+    const name = val('studentName');
+    const project = val('projectTitle');
+    if (name || project) {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...GRAY);
+      if (name)    { doc.text('Student: ' + name,    margin, y); y += 16; }
+      if (project) { doc.text('Project: ' + project, margin, y); y += 16; }
+      y += 6;
+    }
+
+    function sectionHeader(num, title) {
+      checkPage(44);
+      y += 6;
+      doc.setFillColor(...NAVY);
+      doc.rect(margin, y, contentW, 26, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...GOLD);
+      doc.text(String(num), margin + 10, y + 17);
+      doc.setFontSize(11);
+      doc.setTextColor(...WHITE);
+      doc.text(title, margin + 28, y + 17);
+      y += 34;
+    }
+
+    function subHeader(title) {
+      checkPage(28);
+      y += 4;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.setTextColor(...GOLD);
+      doc.text(title.toUpperCase(), margin, y);
+      doc.setDrawColor(...LGRAY);
+      doc.line(margin, y + 3, margin + contentW, y + 3);
+      y += 14;
+    }
+
+    function field(label, value) {
+      if (!value) return;
+      checkPage(28);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...GRAY);
+      doc.text(label, margin, y);
+      y += 13;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...TEXT);
+      const lines = doc.splitTextToSize(value, contentW);
+      lines.forEach(line => { checkPage(14); doc.text(line, margin, y); y += 14; });
+      y += 4;
+    }
+
+    // ── Section 1 ──
+    sectionHeader(1, 'Learning Goals');
+    field('Central Research Question', val('researchQuestion'));
+    field('Supporting Questions', val('subQuestions'));
+    field('Current Assumptions', val('assumptions'));
+
+    // ── Section 2 ──
+    sectionHeader(2, 'Research Protocol');
+    subHeader('A \u2014 Method');
+    field('Primary Method', val('method'));
+    field('Planned Sessions or Interactions', val('sessionCount'));
+    field('Why this method is appropriate', val('methodRationale'));
+    subHeader('B \u2014 Participants');
+    field('Who will you engage?', val('whoParticipants'));
+    field('How will you access or recruit them?', val('accessStrategy'));
+    subHeader('C \u2014 Interview / Observation Guide');
+    field('Key Questions or Observation Prompts', val('guideQuestions'));
+    field('Follow-up Probes', val('probes'));
+    subHeader('D \u2014 Logistics');
+    field('When will you conduct research?', val('timing'));
+    field('Where will it take place?', val('location'));
+    field('Tools & Materials Needed', val('materials'));
+    subHeader('E \u2014 Ethics & Positionality');
+    field('How will you protect participant privacy?', val('privacy'));
+    field('What biases might affect your work?', val('biases'));
+    const perm = radioVal('permissions');
+    const permDetail = val('permissionsDetail');
+    field('Permissions / Access agreements', [perm, permDetail].filter(Boolean).join('\n'));
+
+    // ── Section 3 ──
+    sectionHeader(3, 'Contingency Plan');
+    field('What could go wrong?', val('risks'));
+    field('Backup plan', val('backup'));
+    field('What does "enough data" look like?', val('successLook'));
+
+    // ── Footer on every page ──
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFillColor(...LGRAY);
+      doc.rect(0, pageH - 28, pageW, 28, 'F');
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...GRAY);
+      doc.text('ENTR 335  \u00B7  Xavier University  \u00B7  Field Research Plan', margin, pageH - 10);
+      doc.text('Page ' + i + ' of ' + totalPages, pageW - margin, pageH - 10, { align: 'right' });
+    }
+
+    const safeName = (val('studentName') || 'student').replace(/\s+/g, '-').toLowerCase();
+    doc.save('field-research-plan-' + safeName + '.pdf');
+    showToast('PDF downloaded!');
+  }
+</script>
+</body>
+</html>
