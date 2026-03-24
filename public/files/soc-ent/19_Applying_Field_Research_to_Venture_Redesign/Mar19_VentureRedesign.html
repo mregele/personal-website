@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venture Redesign Workshop | ENTR 335 | Mar 19</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --xavier-blue: #0C2340;
+            --xavier-gold: #B3A369;
+            --accent-blue: #0047AB;
+            --light-blue: #e0f2fe;
+            --white: #ffffff;
+            --light: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #7c3aed;
+            --purple-light: #ede9fe;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--xavier-blue);
+            color: var(--white);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SLIDE SYSTEM ===== */
+        .presentation { width: 100vw; height: 100vh; position: relative; }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 100px 100px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .slide.active { opacity: 1; visibility: visible; transform: scale(1); }
+
+        /* ===== BACKGROUNDS ===== */
+        .bg-dark { background: linear-gradient(135deg, var(--xavier-blue) 0%, #1a3a5c 100%); }
+        .bg-accent { background: linear-gradient(135deg, var(--accent-blue) 0%, #0066cc 100%); }
+        .bg-light { background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%); color: var(--xavier-blue); }
+        .bg-gradient { background: linear-gradient(135deg, #0C2340 0%, var(--accent-blue) 50%, #0077b6 100%); }
+        .bg-success { background: linear-gradient(135deg, #065f46 0%, var(--success) 100%); }
+        .bg-purple { background: linear-gradient(135deg, #5b21b6 0%, var(--purple) 100%); }
+        .bg-gold { background: linear-gradient(135deg, #7a6520 0%, #c9ad50 100%); }
+
+        /* ===== TITLE SLIDE ===== */
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, var(--xavier-blue) 0%, #0a1c33 50%, var(--accent-blue) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(179, 163, 105, 0.1) 0%, transparent 70%);
+            top: -200px; right: -200px;
+        }
+
+        .title-slide h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative; z-index: 1;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5rem; font-weight: 400; color: var(--xavier-gold);
+            margin-bottom: 50px; letter-spacing: 4px; text-transform: uppercase;
+            position: relative; z-index: 1;
+        }
+
+        .title-slide .date-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px; font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: relative; z-index: 1;
+        }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-slide { text-align: center; }
+        .section-slide h2 { font-size: 4rem; font-weight: 700; position: relative; display: inline-block; }
+        .section-slide h2::before, .section-slide h2::after {
+            content: ''; position: absolute;
+            width: 80px; height: 3px;
+            background: var(--xavier-gold); top: 50%; transform: translateY(-50%);
+        }
+        .section-slide h2::before { right: calc(100% + 30px); }
+        .section-slide h2::after { left: calc(100% + 30px); }
+        .section-slide .section-number {
+            font-size: 1rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--xavier-gold); margin-bottom: 20px;
+        }
+
+        /* ===== CONTENT SLIDES ===== */
+        .content-slide { align-items: flex-start; text-align: left; }
+        .slide h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 40px; }
+        .content-slide h2 { position: relative; }
+        .content-slide h2::after {
+            content: ''; position: absolute; bottom: -12px; left: 0;
+            width: 60px; height: 4px;
+            background: var(--xavier-gold); border-radius: 2px;
+        }
+        .bg-light.content-slide h2::after { background: var(--accent-blue); }
+
+        .content-slide > ul {
+            list-style: none; font-size: 1.4rem; line-height: 1.8;
+            width: 100%; max-width: 1000px;
+        }
+        .content-slide > ul > li {
+            display: block; position: relative;
+            padding-left: 30px; margin-bottom: 30px; width: 100%;
+        }
+        .content-slide > ul > li::before {
+            content: ''; width: 10px; height: 10px;
+            background: var(--xavier-gold); border-radius: 50%;
+            position: absolute; left: 0; top: 11px;
+        }
+        .bg-light.content-slide > ul > li::before { background: var(--accent-blue); }
+
+        /* ===== GRID LAYOUTS ===== */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; width: 100%; max-width: 1100px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; width: 100%; max-width: 1200px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1200px; }
+
+        /* ===== FLOW DIAGRAM ===== */
+        .flow-diagram {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; width: 100%; max-width: 1150px; margin: 30px 0;
+        }
+        .flow-box {
+            background: rgba(255, 255, 255, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 14px; padding: 22px 18px; text-align: center; flex: 1;
+        }
+        .flow-box h4 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; color: var(--xavier-gold); }
+        .flow-box p { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; }
+        .flow-box.highlight { background: var(--xavier-gold); color: var(--xavier-blue); border-color: var(--xavier-gold); }
+        .flow-box.highlight h4 { color: var(--xavier-blue); }
+        .flow-arrow { font-size: 1.8rem; color: var(--xavier-gold); flex-shrink: 0; }
+
+        /* ===== ACTIVITY BOX ===== */
+        .activity-box {
+            background: var(--white); border-radius: 20px; padding: 40px;
+            max-width: 950px; width: 100%; color: var(--xavier-blue);
+        }
+        .activity-box h3 { font-size: 1.5rem; margin-bottom: 20px; }
+        .activity-box h4 { font-size: 1.1rem; color: var(--accent-blue); margin: 20px 0 10px; }
+
+        /* ===== PROMPT BOX ===== */
+        .prompt-box {
+            background: var(--gray-100); padding: 25px; border-radius: 12px;
+            font-family: monospace; font-size: 0.88rem; line-height: 1.75;
+            border-left: 4px solid var(--accent-blue); margin: 20px 0;
+            white-space: pre-wrap; color: var(--gray-600);
+            max-height: 320px; overflow-y: auto;
+        }
+        .copy-btn {
+            padding: 12px 30px; background: var(--accent-blue); color: var(--white);
+            border: none; border-radius: 8px; font-size: 1rem;
+            cursor: pointer; transition: background 0.3s;
+        }
+        .copy-btn:hover { background: var(--xavier-blue); }
+        .copy-btn.copied { background: var(--success); }
+
+        /* ===== TIMER ===== */
+        .timer-container { text-align: center; margin: 25px 0; }
+        .timer-display {
+            font-size: 3.5rem; font-family: 'Inter', monospace; font-weight: 700;
+            background: var(--gray-100); padding: 15px 40px;
+            border-radius: 15px; display: inline-block; color: var(--xavier-blue);
+        }
+        .timer-controls { display: flex; gap: 15px; justify-content: center; margin-top: 15px; }
+        .timer-btn {
+            padding: 10px 25px; border: none; border-radius: 10px;
+            font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+        }
+        .timer-btn.start { background: var(--success); color: var(--white); }
+        .timer-btn.pause { background: var(--warning); color: var(--xavier-blue); }
+        .timer-btn.reset { background: var(--gray-200); color: var(--gray-600); }
+        .timer-btn:hover { transform: scale(1.05); }
+
+        /* ===== STEP CARDS ===== */
+        .step-card {
+            background: rgba(255, 255, 255, 0.1); border-radius: 12px;
+            padding: 20px; border-left: 4px solid var(--xavier-gold);
+        }
+        .bg-light .step-card { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--accent-blue); }
+        .step-card h4 { font-size: 1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .step-card p, .step-card ul { font-size: 0.95rem; opacity: 0.9; }
+        .step-card ul { list-style: none; margin-top: 10px; }
+        .step-card li { padding: 5px 0; padding-left: 15px; position: relative; }
+        .step-card li::before { content: '›'; position: absolute; left: 0; color: var(--xavier-gold); font-weight: 700; }
+
+        /* ===== INSIGHT BOX ===== */
+        .insight-box {
+            background: rgba(179, 163, 105, 0.2); border: 2px solid var(--xavier-gold);
+            border-radius: 20px; padding: 40px 50px; text-align: center; max-width: 900px;
+        }
+        .insight-box h3 { font-size: 1.5rem; margin-bottom: 20px; }
+        .insight-box p { font-size: 1.25rem; line-height: 1.7; opacity: 0.95; }
+
+        /* ===== DISCUSSION CARDS ===== */
+        .discussion-card {
+            background: rgba(255, 255, 255, 0.1); border-radius: 12px;
+            padding: 25px; border-left: 4px solid var(--xavier-gold);
+        }
+        .discussion-card p { font-size: 1.15rem; font-style: italic; line-height: 1.6; }
+
+        /* ===== NEXT STEPS ===== */
+        .next-step-row {
+            display: flex; align-items: center; gap: 20px;
+            padding: 18px 22px; background: var(--white);
+            border: 1px solid var(--gray-200); border-radius: 12px;
+            margin-bottom: 15px; color: var(--xavier-blue);
+        }
+        .step-num {
+            width: 40px; height: 40px; background: var(--accent-blue); color: var(--white);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; flex-shrink: 0;
+        }
+        .next-step-row p { font-size: 1.05rem; line-height: 1.5; }
+        .due-badge {
+            margin-left: auto; padding: 6px 14px;
+            background: rgba(179, 163, 105, 0.15);
+            border: 1px solid var(--xavier-gold);
+            border-radius: 20px; font-size: 0.8rem;
+            color: var(--accent-blue); font-weight: 600; white-space: nowrap; flex-shrink: 0;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(12, 35, 64, 0.95); backdrop-filter: blur(20px);
+            padding: 16px 40px; display: flex;
+            justify-content: space-between; align-items: center;
+            z-index: 1000; border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-title { font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); }
+        .nav-controls { display: flex; align-items: center; gap: 20px; }
+        .nav-btn {
+            width: 48px; height: 48px; border: none;
+            background: rgba(255, 255, 255, 0.1); color: var(--white);
+            border-radius: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .nav-btn:hover:not(:disabled) { background: var(--xavier-gold); color: var(--xavier-blue); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .progress-container { display: flex; align-items: center; gap: 15px; }
+        .progress-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--xavier-gold); border-radius: 2px; transition: width 0.3s ease; }
+        .slide-counter { font-size: 0.95rem; font-weight: 500; min-width: 60px; text-align: center; }
+
+        /* ===== KEYBOARD HINTS ===== */
+        .keyboard-hint {
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(10px);
+            padding: 12px 18px; border-radius: 10px;
+            font-size: 0.8rem; color: rgba(255,255,255,0.7);
+            opacity: 0; transition: opacity 0.3s; z-index: 100;
+        }
+        body:hover .keyboard-hint { opacity: 1; }
+        .keyboard-hint kbd { background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 4px; margin: 0 3px; }
+
+        /* ===== FLIP CARDS (Slide 5) ===== */
+        .flip-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 22px; width: 100%; max-width: 1100px;
+        }
+        .flip-card { perspective: 1000px; cursor: pointer; min-height: 230px; }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; min-height: 230px;
+            transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; inset: 0; backface-visibility: hidden;
+            border-radius: 18px; padding: 28px 20px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+        }
+        .flip-card-front {
+            background: linear-gradient(135deg, #1a1a8c 0%, #0047AB 100%);
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+        }
+        .flip-card-front:hover { border-color: var(--xavier-gold); }
+        .flip-card-back {
+            background: linear-gradient(135deg, #0C2340 0%, #1a3a5c 100%);
+            border: 2px solid var(--xavier-gold);
+            transform: rotateY(180deg);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+        }
+        .flip-card-front .company-name {
+            font-size: 1.7rem; font-weight: 800; color: var(--white); margin-bottom: 10px;
+        }
+        .flip-card-front .company-desc {
+            font-size: 0.83rem; opacity: 0.8; line-height: 1.5; color: rgba(255,255,255,0.85);
+        }
+        .flip-card-front .flip-hint {
+            margin-top: 16px; font-size: 0.72rem; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--xavier-gold); opacity: 0.9;
+        }
+        .flip-card-back .pivot-from { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+        .flip-card-back .pivot-before { font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 10px; line-height: 1.3; }
+        .flip-card-back .pivot-arrow-big { font-size: 1.6rem; color: var(--xavier-gold); margin-bottom: 10px; }
+        .flip-card-back .pivot-after-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--xavier-gold); margin-bottom: 4px; }
+        .flip-card-back .pivot-after { font-size: 1.4rem; font-weight: 800; color: var(--white); margin-bottom: 12px; }
+        .flip-card-back .pivot-type-badge {
+            padding: 4px 14px; background: rgba(179,163,105,0.2);
+            border: 1px solid var(--xavier-gold); border-radius: 20px;
+            font-size: 0.7rem; color: var(--xavier-gold);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* ===== PIVOT TABLE (Slide 6) ===== */
+        .pivot-table { width: 100%; max-width: 1100px; border-collapse: collapse; margin-top: 6px; }
+        .pivot-table thead tr { border-bottom: 3px solid var(--xavier-gold); }
+        .pivot-table thead th {
+            padding: 10px 18px; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--xavier-gold); text-align: left; font-weight: 700;
+        }
+        .pivot-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.08); transition: background 0.2s; }
+        .pivot-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+        .pivot-table tbody tr:last-child { border-bottom: none; }
+        .pivot-table td { padding: 14px 18px; vertical-align: middle; }
+        .pivot-name { display: flex; align-items: center; gap: 12px; }
+        .pivot-name-icon {
+            width: 38px; height: 38px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .pivot-name-text { font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
+        .pivot-def { font-size: 0.97rem; line-height: 1.6; opacity: 0.9; }
+        .pivot-def strong { color: var(--xavier-gold); }
+        .pivot-example {
+            font-size: 0.85rem; line-height: 1.5;
+            background: rgba(255,255,255,0.07); border-radius: 10px;
+            padding: 10px 14px; border-left: 3px solid var(--xavier-gold);
+        }
+        .pivot-example .ex-before { opacity: 0.6; font-size: 0.78rem; margin-bottom: 3px; }
+        .pivot-example .ex-arrow { color: var(--xavier-gold); font-weight: 700; margin: 2px 0; font-size: 0.9rem; }
+        .pivot-example .ex-after { font-weight: 600; }
+
+        /* ===== REFINEMENT SCALE ===== */
+        .scale-wrapper { width: 100%; max-width: 1000px; margin-top: 20px; }
+        .scale-track {
+            position: relative; height: 22px; border-radius: 11px;
+            background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #ef4444 100%);
+            margin: 40px 0 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .scale-labels {
+            display: flex; justify-content: space-between;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 30px;
+            color: rgba(255,255,255,0.8);
+        }
+        .scale-tick {
+            position: absolute; top: -28px;
+            display: flex; flex-direction: column; align-items: center;
+            transform: translateX(-50%);
+        }
+        .scale-tick span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; color: rgba(255,255,255,0.9); }
+        .scale-tick::after { content: ''; width: 3px; height: 14px; background: rgba(255,255,255,0.6); margin-top: 6px; border-radius: 2px; }
+        .scale-examples-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px;
+        }
+        .scale-example {
+            border-radius: 12px; padding: 16px 18px;
+        }
+        .scale-example.refine { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); }
+        .scale-example.adjust { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); }
+        .scale-example.pivot  { background: rgba(239,68,68,0.15);  border: 1px solid rgba(239,68,68,0.4); }
+        .scale-example h5 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .scale-example.refine h5 { color: #6ee7b7; }
+        .scale-example.adjust h5 { color: #fcd34d; }
+        .scale-example.pivot  h5 { color: #fca5a5; }
+        .scale-example p { font-size: 0.85rem; opacity: 0.85; line-height: 1.5; }
+
+        /* ===== DRAG AND DROP ===== */
+        .dnd-layout {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 30px; width: 100%; max-width: 1100px;
+        }
+        .dnd-column h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 14px; }
+        .drag-card {
+            background: rgba(255,255,255,0.12);
+            border: 2px solid rgba(255,255,255,0.25);
+            border-radius: 12px; padding: 14px 18px; margin-bottom: 10px;
+            cursor: grab; font-size: 0.9rem; line-height: 1.5;
+            transition: all 0.2s; user-select: none;
+        }
+        .drag-card:hover { background: rgba(255,255,255,0.2); border-color: var(--xavier-gold); }
+        .drag-card.dragging { opacity: 0.4; transform: scale(0.97); cursor: grabbing; }
+        .drag-card.matched { opacity: 0.35; cursor: default; border-style: dashed; }
+        .drop-zone {
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.25);
+            border-radius: 12px; padding: 14px 18px; margin-bottom: 10px;
+            font-size: 0.9rem; min-height: 54px;
+            display: flex; align-items: center; gap: 10px;
+            transition: all 0.25s;
+        }
+        .drop-zone .zone-label { font-weight: 700; color: var(--xavier-gold); white-space: nowrap; }
+        .drop-zone.drag-over { background: rgba(179,163,105,0.15); border-color: var(--xavier-gold); border-style: solid; }
+        .drop-zone.correct { background: rgba(16,185,129,0.2); border-color: var(--success); border-style: solid; }
+        .drop-zone.shake { animation: shake 0.4s ease; }
+        .match-badge { font-size: 0.78rem; color: var(--success); font-weight: 600; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        /* ===== QUOTE SLIDE ===== */
+        .big-quote {
+            font-size: 2.4rem; font-weight: 700; line-height: 1.4;
+            text-align: center; max-width: 850px;
+            color: var(--white);
+        }
+        .big-quote em { color: var(--xavier-gold); font-style: normal; }
+        .quote-attribution {
+            margin-top: 30px; font-size: 1rem; opacity: 0.65;
+            text-transform: uppercase; letter-spacing: 3px;
+        }
+
+        /* ===== SHARE-OUT BOARD ===== */
+        .share-board {
+            background: var(--white); border-radius: 20px;
+            padding: 32px; max-width: 1050px; width: 100%; color: var(--xavier-blue);
+        }
+        .share-row {
+            display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+            align-items: center; gap: 8px; margin-bottom: 12px;
+        }
+        .share-cell {
+            background: var(--gray-100); border-radius: 12px;
+            padding: 18px 20px; text-align: center;
+        }
+        .share-cell .share-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gray-400); margin-bottom: 6px; }
+        .share-cell .share-content { font-size: 0.95rem; font-weight: 600; color: var(--xavier-blue); line-height: 1.4; }
+        .share-arrow { text-align: center; font-size: 1.4rem; color: var(--xavier-gold); font-weight: 700; }
+
+        /* ===== MINDSET CONTRAST ===== */
+        .mindset-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0; max-width: 900px; width: 100%;
+            border-radius: 20px; overflow: hidden;
+        }
+        .mindset-col { padding: 35px 40px; }
+        .mindset-col.old { background: rgba(239,68,68,0.15); border: 2px solid rgba(239,68,68,0.4); border-right: none; border-radius: 20px 0 0 20px; }
+        .mindset-col.new { background: rgba(16,185,129,0.15); border: 2px solid rgba(16,185,129,0.4); border-left: none; border-radius: 0 20px 20px 0; }
+        .mindset-col h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+        .mindset-col.old h4 { color: #fca5a5; }
+        .mindset-col.new h4 { color: #6ee7b7; }
+        .mindset-col ul { list-style: none; }
+        .mindset-col ul li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 1rem; line-height: 1.5; }
+        .mindset-col ul li:last-child { border-bottom: none; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .slide { padding: 50px 60px 100px; }
+            .title-slide h1 { font-size: 3rem; }
+            .pivot-cards-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 40px 30px 100px; }
+            .grid-2, .grid-3, .pivot-cards-grid { grid-template-columns: 1fr; }
+            .section-slide h2::before, .section-slide h2::after { display: none; }
+            .jeopardy-row, .jeopardy-header-row { grid-template-columns: repeat(2, 1fr); }
+            .dnd-layout { grid-template-columns: 1fr; }
+            .mindset-grid { grid-template-columns: 1fr; }
+            .mindset-col.old { border-right: 2px solid rgba(239,68,68,0.4); border-bottom: none; border-radius: 20px 20px 0 0; }
+            .mindset-col.new { border-left: 2px solid rgba(16,185,129,0.4); border-top: none; border-radius: 0 0 20px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- SLIDE 1: Title -->
+        <div class="slide title-slide active" data-slide="1">
+            <h1>Applying Field Insights to Venture Redesign</h1>
+            <p class="subtitle">The Art of the Pivot &mdash; ENTR 335</p>
+            <div class="date-badge">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                March 19, 2026
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Learning Objectives -->
+        <div class="slide bg-dark content-slide" data-slide="2">
+            <h2>Learning Objectives</h2>
+            <ul>
+                <li>Connect field insights to <strong>strategic decisions</strong> &mdash; understand how a single disconfirming observation can justify a major redesign</li>
+                <li>Utilize <strong>AI for divergent brainstorming</strong> &mdash; generate multiple pivot options from one piece of evidence before evaluating any of them</li>
+                <li>Justify a <strong>clear redesign path</strong> with evidence &mdash; articulate why a given direction is the most strategic response to what you learned</li>
+                <li>Distinguish between <strong>minor refinements</strong> and pivots that require rethinking core assumptions of your venture model</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 3: Pivot Definition -->
+        <div class="slide bg-gradient" data-slide="3">
+            <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: var(--xavier-gold); margin-bottom: 30px;">The Pivot, Defined</p>
+            <p class="big-quote">&ldquo;A change in <em>strategy</em> without a change in <em>vision</em>.&rdquo;</p>
+            <p class="quote-attribution">&mdash; Eric Ries, <em>The Lean Startup</em></p>
+            <div style="margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 800px; width: 100%;">
+                <div style="background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 24px; text-align: center;">
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 10px;">Vision (Stays the Same)</div>
+                    <div style="font-size: 1rem; line-height: 1.6; opacity: 0.9;">The impact you seek. The community you serve. The world you want to create.</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 24px; text-align: center;">
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 10px;">Strategy (Changes)</div>
+                    <div style="font-size: 1rem; line-height: 1.6; opacity: 0.9;">How you deliver. Who you target. What problem you solve. How you sustain it.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Pivot Mindset -->
+        <div class="slide bg-dark" data-slide="4">
+            <h2 style="text-align: center; margin-bottom: 35px;">The Pivot Mindset</h2>
+            <p style="text-align: center; opacity: 0.75; margin-bottom: 40px; font-size: 1.05rem;">The difference between founders who grow and those who stall is rarely intelligence &mdash; it&rsquo;s this.</p>
+            <div class="mindset-grid">
+                <div class="mindset-col old">
+                    <h4>&#10060; Confirmation Mode</h4>
+                    <ul>
+                        <li>Seeks data that confirms the original plan</li>
+                        <li>Treats disconfirming evidence as noise</li>
+                        <li>&ldquo;Our users just don&rsquo;t understand it yet&rdquo;</li>
+                        <li>Ego is tied to the original idea</li>
+                        <li>Pivoting feels like failure</li>
+                    </ul>
+                </div>
+                <div class="mindset-col new">
+                    <h4>&#9989; Curiosity Mode</h4>
+                    <ul>
+                        <li><strong>Seeks data that challenges</strong> the original plan</li>
+                        <li>Treats disconfirming evidence as a gift</li>
+                        <li>&ldquo;Our users are showing us something important&rdquo;</li>
+                        <li>Ego is tied to the <em>mission</em>, not the method</li>
+                        <li>Pivoting feels like learning</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top: 28px; padding: 16px 28px; background: rgba(179,163,105,0.15); border: 1px solid var(--xavier-gold); border-radius: 12px; text-align: center; max-width: 800px;">
+                <p style="font-size: 1rem; font-weight: 600;">&#128161; <strong>Curiosity over confirmation. Evidence over ego.</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: INTERACTIVE — Pivot Mystery Flip Cards -->
+        <div class="slide bg-dark" data-slide="5">
+            <h2 style="text-align: center; margin-bottom: 8px;">&#128161; Pivot Mystery Cards</h2>
+            <p style="text-align: center; opacity: 0.65; margin-bottom: 26px; font-size: 0.9rem;">What did these companies become? Make your guess &mdash; then click to reveal the pivot.</p>
+            <div class="flip-grid">
+                <!-- Card 1: Burbn → Instagram -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="company-name">Burbn</div>
+                            <div class="company-desc">A mobile app for checking in at locations, posting weekend plans &amp; earning points for hanging out with friends in real life</div>
+                            <div class="flip-hint">&#128161; Click to reveal pivot</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="pivot-from">Started as</div>
+                            <div class="pivot-before">Burbn<br><span style="font-size:0.78rem; font-weight:400; opacity:0.65;">location check-in app</span></div>
+                            <div class="pivot-arrow-big">&#8595;</div>
+                            <div class="pivot-after-label">Became</div>
+                            <div class="pivot-after">Instagram</div>
+                            <div class="pivot-type-badge">Solution Pivot</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2: Odeo → Twitter -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="company-name">Odeo</div>
+                            <div class="company-desc">A platform for finding, subscribing to, and publishing podcasts &mdash; until Apple&rsquo;s iTunes launched and wiped out the entire market</div>
+                            <div class="flip-hint">&#128161; Click to reveal pivot</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="pivot-from">Started as</div>
+                            <div class="pivot-before">Odeo<br><span style="font-size:0.78rem; font-weight:400; opacity:0.65;">podcast distribution platform</span></div>
+                            <div class="pivot-arrow-big">&#8595;</div>
+                            <div class="pivot-after-label">Became</div>
+                            <div class="pivot-after">Twitter</div>
+                            <div class="pivot-type-badge">Solution Pivot</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3: ThePoint → Groupon -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="company-name">ThePoint</div>
+                            <div class="company-desc">A social platform for organizing group campaigns, boycotts &amp; collective action around causes &mdash; a &ldquo;tipping point&rdquo; model for change</div>
+                            <div class="flip-hint">&#128161; Click to reveal pivot</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="pivot-from">Started as</div>
+                            <div class="pivot-before">ThePoint<br><span style="font-size:0.78rem; font-weight:400; opacity:0.65;">collective-action social platform</span></div>
+                            <div class="pivot-arrow-big">&#8595;</div>
+                            <div class="pivot-after-label">Became</div>
+                            <div class="pivot-after">Groupon</div>
+                            <div class="pivot-type-badge">Customer Segment + Revenue Pivot</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4: Starbucks Equipment → Starbucks Café -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="company-name">Starbucks</div>
+                            <div class="company-desc">A retailer that sold whole-bean coffee &amp; espresso equipment &mdash; no lattes, no chairs, no &ldquo;third place&rdquo; vibe. Just beans &amp; gear.</div>
+                            <div class="flip-hint">&#128161; Click to reveal pivot</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="pivot-from">Started as</div>
+                            <div class="pivot-before">Coffee Equipment Store<br><span style="font-size:0.78rem; font-weight:400; opacity:0.65;">beans &amp; gear retailer</span></div>
+                            <div class="pivot-arrow-big">&#8595;</div>
+                            <div class="pivot-after-label">Became</div>
+                            <div class="pivot-after">Starbucks Caf&eacute;</div>
+                            <div class="pivot-type-badge">Solution Pivot</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Types of Pivots — 3-Column Table -->
+        <div class="slide bg-dark" data-slide="6">
+            <h2 style="text-align: center; margin-bottom: 6px;">Five Types of Pivots</h2>
+            <p style="text-align: center; opacity: 0.65; margin-bottom: 16px; font-size: 0.9rem;">Change strategy, not vision &mdash; one dimension at a time.</p>
+            <table class="pivot-table">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Pivot Name</th>
+                        <th style="width: 40%;">Definition</th>
+                        <th style="width: 40%;">Real Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Customer Segment: YouTube -->
+                    <tr>
+                        <td>
+                            <div class="pivot-name">
+                                <div class="pivot-name-icon" style="background:rgba(16,185,129,0.25); border:2px solid #6ee7b7;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                </div>
+                                <span class="pivot-name-text" style="color:#6ee7b7; font-size:1.2rem;">Customer<br>Segment</span>
+                            </div>
+                        </td>
+                        <td class="pivot-def" style="font-size:1.05rem;">Same solution, <strong>different user</strong>. A different population turns out to benefit most &mdash; not the group you originally designed for.</td>
+                        <td>
+                            <div class="pivot-example" style="font-size:0.95rem;">
+                                <div class="ex-before" style="font-size:0.85rem;">&#127916; YouTube: Video-dating site for singles</div>
+                                <div class="ex-arrow" style="font-size:1rem;">&#8595;</div>
+                                <div class="ex-after" style="font-size:0.95rem;">Global video-sharing platform for everyone</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Problem: Slack -->
+                    <tr>
+                        <td>
+                            <div class="pivot-name">
+                                <div class="pivot-name-icon" style="background:rgba(239,68,68,0.25); border:2px solid #fca5a5;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                </div>
+                                <span class="pivot-name-text" style="color:#fca5a5; font-size:1.2rem;">Problem</span>
+                            </div>
+                        </td>
+                        <td class="pivot-def" style="font-size:1.05rem;">Same users, <strong>different problem</strong>. The real pain is upstream, downstream, or adjacent to what you assumed.</td>
+                        <td>
+                            <div class="pivot-example" style="font-size:0.95rem;">
+                                <div class="ex-before" style="font-size:0.85rem;">&#127918; Slack: Internal chat tool for a game studio</div>
+                                <div class="ex-arrow" style="font-size:1rem;">&#8595;</div>
+                                <div class="ex-after" style="font-size:0.95rem;">Communication platform for all businesses</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Solution: Play-Doh -->
+                    <tr>
+                        <td>
+                            <div class="pivot-name">
+                                <div class="pivot-name-icon" style="background:rgba(0,71,171,0.35); border:2px solid #93c5fd;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path></svg>
+                                </div>
+                                <span class="pivot-name-text" style="color:#93c5fd; font-size:1.2rem;">Solution</span>
+                            </div>
+                        </td>
+                        <td class="pivot-def" style="font-size:1.05rem;">Same problem, <strong>different mechanism</strong>. A radically different approach delivers the outcome better &mdash; often for a completely different context.</td>
+                        <td>
+                            <div class="pivot-example" style="font-size:0.95rem;">
+                                <div class="ex-before" style="font-size:0.85rem;">&#129529; Play-Doh: Soapy wallpaper-cleaning putty</div>
+                                <div class="ex-arrow" style="font-size:1rem;">&#8595;</div>
+                                <div class="ex-after" style="font-size:0.95rem;">Non-toxic modeling clay for children</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Channel: Netflix -->
+                    <tr>
+                        <td>
+                            <div class="pivot-name">
+                                <div class="pivot-name-icon" style="background:rgba(245,158,11,0.25); border:2px solid #fcd34d;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fcd34d" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                </div>
+                                <span class="pivot-name-text" style="color:#fcd34d; font-size:1.2rem;">Channel</span>
+                            </div>
+                        </td>
+                        <td class="pivot-def" style="font-size:1.05rem;">Same solution, <strong>different distribution</strong>. How you reach, deliver to, or support users changes entirely.</td>
+                        <td>
+                            <div class="pivot-example" style="font-size:0.95rem;">
+                                <div class="ex-before" style="font-size:0.85rem;">&#128191; Netflix: Physical DVD-by-mail service</div>
+                                <div class="ex-arrow" style="font-size:1rem;">&#8595;</div>
+                                <div class="ex-after" style="font-size:0.95rem;">Instant digital streaming on any device</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Revenue Model: Adobe -->
+                    <tr>
+                        <td>
+                            <div class="pivot-name">
+                                <div class="pivot-name-icon" style="background:rgba(124,58,237,0.3); border:2px solid #c4b5fd;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                </div>
+                                <span class="pivot-name-text" style="color:#c4b5fd; font-size:1.2rem;">Revenue<br>Model</span>
+                            </div>
+                        </td>
+                        <td class="pivot-def" style="font-size:1.05rem;">Same value proposition, <strong>different monetization</strong>. Who pays, how much, and in what form all change.</td>
+                        <td>
+                            <div class="pivot-example" style="font-size:0.95rem;">
+                                <div class="ex-before" style="font-size:0.85rem;">&#128187; Adobe: One-time $700 software license</div>
+                                <div class="ex-arrow" style="font-size:1rem;">&#8595;</div>
+                                <div class="ex-after" style="font-size:0.95rem;">Creative Cloud: $50/month subscription</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SLIDE 7: Section Header Part 1 -->
+        <div class="slide bg-gradient section-slide" data-slide="7">
+            <p class="section-number">Part 1</p>
+            <h2>The Reality Check</h2>
+        </div>
+
+        <!-- SLIDE 8: Sharing the Catalyst -->
+        <div class="slide bg-accent" data-slide="8">
+            <h2 style="text-align: center;">&#9889; Sharing Your Catalyst</h2>
+            <p style="text-align: center; opacity: 0.9; margin-bottom: 28px; font-size: 1rem;">From your Mar 17 synthesis: the disconfirming evidence that <strong>&ldquo;set a box in your Logic Model on fire.&rdquo;</strong></p>
+            <div class="activity-box" style="max-width: 950px;">
+                <h3>&#128101; Partner Share-Out &mdash; 8 minutes</h3>
+                <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+                    <div class="step-card" style="display: flex; gap: 18px; align-items: flex-start;">
+                        <div style="width: 38px; height: 38px; background: var(--accent-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; color: var(--white);">1</div>
+                        <div>
+                            <h4>&#128204; Identify Your Catalyst</h4>
+                            <p>State the specific fieldwork quote or observation &mdash; the exact moment that unsettled your assumptions. Be concrete: not &ldquo;they didn&rsquo;t engage&rdquo; but <em>what precisely happened</em>, where, and who said it.</p>
+                        </div>
+                    </div>
+                    <div class="step-card" style="display: flex; gap: 18px; align-items: flex-start;">
+                        <div style="width: 38px; height: 38px; background: var(--accent-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; color: var(--white);">2</div>
+                        <div>
+                            <h4>&#128293; Which Box Burned?</h4>
+                            <p>Point to the specific Logic Model box that this evidence directly breaks. Name it precisely: <em>&ldquo;My Activities assumption that weekly workshops would build community trust&rdquo;</em> &mdash; not just &ldquo;the middle part.&rdquo;</p>
+                        </div>
+                    </div>
+                    <div class="step-card" style="display: flex; gap: 18px; align-items: flex-start;">
+                        <div style="width: 38px; height: 38px; background: var(--accent-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; color: var(--white);">3</div>
+                        <div>
+                            <h4>&#129522; Strategic Implication</h4>
+                            <p>In one sentence: what does this evidence force you to fundamentally rethink? Not &ldquo;we should tweak our messaging&rdquo; &mdash; but <em>&ldquo;we must reconsider [core assumption] because the data shows [what].&rdquo;</em></p>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 14px 20px; background: rgba(179,163,105,0.15); border: 1px solid var(--xavier-gold); border-radius: 10px; text-align: center;">
+                    <p style="font-size: 0.95rem; color: var(--xavier-blue);">&#127942; This three-part structure is the backbone of your <strong>Exit Ticket: My Venture Pivot</strong> &mdash; due tonight at 11:59 PM.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Refinement vs. Pivot -->
+        <div class="slide bg-dark" data-slide="9">
+            <h2 style="text-align: center; margin-bottom: 8px;">Refinement vs. Pivot</h2>
+            <p style="text-align: center; opacity: 0.7; margin-bottom: 20px; font-size: 0.95rem;">Not all responses to disconfirming evidence require the same magnitude of change.</p>
+            <div class="scale-wrapper">
+                <div class="scale-labels">
+                    <span>Minor Refinement</span>
+                    <span>Strategic Adjustment</span>
+                    <span>Full Pivot</span>
+                </div>
+                <div class="scale-track">
+                    <div class="scale-tick" style="left: 12%;">
+                        <span>Tweak</span>
+                    </div>
+                    <div class="scale-tick" style="left: 38%;">
+                        <span>Expand</span>
+                    </div>
+                    <div class="scale-tick" style="left: 62%;">
+                        <span>Shift</span>
+                    </div>
+                    <div class="scale-tick" style="left: 88%;">
+                        <span>Reinvent</span>
+                    </div>
+                </div>
+                <div class="scale-examples-grid">
+                    <div class="scale-example refine">
+                        <h5>&#128994; Refinement</h5>
+                        <p>Vision <em>and</em> core strategy unchanged. You adjust messaging, timing, or surface-level execution based on feedback.</p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; opacity: 0.75; font-style: italic;">e.g., &ldquo;Users want weekly sessions, not monthly&rdquo;</p>
+                    </div>
+                    <div class="scale-example adjust">
+                        <h5>&#128992; Strategic Adjustment</h5>
+                        <p>Vision intact, one strategic variable changes significantly. You re-target, re-scope, or re-route &mdash; but the core logic holds.</p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; opacity: 0.75; font-style: italic;">e.g., &ldquo;We should partner with schools, not reach families directly&rdquo;</p>
+                    </div>
+                    <div class="scale-example pivot">
+                        <h5>&#128308; Full Pivot</h5>
+                        <p>Evidence demands a fundamental rethinking. A core assumption about the user, problem, or solution model is broken and must be replaced.</p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; opacity: 0.75; font-style: italic;">e.g., &ldquo;The people we designed for can&rsquo;t use this at all &mdash; but a different group is already adapting it themselves&rdquo;</p>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 18px; padding: 13px 24px; background: rgba(179,163,105,0.12); border: 1px solid var(--xavier-gold); border-radius: 10px; text-align: center; max-width: 800px;">
+                <p style="font-size: 0.92rem;">&#128270; Ask: <strong>How many Logic Model boxes does my disconfirming evidence invalidate?</strong> One box = refinement. Three or more = pivot territory.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Section Header Part 2 -->
+        <div class="slide bg-gradient section-slide" data-slide="10">
+            <p class="section-number">Part 2</p>
+            <h2>Divergent Brainstorming</h2>
+        </div>
+
+        <!-- SLIDE 11: AI as Consultant -->
+        <div class="slide bg-dark" data-slide="11">
+            <div class="insight-box" style="max-width: 820px; margin-bottom: 40px;">
+                <h3>&#129302; AI as Your Brainstorming Consultant</h3>
+                <p>&ldquo;A single insight can lead to <strong>multiple pivot paths</strong>. We use AI to think expansively &mdash; generating every plausible direction before our judgment narrows the field.&rdquo;</p>
+            </div>
+            <div class="grid-3" style="max-width: 1100px;">
+                <div class="step-card">
+                    <h4>&#128200; Why AI is Good at This</h4>
+                    <ul>
+                        <li>No ego tied to your original idea</li>
+                        <li>Generates options without self-censoring</li>
+                        <li>Connects across industries and contexts</li>
+                        <li>Speed: 5 pivot options in 30 seconds</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4>&#128683; What AI Cannot Do</h4>
+                    <ul>
+                        <li>Know your community&rsquo;s specific context</li>
+                        <li>Judge what is <em>truly</em> mission-aligned</li>
+                        <li>Weigh relationships and trust built</li>
+                        <li>Make the final strategic call for you</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4>&#127919; The Right Division of Labor</h4>
+                    <ul>
+                        <li>AI: generate 5 divergent options</li>
+                        <li>You: critically evaluate each one</li>
+                        <li>Evidence: your filter for viability</li>
+                        <li>Mission: your filter for alignment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: INTERACTIVE — The Redesign Prompt -->
+        <div class="slide bg-purple" data-slide="12">
+            <h2 style="text-align: center;">&#128203; The AI Redesign Prompt</h2>
+            <div class="activity-box" style="max-width: 960px;">
+                <h3>Copy this prompt &rarr; fill in your details &rarr; paste into Claude or ChatGPT</h3>
+                <div class="prompt-box" id="redesign-prompt">You are a Creative Social Innovation Consultant with deep expertise in social entrepreneurship, pivot strategy, and impact design. Your role is to help a student social entrepreneur think expansively — generating bold, diverse strategic options before any evaluation takes place.
+
+My original venture concept: [DESCRIBE YOUR CONCEPT — target population, core problem, proposed solution]
+
+My core vision (what impact I ultimately seek): [DESCRIBE YOUR MISSION IN 1-2 SENTENCES]
+
+The most important disconfirming finding from my field research:
+[PASTE YOUR CATALYST QUOTE OR KEY OBSERVATION — be specific and direct]
+
+The Logic Model assumption this evidence breaks: [WHICH BOX — e.g., "My Activities assumption that weekly workshops would build skills"]
+
+Using only the evidence above, generate FIVE distinct pivot directions for my venture. For each option:
+1. Name the pivot TYPE (Customer Segment / Problem / Solution / Channel / Revenue Model)
+2. Describe the new strategic direction in 2-3 sentences
+3. Explain what stays the same (vision) and what changes (strategy)
+4. Identify the single biggest risk of this pivot path
+5. Rate the magnitude: Minor Adjustment (1) → Major Reinvention (5)
+
+Include at least one "wild card" option — something counterintuitive or uncomfortable. Do NOT filter for feasibility. We will evaluate viability ourselves. Generate options only.</div>
+                <button class="copy-btn" onclick="copyPrompt('redesign-prompt')">&#128203; Copy Prompt to Clipboard</button>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Work Time — 25-Minute Timer -->
+        <div class="slide bg-success" data-slide="13">
+            <h2 style="text-align: center;">&#9202; Work Time</h2>
+            <p style="text-align: center; opacity: 0.9; margin-bottom: 20px; font-size: 1.05rem;">Run the AI Redesign Prompt. Read all five options. Don&rsquo;t evaluate yet &mdash; just generate.</p>
+            <div class="activity-box" style="max-width: 900px;">
+                <div class="grid-2" style="gap: 20px; margin-bottom: 20px;">
+                    <div class="step-card">
+                        <h4>&#128203; Step 1 (5 min)</h4>
+                        <p>Fill in the Redesign Prompt with your venture&rsquo;s details and your catalyst finding. Copy and paste into your AI tool.</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>&#129302; Step 2 (10 min)</h4>
+                        <p>Read all five pivot options. Highlight anything that surprises you or makes you uncomfortable &mdash; those are the interesting ones.</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>&#128221; Step 3 (10 min)</h4>
+                        <p>For each option, write one sentence: <em>What would need to be true for this to work?</em> Don&rsquo;t kill options yet &mdash; just note conditions.</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>&#127775; Step 4 (before debrief)</h4>
+                        <p>Star your top 2 options. You will defend your final choice in the Share-Out.</p>
+                    </div>
+                </div>
+                <div class="timer-container">
+                    <div class="timer-display" id="timer-work">25:00</div>
+                    <div class="timer-controls">
+                        <button class="timer-btn start" onclick="startTimer('timer-work', 1500)">Start</button>
+                        <button class="timer-btn pause" onclick="pauseTimer('timer-work')">Pause</button>
+                        <button class="timer-btn reset" onclick="resetTimer('timer-work', 1500)">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: The Human Value-Add -->
+        <div class="slide bg-light" data-slide="14">
+            <h2>The Human Value-Add</h2>
+            <p style="color: var(--gray-600); font-size: 1.05rem; margin-bottom: 30px;">AI generated your options. Now <em>you</em> do what AI cannot: critique them with context, values, and judgment.</p>
+            <div class="grid-3" style="max-width: 1100px; margin-bottom: 25px;">
+                <div class="step-card">
+                    <h4 style="color: var(--accent-blue);">&#128203; Filter 1: Viability</h4>
+                    <p style="color: var(--gray-600);">Does this pivot require resources, relationships, or capabilities you don&rsquo;t have? What&rsquo;s the realistic path to make it work?</p>
+                    <ul style="color: var(--gray-600);">
+                        <li>What partnerships would I need?</li>
+                        <li>What skills does my team lack?</li>
+                        <li>What&rsquo;s the minimum viable version?</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4 style="color: var(--accent-blue);">&#10084;&#65039; Filter 2: Mission Alignment</h4>
+                    <p style="color: var(--gray-600);">Does this direction still serve the people your venture exists for? Or does it drift toward impact-washing?</p>
+                    <ul style="color: var(--gray-600);">
+                        <li>Whose voice is centered here?</li>
+                        <li>Does this create real equity impact?</li>
+                        <li>Would your original community endorse it?</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4 style="color: var(--accent-blue);">&#128200; Filter 3: Evidence Fit</h4>
+                    <p style="color: var(--gray-600);">Does the pivot actually respond to what your field evidence showed? Or is it an interesting idea that isn&rsquo;t grounded in what you learned?</p>
+                    <ul style="color: var(--gray-600);">
+                        <li>Which quotes support this direction?</li>
+                        <li>What evidence would you still need?</li>
+                        <li>Does it address the root cause?</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="padding: 14px 28px; background: rgba(0,71,171,0.08); border: 2px solid var(--accent-blue); border-radius: 12px; max-width: 900px; width: 100%;">
+                <p style="color: var(--xavier-blue); font-size: 0.97rem;">&#128161; <strong>A pivot that passes all three filters</strong> &mdash; viable, mission-aligned, and evidence-grounded &mdash; is a strategic direction worth defending. That&rsquo;s what your <strong>Exit Ticket: My Venture Pivot</strong> must demonstrate.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Justifying the Path -->
+        <div class="slide bg-dark content-slide" data-slide="15">
+            <h2>Justifying the Path</h2>
+            <p style="opacity: 0.75; margin-bottom: 35px; font-size: 1.05rem;">In your <strong>Exit Ticket: My Venture Pivot</strong>, you don&rsquo;t just name a pivot &mdash; you justify it. A strategic argument has three parts.</p>
+            <div class="flow-diagram" style="flex-direction: column; gap: 14px; align-items: stretch; max-width: 900px;">
+                <div class="flow-box" style="text-align: left; padding: 22px 28px;">
+                    <h4>&#128204; 1 — The Evidence</h4>
+                    <p>State the specific catalyst: the quote, observation, or data point that makes the status quo untenable. Be direct and concrete. This is your foundation.</p>
+                </div>
+                <div class="flow-box" style="text-align: left; padding: 22px 28px;">
+                    <h4>&#129300; 2 — The Logic</h4>
+                    <p>Explain <em>why</em> this evidence points to this specific pivot type. What does it reveal about your original assumption? What would happen if you <em>didn&rsquo;t</em> pivot?</p>
+                </div>
+                <div class="flow-box highlight" style="text-align: left; padding: 22px 28px;">
+                    <h4>&#127919; 3 — The Strategic Direction</h4>
+                    <p style="color: var(--xavier-blue);">Articulate the new direction with precision: who the user is, what problem you&rsquo;re solving, how you deliver it, and why this honors your original mission. This is the &ldquo;so what&rdquo; of all your fieldwork.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: INTERACTIVE — Venture Redesign Drag & Drop -->
+        <div class="slide bg-accent" data-slide="16">
+            <h2 style="text-align: center; margin-bottom: 8px;">&#129302; Venture Redesign Match-Up</h2>
+            <p style="text-align: center; opacity: 0.9; margin-bottom: 20px; font-size: 0.9rem;">Drag each field evidence card to the pivot type it implies.</p>
+            <div class="dnd-layout">
+                <div class="dnd-column">
+                    <h3>&#128204; Field Evidence</h3>
+                    <div class="drag-card" draggable="true" data-pivot="revenue" id="dc4">
+                        &#128176; &ldquo;Individuals love this but won&rsquo;t pay. Local businesses, however, said they would sponsor access.&rdquo;
+                    </div>
+                    <div class="drag-card" draggable="true" data-pivot="channel" id="dc1">
+                        &#127760; &ldquo;Most families in our target neighborhood don&rsquo;t have reliable internet at home.&rdquo;
+                    </div>
+                    <div class="drag-card" draggable="true" data-pivot="solution" id="dc5">
+                        &#128196; &ldquo;Our app-based approach flopped &mdash; but a simple printed one-page guide changed behavior immediately.&rdquo;
+                    </div>
+                    <div class="drag-card" draggable="true" data-pivot="problem" id="dc2">
+                        &#128161; &ldquo;The real barrier isn&rsquo;t awareness of resources &mdash; it&rsquo;s deep distrust of institutions offering them.&rdquo;
+                    </div>
+                    <div class="drag-card" draggable="true" data-pivot="customer" id="dc3">
+                        &#128101; &ldquo;The people who showed up and engaged weren&rsquo;t our target users &mdash; they were local nonprofits looking for a tool.&rdquo;
+                    </div>
+                </div>
+                <div class="dnd-column">
+                    <h3>&#127917; Pivot Type</h3>
+                    <div class="drop-zone" data-accepts="channel" id="dz-channel">
+                        <span class="zone-label">&#128247; Channel Pivot</span>
+                        <span style="opacity:0.5; font-size:0.82rem;">drop here</span>
+                    </div>
+                    <div class="drop-zone" data-accepts="problem" id="dz-problem">
+                        <span class="zone-label">&#10067; Problem Pivot</span>
+                        <span style="opacity:0.5; font-size:0.82rem;">drop here</span>
+                    </div>
+                    <div class="drop-zone" data-accepts="customer" id="dz-customer">
+                        <span class="zone-label">&#128101; Customer Segment Pivot</span>
+                        <span style="opacity:0.5; font-size:0.82rem;">drop here</span>
+                    </div>
+                    <div class="drop-zone" data-accepts="revenue" id="dz-revenue">
+                        <span class="zone-label">&#128176; Revenue Model Pivot</span>
+                        <span style="opacity:0.5; font-size:0.82rem;">drop here</span>
+                    </div>
+                    <div class="drop-zone" data-accepts="solution" id="dz-solution">
+                        <span class="zone-label">&#9881;&#65039; Solution Pivot</span>
+                        <span style="opacity:0.5; font-size:0.82rem;">drop here</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Lightning Round -->
+        <div class="slide bg-dark" data-slide="17">
+            <h2 style="text-align: center; margin-bottom: 8px;">&#9889; Lightning Round</h2>
+            <div style="display: inline-block; padding: 6px 20px; background: rgba(179,163,105,0.15); border: 1px solid var(--xavier-gold); border-radius: 20px; font-size: 0.8rem; color: var(--xavier-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 28px;">&#127871; Popcorn Style &mdash; Volunteer to Share</div>
+            <div class="grid-2" style="max-width: 1000px; gap: 24px;">
+                <div style="background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 28px 30px;">
+                    <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 12px;">&#129302; The Question</p>
+                    <p style="font-size: 1.2rem; font-weight: 600; line-height: 1.6; font-style: italic;">&ldquo;What was the <strong>most surprising pivot</strong> the AI suggested for your venture &mdash; the one that made you uncomfortable or felt genuinely counterintuitive?&rdquo;</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 28px 30px;">
+                    <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 16px;">&#128076; How to Share</p>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <div style="width: 26px; height: 26px; background: rgba(179,163,105,0.2); border: 1px solid var(--xavier-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0;">1</div>
+                            <p style="font-size: 0.95rem; opacity: 0.9;">Name the pivot type the AI suggested</p>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <div style="width: 26px; height: 26px; background: rgba(179,163,105,0.2); border: 1px solid var(--xavier-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0;">2</div>
+                            <p style="font-size: 0.95rem; opacity: 0.9;">Say what made it feel surprising or risky</p>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <div style="width: 26px; height: 26px; background: rgba(179,163,105,0.2); border: 1px solid var(--xavier-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0;">3</div>
+                            <p style="font-size: 0.95rem; opacity: 0.9;">Decide: dead on arrival &mdash; or worth a second look?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 22px; padding: 13px 24px; background: rgba(179,163,105,0.1); border: 1px solid rgba(179,163,105,0.3); border-radius: 10px; text-align: center; max-width: 700px;">
+                <p style="font-size: 0.9rem; opacity: 0.85;">No pressure to share &mdash; but the most interesting pivots are often the ones that made you say <em>&ldquo;wait, could that actually work?&rdquo;</em></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Exit Ticket Wrap-Up -->
+        <div class="slide bg-light" data-slide="18">
+            <h2 style="color: var(--xavier-blue); text-align: center; position: relative; margin-bottom: 8px;">&#127915; Exit Ticket: My Venture Pivot</h2>
+            <div style="width: 60px; height: 4px; background: var(--accent-blue); border-radius: 2px; margin: 0 auto 12px;"></div>
+            <p style="color: var(--gray-600); text-align: center; margin-bottom: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;">Note: Assignment 3 (full submission) was due before class today.</p>
+            <p style="color: var(--gray-600); text-align: center; margin-bottom: 28px; font-size: 1rem;">This Exit Ticket captures the strategic decision you made <em>during</em> today&rsquo;s session.</p>
+            <div style="max-width: 950px; width: 100%; display: flex; flex-direction: column; gap: 16px;">
+                <div class="next-step-row" style="border-left: 5px solid var(--accent-blue);">
+                    <div class="step-num">1</div>
+                    <div>
+                        <p style="font-weight: 700; margin-bottom: 4px;">Key Fieldwork Insight</p>
+                        <p style="font-size: 0.92rem; color: var(--gray-600);">State the one field observation or quote that most directly challenged your venture&rsquo;s assumptions. Be specific &mdash; exact words, context, and which Logic Model box it breaks.</p>
+                    </div>
+                </div>
+                <div class="next-step-row" style="border-left: 5px solid var(--xavier-gold);">
+                    <div class="step-num" style="background: var(--xavier-gold); color: var(--xavier-blue);">2</div>
+                    <div>
+                        <p style="font-weight: 700; margin-bottom: 4px;">Your Chosen Redesign</p>
+                        <p style="font-size: 0.92rem; color: var(--gray-600);">Name your pivot type (Customer Segment / Problem / Solution / Channel / Revenue Model) and describe the new strategic direction in 2&ndash;3 sentences. What changes? What stays the same?</p>
+                    </div>
+                </div>
+                <div class="next-step-row" style="border-left: 5px solid var(--success);">
+                    <div class="step-num" style="background: var(--success);">3</div>
+                    <div>
+                        <p style="font-weight: 700; margin-bottom: 4px;">Justification</p>
+                        <p style="font-size: 0.92rem; color: var(--gray-600);">Explain why this direction is the best strategic response to your evidence. Reference the three filters: viability, mission alignment, and evidence fit.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 22px; max-width: 950px; width: 100%; display: flex; align-items: center; gap: 18px;">
+                <div style="padding: 13px 28px; background: var(--danger); color: var(--white); border-radius: 30px; font-weight: 700; font-size: 1rem; white-space: nowrap;">
+                    &#128683; Due Tonight &mdash; March 19 by 11:59 PM on Canvas
+                </div>
+                <p style="color: var(--gray-600); font-size: 0.88rem; font-style: italic;">Keep it focused &mdash; this is a strategic snapshot, not an essay. 1 paragraph per section is enough.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Summary -->
+        <div class="slide bg-dark" data-slide="19">
+            <h2 style="text-align: center; margin-bottom: 40px;">From Raw Data to Strategic Action</h2>
+            <div class="flow-diagram">
+                <div class="flow-box">
+                    <h4>&#128196; Field Notes</h4>
+                    <p>Messy, unfiltered observations and quotes</p>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-box">
+                    <h4>&#9889; Catalyst</h4>
+                    <p>The disconfirming moment that breaks an assumption</p>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-box">
+                    <h4>&#129302; AI Expansion</h4>
+                    <p>5 divergent pivot options generated without ego</p>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-box">
+                    <h4>&#128270; Human Filter</h4>
+                    <p>Viability, mission alignment &amp; evidence fit</p>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-box highlight">
+                    <h4>&#127919; Justified Pivot</h4>
+                    <p style="color: var(--xavier-blue);">A strategic direction grounded in evidence &amp; values</p>
+                </div>
+            </div>
+            <div style="margin-top: 40px; max-width: 900px; width: 100%; text-align: center;">
+                <p style="font-size: 1.1rem; opacity: 0.85; line-height: 1.7;">This is the arc of your work this week: a story of learning that ends not in defeat but in <strong>a sharper, more honest venture direction</strong>.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Key Insight -->
+        <div class="slide bg-gradient" data-slide="20">
+            <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: var(--xavier-gold); margin-bottom: 30px;">Key Insight</p>
+            <p class="big-quote">Pivot Mindset:<br><em>Curiosity over ego.</em></p>
+            <div style="margin-top: 50px; max-width: 750px; text-align: center;">
+                <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.85;">The social entrepreneur who can look at evidence that breaks their model &mdash; and respond with curiosity instead of defensiveness &mdash; is the one whose venture actually changes something. <strong>That&rsquo;s the skill you built today.</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: Questions -->
+        <div class="slide bg-dark" data-slide="21">
+            <h2 style="text-align: center; font-size: 4rem; margin-bottom: 40px;">Questions?</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 24px;">
+                <div style="display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 22px 40px;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--xavier-gold)" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <span style="font-size: 1.3rem; font-weight: 600;">regelem@xavier.edu</span>
+                </div>
+                <div style="padding: 16px 32px; background: rgba(179,163,105,0.15); border: 1px solid var(--xavier-gold); border-radius: 12px; text-align: center; max-width: 650px;">
+                    <p style="font-size: 0.95rem; line-height: 1.7; opacity: 0.9;">Exit Ticket due <strong>tonight by 11:59 PM</strong> on Canvas. Office hours available by appointment.</p>
+                </div>
+                <div style="margin-top: 10px; display: flex; gap: 20px; opacity: 0.5; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">
+                    <span>ENTR 335</span>
+                    <span>&#183;</span>
+                    <span>Social Entrepreneurship &amp; Innovation</span>
+                    <span>&#183;</span>
+                    <span>Spring 2026</span>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end .presentation -->
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-title">Venture Redesign: The Art of the Pivot | ENTR 335 | Mar 19</div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+                <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">21</span></span>
+            </div>
+            <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Keyboard Hint -->
+    <div class="keyboard-hint">
+        <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> or <kbd>Space</kbd> to navigate
+    </div>
+
+    <script>
+        // ===== SLIDE NAVIGATION =====
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            if (n < 0 || n >= totalSlides) return;
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            updateNav();
+        }
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function prevSlide() { showSlide(currentSlide - 1); }
+
+        function updateNav() {
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('totalSlides').textContent = totalSlides;
+            document.getElementById('progress').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        // ===== KEYBOARD NAVIGATION =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+        });
+
+        // ===== TIMERS =====
+        const timers = {};
+
+        function startTimer(timerId, duration) {
+            if (timers[timerId] && timers[timerId].interval) return;
+            if (!timers[timerId]) timers[timerId] = { timeLeft: duration };
+            timers[timerId].interval = setInterval(() => {
+                if (timers[timerId].timeLeft > 0) {
+                    timers[timerId].timeLeft--;
+                    updateTimerDisplay(timerId);
+                } else {
+                    clearInterval(timers[timerId].interval);
+                    timers[timerId].interval = null;
+                    const el = document.getElementById(timerId);
+                    if (el) el.style.color = '#ef4444';
+                }
+            }, 1000);
+        }
+
+        function pauseTimer(timerId) {
+            if (timers[timerId] && timers[timerId].interval) {
+                clearInterval(timers[timerId].interval);
+                timers[timerId].interval = null;
+            }
+        }
+
+        function resetTimer(timerId, duration) {
+            pauseTimer(timerId);
+            timers[timerId] = { timeLeft: duration };
+            updateTimerDisplay(timerId);
+            const el = document.getElementById(timerId);
+            if (el) el.style.color = '';
+        }
+
+        function updateTimerDisplay(timerId) {
+            const el = document.getElementById(timerId);
+            if (el && timers[timerId]) {
+                const m = Math.floor(timers[timerId].timeLeft / 60);
+                const s = timers[timerId].timeLeft % 60;
+                el.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            }
+        }
+
+        // Initialize timers
+        timers['timer-work'] = { timeLeft: 1500 };
+
+        // ===== COPY PROMPT =====
+        function copyPrompt(promptId) {
+            const el = document.getElementById(promptId);
+            const text = el.innerText;
+            const btn = el.parentElement.querySelector('.copy-btn');
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt to Clipboard'; btn.classList.remove('copied'); }, 2000);
+            }).catch(() => {
+                const range = document.createRange();
+                range.selectNode(el);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt to Clipboard'; btn.classList.remove('copied'); }, 2000);
+            });
+        }
+
+        // ===== DRAG AND DROP =====
+        const dragCards = document.querySelectorAll('.drag-card');
+        const dropZones = document.querySelectorAll('.drop-zone');
+
+        dragCards.forEach(card => {
+            card.addEventListener('dragstart', e => {
+                e.dataTransfer.setData('text/plain', card.dataset.pivot);
+                e.dataTransfer.setData('card-id', card.id);
+                card.classList.add('dragging');
+            });
+            card.addEventListener('dragend', () => card.classList.remove('dragging'));
+        });
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                if (!zone.classList.contains('correct')) zone.classList.add('drag-over');
+            });
+            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+                if (zone.classList.contains('correct')) return;
+                const pivotType = e.dataTransfer.getData('text/plain');
+                const cardId = e.dataTransfer.getData('card-id');
+                if (pivotType === zone.dataset.accepts) {
+                    zone.classList.add('correct');
+                    const badge = document.createElement('span');
+                    badge.className = 'match-badge';
+                    badge.textContent = ' ✓ Correct!';
+                    zone.appendChild(badge);
+                    const card = document.getElementById(cardId);
+                    if (card) card.classList.add('matched');
+                } else {
+                    zone.classList.add('shake');
+                    zone.addEventListener('animationend', () => zone.classList.remove('shake'), { once: true });
+                }
+            });
+        });
+
+        // Initialize
+        updateNav();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Research Synthesis Workshop | ENTR 335 | Mar 17</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --xavier-blue: #0C2340;
+            --xavier-gold: #B3A369;
+            --accent-blue: #0047AB;
+            --light-blue: #e0f2fe;
+            --white: #ffffff;
+            --light: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #7c3aed;
+            --purple-light: #ede9fe;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--xavier-blue);
+            color: var(--white);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SLIDE SYSTEM ===== */
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 100px 100px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        /* ===== BACKGROUNDS ===== */
+        .bg-dark {
+            background: linear-gradient(135deg, var(--xavier-blue) 0%, #1a3a5c 100%);
+        }
+
+        .bg-accent {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #0066cc 100%);
+        }
+
+        .bg-light {
+            background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%);
+            color: var(--xavier-blue);
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, #0C2340 0%, var(--accent-blue) 50%, #0077b6 100%);
+        }
+
+        .bg-success {
+            background: linear-gradient(135deg, #065f46 0%, var(--success) 100%);
+        }
+
+        .bg-purple {
+            background: linear-gradient(135deg, #5b21b6 0%, var(--purple) 100%);
+        }
+
+        /* ===== TITLE SLIDE ===== */
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, var(--xavier-blue) 0%, #0a1c33 50%, var(--accent-blue) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(179, 163, 105, 0.1) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+        }
+
+        .title-slide h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--xavier-gold);
+            margin-bottom: 50px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-slide .date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-slide {
+            text-align: center;
+        }
+
+        .section-slide h2 {
+            font-size: 4rem;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-slide h2::before,
+        .section-slide h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: var(--xavier-gold);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .section-slide h2::before { right: calc(100% + 30px); }
+        .section-slide h2::after { left: calc(100% + 30px); }
+
+        .section-slide .section-number {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--xavier-gold);
+            margin-bottom: 20px;
+        }
+
+        /* ===== CONTENT SLIDES ===== */
+        .content-slide {
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .content-slide h2 {
+            position: relative;
+        }
+
+        .content-slide h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--xavier-gold);
+            border-radius: 2px;
+        }
+
+        .bg-light.content-slide h2::after {
+            background: var(--accent-blue);
+        }
+
+        .content-slide > ul {
+            list-style: none;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .content-slide > ul > li {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .content-slide > ul > li::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--xavier-gold);
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 11px;
+        }
+
+        .bg-light.content-slide > ul > li::before {
+            background: var(--accent-blue);
+        }
+
+        /* ===== GRID LAYOUTS ===== */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; width: 100%; max-width: 1100px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; width: 100%; max-width: 1200px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1200px; }
+
+        /* ===== FLOW DIAGRAM ===== */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 1150px;
+            margin: 30px 0;
+        }
+
+        .flow-box {
+            background: rgba(255, 255, 255, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 14px;
+            padding: 22px 18px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .flow-box h4 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: var(--xavier-gold);
+        }
+
+        .flow-box p {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        .flow-box.highlight {
+            background: var(--xavier-gold);
+            color: var(--xavier-blue);
+            border-color: var(--xavier-gold);
+        }
+
+        .flow-box.highlight h4 {
+            color: var(--xavier-blue);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--xavier-gold);
+            flex-shrink: 0;
+        }
+
+        /* ===== T-CHART ===== */
+        .tchart-container {
+            display: grid;
+            grid-template-columns: 1fr 4px 1fr;
+            gap: 0;
+            max-width: 1050px;
+            width: 100%;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            color: var(--xavier-blue);
+        }
+
+        .tchart-col {
+            padding: 30px 35px;
+        }
+
+        .tchart-col.confirming { border-right: none; }
+        .tchart-col.disconfirming { border-left: none; }
+
+        .tchart-divider {
+            background: var(--gray-200);
+            width: 4px;
+        }
+
+        .tchart-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+        }
+
+        .tchart-col.confirming .tchart-header { border-color: var(--success); }
+        .tchart-col.disconfirming .tchart-header { border-color: var(--danger); }
+
+        .tchart-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .tchart-header .icon {
+            font-size: 1.5rem;
+        }
+
+        .tchart-col ul {
+            list-style: none;
+        }
+
+        .tchart-col li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 1rem;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .tchart-col li:last-child { border-bottom: none; }
+
+        .tchart-col.confirming li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .tchart-col.disconfirming li::before {
+            content: '✗';
+            color: var(--danger);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .tchart-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray-400);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* ===== AGENDA CARDS ===== */
+        .agenda-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .agenda-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .agenda-time {
+            font-size: 0.9rem;
+            color: var(--xavier-gold);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .agenda-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .agenda-card p { font-size: 0.9rem; opacity: 0.8; }
+
+        /* ===== ACTIVITY BOX ===== */
+        .activity-box {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 950px;
+            width: 100%;
+            color: var(--xavier-blue);
+        }
+
+        .activity-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .activity-box h4 {
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin: 20px 0 10px;
+        }
+
+        /* ===== PROMPT BOX ===== */
+        .prompt-box {
+            background: var(--gray-100);
+            padding: 25px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.88rem;
+            line-height: 1.75;
+            border-left: 4px solid var(--accent-blue);
+            margin: 20px 0;
+            white-space: pre-wrap;
+            color: var(--gray-600);
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .prompt-box .highlight {
+            background: rgba(0, 71, 171, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            padding: 12px 30px;
+            background: var(--accent-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .copy-btn:hover { background: var(--xavier-blue); }
+        .copy-btn.copied { background: var(--success); }
+
+        /* ===== TIMER ===== */
+        .timer-container { text-align: center; margin: 25px 0; }
+
+        .timer-display {
+            font-size: 3.5rem;
+            font-family: 'Inter', monospace;
+            font-weight: 700;
+            background: var(--gray-100);
+            padding: 15px 40px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .timer-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .timer-btn.start { background: var(--success); color: var(--white); }
+        .timer-btn.pause { background: var(--warning); color: var(--xavier-blue); }
+        .timer-btn.reset { background: var(--gray-200); color: var(--gray-600); }
+        .timer-btn:hover { transform: scale(1.05); }
+
+        /* ===== STEP CARDS ===== */
+        .step-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid var(--xavier-gold);
+        }
+
+        .bg-light .step-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .step-card h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-card p, .step-card ul {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .step-card ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .step-card li {
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .step-card li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--xavier-gold);
+            font-weight: 700;
+        }
+
+        .bg-light .step-card li::before {
+            color: var(--accent-blue);
+        }
+
+        /* ===== KEY INSIGHT ===== */
+        .insight-box {
+            background: rgba(179, 163, 105, 0.2);
+            border: 2px solid var(--xavier-gold);
+            border-radius: 20px;
+            padding: 40px 50px;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .insight-box h3 { font-size: 1.5rem; margin-bottom: 20px; }
+        .insight-box p { font-size: 1.25rem; line-height: 1.7; opacity: 0.95; }
+
+        /* ===== DISCUSSION CARDS ===== */
+        .discussion-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid var(--xavier-gold);
+        }
+
+        .discussion-card p {
+            font-size: 1.15rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* ===== QUOTE WALL ===== */
+        .quote-category {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px 30px;
+            color: var(--xavier-blue);
+        }
+
+        .quote-category h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid;
+        }
+
+        .quote-category.surprising h4 { border-color: var(--warning); }
+        .quote-category.confusing h4 { border-color: var(--purple); }
+
+        .quote-line {
+            border-bottom: 1px solid var(--gray-200);
+            padding: 10px 0;
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            font-style: italic;
+        }
+
+        .quote-line:last-child { border-bottom: none; }
+
+        /* ===== AUDIT BOXES ===== */
+        .audit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 1100px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .audit-box {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 20px;
+            color: var(--xavier-blue);
+            border-top: 5px solid;
+        }
+
+        .audit-box.solid { border-color: var(--success); }
+        .audit-box.shaky { border-color: var(--warning); }
+        .audit-box.broken { border-color: var(--danger); }
+
+        .audit-box h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .audit-box.solid h4 { color: var(--success); }
+        .audit-box.shaky h4 { color: #d97706; }
+        .audit-box.broken h4 { color: var(--danger); }
+
+        .audit-box p {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        /* ===== REFLECTION PROMPTS ===== */
+        .reflection-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 28px 32px;
+        }
+
+        .reflection-card .prompt-num {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--xavier-gold);
+            margin-bottom: 10px;
+        }
+
+        .reflection-card p {
+            font-size: 1.1rem;
+            line-height: 1.65;
+            font-style: italic;
+        }
+
+        /* ===== NEXT STEPS LIST ===== */
+        .next-step-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 22px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            color: var(--xavier-blue);
+        }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .next-step-row p {
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        .due-badge {
+            margin-left: auto;
+            padding: 6px 14px;
+            background: rgba(179, 163, 105, 0.15);
+            border: 1px solid var(--xavier-gold);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(12, 35, 64, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--xavier-gold);
+            color: var(--xavier-blue);
+        }
+
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--xavier-gold);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .slide-counter {
+            font-size: 0.95rem;
+            font-weight: 500;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* ===== KEYBOARD HINTS ===== */
+        .keyboard-hint {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        body:hover .keyboard-hint { opacity: 1; }
+
+        .keyboard-hint kbd {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin: 0 3px;
+            font-family: inherit;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .slide { padding: 50px 60px 100px; }
+            .title-slide h1 { font-size: 3.5rem; }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .flow-diagram { flex-wrap: wrap; }
+            .audit-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 40px 30px 100px; }
+            .title-slide h1 { font-size: 2.5rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .section-slide h2 { font-size: 2.5rem; }
+            .section-slide h2::before, .section-slide h2::after { display: none; }
+            .tchart-container { grid-template-columns: 1fr; }
+            .tchart-divider { display: none; }
+            .audit-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- SLIDE 1: Title -->
+        <div class="slide title-slide active" data-slide="1">
+            <h1>Field Research Synthesis Workshop</h1>
+            <p class="subtitle">ENTR 335 &mdash; Social Entrepreneurship</p>
+            <div class="date-badge">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                March 17, 2026
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Agenda -->
+        <div class="slide bg-accent" data-slide="2">
+            <h2 style="text-align: center; margin-bottom: 50px;">Today's Agenda</h2>
+            <div class="grid-4">
+                <div class="agenda-card">
+                    <div class="agenda-time">15 min</div>
+                    <h3>Grounded Theory</h3>
+                    <p>How raw data becomes insight</p>
+                </div>
+                <div class="agenda-card">
+                    <div class="agenda-time">25 min</div>
+                    <h3>Part 1: Coding</h3>
+                    <p>Quote Wall &amp; theme identification</p>
+                </div>
+                <div class="agenda-card">
+                    <div class="agenda-time">25 min</div>
+                    <h3>Part 2: Audit</h3>
+                    <p>Stress-test your Logic Model</p>
+                </div>
+                <div class="agenda-card">
+                    <div class="agenda-time">20 min</div>
+                    <h3>Part 3: Catalyst</h3>
+                    <p>AI synthesis &amp; pivot-ready insights</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Learning Objectives -->
+        <div class="slide bg-dark content-slide" data-slide="3">
+            <h2>Learning Objectives</h2>
+            <ul>
+                <li>Organize raw field notes into meaningful patterns using coding techniques</li>
+                <li>Identify emergent themes that surface across multiple observations and interviews</li>
+                <li>Distinguish between <strong>confirming evidence</strong> (data that supports your assumptions) and <strong>challenging evidence</strong> (data that unsettles them)</li>
+                <li>Use a synthesis framework to identify the pivot moment that will drive Assignment 3</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 4: Grounded Synthesis -->
+        <div class="slide bg-light" data-slide="4">
+            <h2 style="text-align: center; color: var(--xavier-blue);">Grounded Synthesis: Mindset over Method</h2>
+            <p style="text-align: center; color: var(--gray-600); margin-bottom: 25px; font-size: 1.05rem;">We borrow the <em>logic</em> of Grounded Theory (Corbin &amp; Strauss) &mdash; not the full academic apparatus.</p>
+            <div class="grid-2" style="max-width: 1050px; margin-bottom: 25px; gap: 25px;">
+                <div style="background: rgba(12,35,64,0.06); border: 2px solid var(--gray-200); border-radius: 16px; padding: 25px 30px;">
+                    <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gray-400); margin-bottom: 12px;">Academic Rigor (Corbin &amp; Strauss)</p>
+                    <ul style="list-style: none; font-size: 0.95rem; color: var(--gray-600); line-height: 2;">
+                        <li>&#128218; Months of iterative data collection</li>
+                        <li>&#128221; Formal open, axial &amp; selective coding</li>
+                        <li>&#128270; Theoretical sampling until saturation</li>
+                        <li>&#128203; Peer validation &amp; member-checking</li>
+                    </ul>
+                    <p style="margin-top: 14px; font-size: 0.85rem; color: var(--gray-400); font-style: italic;">Built for academic dissertations and longitudinal research.</p>
+                </div>
+                <div style="background: rgba(179,163,105,0.12); border: 2px solid var(--xavier-gold); border-radius: 16px; padding: 25px 30px;">
+                    <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 12px;">&#9889; Entrepreneurial Speed (What We're Doing)</p>
+                    <ul style="list-style: none; font-size: 0.95rem; color: var(--xavier-blue); line-height: 2;">
+                        <li>&#128640; Data-first: let what you <em>heard</em> lead</li>
+                        <li>&#127991; Informal coding: name what you see, fast</li>
+                        <li>&#128161; Pattern-spotting across 5&ndash;10 conversations</li>
+                        <li>&#129302; AI as synthesis partner, not as oracle</li>
+                    </ul>
+                    <p style="margin-top: 14px; font-size: 0.85rem; color: var(--gray-600); font-style: italic;">Built for ventures that need to pivot before next week.</p>
+                </div>
+            </div>
+            <div class="insight-box" style="border-color: var(--accent-blue); background: rgba(0,71,171,0.07); max-width: 950px; padding: 22px 36px;">
+                <p style="color: var(--xavier-blue); font-size: 1.05rem;">The mindset is identical: <strong>you do not impose meaning on data &mdash; you let the pattern surface from what people actually said and did.</strong> The difference is speed, not integrity.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Section Header Part 1 -->
+        <div class="slide bg-gradient section-slide" data-slide="5">
+            <p class="section-number">Part 1</p>
+            <h2>From Notes to Patterns</h2>
+        </div>
+
+        <!-- SLIDE 6: The Synthesis Process -->
+        <div class="slide bg-dark" data-slide="6">
+            <h2 style="text-align: center;">The Synthesis Process</h2>
+            <p style="text-align: center; opacity: 0.75; margin-bottom: 35px;">A four-stage path from noise to meaning</p>
+            <div class="flow-diagram">
+                <div class="flow-box">
+                    <h4>&#128196; Raw Notes</h4>
+                    <p>Everything you recorded &mdash; messy, unfiltered, verbatim</p>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-box">
+                    <h4>&#127991; Coding</h4>
+                    <p>Assign short labels to each idea or observation (name what you see)</p>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-box">
+                    <h4>&#128218; Categorizing</h4>
+                    <p>Group similar codes; surface patterns and contradictions</p>
+                </div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-box highlight">
+                    <h4>&#128161; Insights</h4>
+                    <p>The "so what" — what does the pattern mean for your venture?</p>
+                </div>
+            </div>
+            <div class="grid-3" style="margin-top: 30px; max-width: 1000px;">
+                <div class="step-card">
+                    <h4>&#128270; Look for</h4>
+                    <ul>
+                        <li>Repeated words or phrases</li>
+                        <li>Moments of strong emotion</li>
+                        <li>Things people avoided saying</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4>&#9888; Watch out for</h4>
+                    <ul>
+                        <li>Confirmation bias (only seeing what you expected)</li>
+                        <li>Outliers you're tempted to dismiss</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4>&#128172; Ask yourself</h4>
+                    <ul>
+                        <li>What surprised me most?</li>
+                        <li>What made me uncomfortable?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Activity - The Quote Wall -->
+        <div class="slide bg-success" data-slide="7">
+            <h2 style="text-align: center;">&#128204; Activity: The Quote Wall</h2>
+            <div class="activity-box" style="max-width: 1000px;">
+                <div class="grid-2" style="gap: 30px; margin-bottom: 25px;">
+                    <div class="quote-category surprising">
+                        <h4><span>&#129327;</span> 3 Surprising Quotes</h4>
+                        <div class="quote-line">A quote or moment that challenged your expectations&hellip;</div>
+                        <div class="quote-line">Something you didn&rsquo;t anticipate hearing&hellip;</div>
+                        <div class="quote-line">A detail that made you stop and think&hellip;</div>
+                    </div>
+                    <div class="quote-category confusing">
+                        <h4><span>&#129300;</span> 3 Confusing Moments</h4>
+                        <div class="quote-line">Something you observed but couldn&rsquo;t explain&hellip;</div>
+                        <div class="quote-line">A contradiction in what someone said or did&hellip;</div>
+                        <div class="quote-line">A gap between what you expected and what happened&hellip;</div>
+                    </div>
+                </div>
+                <p style="color: var(--gray-600); font-size: 0.95rem; margin-bottom: 20px; text-align: center;">Go through your field notes. Highlight and write these quotes now &mdash; individually, no discussion yet.</p>
+                <div class="timer-container">
+                    <div class="timer-display" id="timer1">15:00</div>
+                    <div class="timer-controls">
+                        <button class="timer-btn start" onclick="startTimer('timer1', 900)">Start</button>
+                        <button class="timer-btn pause" onclick="pauseTimer('timer1')">Pause</button>
+                        <button class="timer-btn reset" onclick="resetTimer('timer1', 900)">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Share-Out Discussion -->
+        <div class="slide bg-dark" data-slide="8">
+            <h2 style="text-align: center;">Small Group Discussion</h2>
+            <p style="text-align: center; opacity: 0.75; margin-bottom: 35px;">Share with your partners &mdash; 10 minutes</p>
+            <div class="grid-2" style="max-width: 1000px;">
+                <div class="discussion-card">
+                    <p>"What was the most surprising quote from your fieldwork &mdash; and why did it catch you off guard?"</p>
+                </div>
+                <div class="discussion-card">
+                    <p>"Describe a confusing moment. What did you observe, and what were you expecting?"</p>
+                </div>
+                <div class="discussion-card">
+                    <p>"Were there themes that appeared in multiple quotes across different conversations?"</p>
+                </div>
+                <div class="discussion-card">
+                    <p>"What word or phrase kept coming up that you didn&rsquo;t anticipate?"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Section Header Part 2 -->
+        <div class="slide bg-gradient section-slide" data-slide="9">
+            <p class="section-number">Part 2</p>
+            <h2>Stress-Testing the Assumptions</h2>
+        </div>
+
+        <!-- SLIDE 10: Confirming vs. Disconfirming Evidence -->
+        <div class="slide bg-light" data-slide="10">
+            <h2 style="text-align: center; color: var(--xavier-blue);">Confirming vs. Disconfirming Evidence</h2>
+            <p style="text-align: center; color: var(--gray-600); margin-bottom: 25px; font-size: 1.05rem;">Honest researchers <strong>seek the data that threatens their model</strong>, not just the data that confirms it.</p>
+            <div class="tchart-container">
+                <div class="tchart-col confirming">
+                    <div class="tchart-header">
+                        <span class="icon">&#9989;</span>
+                        <h3>Confirming Evidence</h3>
+                    </div>
+                    <ul>
+                        <li>Data that aligns with your original assumptions</li>
+                        <li>Observations that support your theory of change</li>
+                        <li>User needs that match what you designed for</li>
+                        <li>Behaviors you predicted actually occurring</li>
+                    </ul>
+                    <p class="tchart-label">Ask: Is this what I <em>hoped</em> to find, or what's <em>actually</em> there?</p>
+                </div>
+                <div class="tchart-divider"></div>
+                <div class="tchart-col disconfirming">
+                    <div class="tchart-header">
+                        <span class="icon">&#10060;</span>
+                        <h3>Disconfirming Evidence</h3>
+                    </div>
+                    <ul>
+                        <li>Data that contradicts a key assumption in your model</li>
+                        <li>User behaviors that differ from what you expected</li>
+                        <li>Barriers you hadn't accounted for</li>
+                        <li>Needs that are different from the problem you're solving</li>
+                    </ul>
+                    <p class="tchart-label">Ask: What does this tell me that I <em>didn't want</em> to know?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Activity - Logic Model Audit -->
+        <div class="slide bg-accent" data-slide="11">
+            <h2 style="text-align: center;">&#128203; Activity: The Logic Model Audit</h2>
+            <p style="text-align: center; opacity: 0.9; margin-bottom: 25px;">Pull up your Feb 24 Logic Model. Map your field evidence onto each box.</p>
+            <div class="audit-grid">
+                <div class="audit-box solid">
+                    <h4>&#9989; Solid</h4>
+                    <p>Field evidence <strong>confirms</strong> this assumption. You have direct quotes or observations that support what you assumed.</p>
+                </div>
+                <div class="audit-box shaky">
+                    <h4>&#9888; Shaky</h4>
+                    <p>Mixed evidence &mdash; some confirms, some challenges. This assumption needs more investigation before you can trust it.</p>
+                </div>
+                <div class="audit-box broken">
+                    <h4>&#10060; Broken</h4>
+                    <p>Field evidence <strong>contradicts</strong> this assumption. This box may need to be rewritten or removed entirely.</p>
+                </div>
+                <div class="audit-box" style="border: 4px solid var(--xavier-gold); background: var(--white);">
+                    <h4 style="color: var(--xavier-blue);">&#128161; A Data Gap is an Insight</h4>
+                    <p style="color: var(--xavier-blue);">It tells you exactly where your venture&rsquo;s biggest blindspots are. <strong>List these gaps as your top priorities for next week&rsquo;s fieldwork.</strong> An honest gap is far more valuable than a weak assumption disguised as evidence.</p>
+                </div>
+                <div class="audit-box" style="border-color: var(--accent-blue); grid-column: span 2;">
+                    <h4 style="color: var(--accent-blue);">&#127919; Your Task</h4>
+                    <p>Go box by box (Inputs &rarr; Activities &rarr; Outputs &rarr; Outcomes &rarr; Impact). For each one, assign a status and write <strong>one piece of field evidence</strong> (a quote or observation) that justifies your rating. Which boxes are now "shaky"?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Section Header Part 3 -->
+        <div class="slide bg-gradient section-slide" data-slide="12">
+            <p class="section-number">Part 3</p>
+            <h2>Identifying the Catalyst</h2>
+        </div>
+
+        <!-- SLIDE 13: What is a Catalyst? -->
+        <div class="slide bg-dark" data-slide="13">
+            <div class="insight-box">
+                <h3>&#9889; What is a Catalyst?</h3>
+                <p>A catalyst is a <strong>powerful quote or vivid observation that forces a pivot</strong> &mdash; a single moment from your fieldwork so undeniable that it changes how you see the problem, the user, or your solution.</p>
+            </div>
+            <div class="grid-3" style="margin-top: 40px; max-width: 1100px;">
+                <div class="step-card">
+                    <h4>&#128249; What it looks like</h4>
+                    <ul>
+                        <li>A user said something that reframed everything</li>
+                        <li>You observed a workaround that revealed a hidden need</li>
+                        <li>A gap between what people said and what they did</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4>&#127919; What it does</h4>
+                    <ul>
+                        <li>Makes your assumptions feel naïve</li>
+                        <li>Points toward a different target user</li>
+                        <li>Reveals a better point of intervention</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <h4>&#128203; Assignment 3 connection</h4>
+                    <ul>
+                        <li>Your catalyst becomes the opening of your Field Research Narrative</li>
+                        <li>It justifies why your redesign is grounded in evidence</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: AI-Enhanced Activity - Synthesis Partner -->
+        <div class="slide bg-purple" data-slide="14">
+            <h2 style="text-align: center;">&#129302; AI Activity: Synthesis Partner</h2>
+            <div class="activity-box" style="max-width: 960px;">
+                <h3>&#128203; Copy this prompt &mdash; then fill in your details</h3>
+                <div class="prompt-box" id="synthesis-prompt">I am synthesizing field research for a social venture.
+
+My initial assumption was: [ASSUMPTION — e.g., "low-income parents want after-school tutoring for their children"]
+
+Here are 3 key quotes or observations from my field notes:
+1. [PASTE QUOTE OR OBSERVATION]
+2. [PASTE QUOTE OR OBSERVATION]
+3. [PASTE QUOTE OR OBSERVATION]
+
+Act as a skeptical research lead reviewing my synthesis. Please do the following:
+
+1. Identify the biggest contradiction between my initial assumption and the evidence I've shared. Be specific about what the data says vs. what I assumed.
+
+2. Based on this contradiction, suggest how this might change either (a) my target user or (b) my service delivery approach. Give one concrete alternative to consider.
+
+3. Identify one question I should have asked in the field but didn't — a gap that, if answered, would significantly strengthen or change my synthesis.</div>
+                <button class="copy-btn" onclick="copyPrompt('synthesis-prompt')">&#128203; Copy Prompt to Clipboard</button>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Share-Out: What Shifted? -->
+        <div class="slide bg-dark" data-slide="15">
+            <h2 style="text-align: center;">&#128260; Share Out: What Shifted?</h2>
+            <p style="text-align: center; opacity: 0.75; margin-bottom: 35px;">Pairs share with the class &mdash; 10 minutes</p>
+            <div class="grid-2" style="max-width: 1000px;">
+                <div class="discussion-card">
+                    <p>"What contradiction did the AI surface &mdash; and do you agree with its framing?"</p>
+                </div>
+                <div class="discussion-card">
+                    <p>"What alternative target user or delivery approach did it suggest? Does it resonate?"</p>
+                </div>
+                <div class="discussion-card">
+                    <p>"What question did the AI say you should have asked? How would you answer it now?"</p>
+                </div>
+                <div class="discussion-card">
+                    <p>"What has your fieldwork revealed that your Feb 24 Logic Model completely missed?"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: Diagnostic - Dealing with Thin Data -->
+        <div class="slide bg-dark" data-slide="16">
+            <h2 style="text-align: center;">&#128300; Diagnostic: Dealing with Thin Data</h2>
+            <p style="text-align: center; opacity: 0.75; margin-bottom: 30px;">Being honest about <em>what you don&rsquo;t know</em> is the key to a high grade on Assignment 3.</p>
+            <div style="max-width: 1050px; width: 100%;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.97rem;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--xavier-gold);">
+                            <th style="text-align: left; padding: 12px 18px; color: var(--xavier-gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; width: 26%;">Data Problem</th>
+                            <th style="text-align: left; padding: 12px 18px; color: var(--xavier-gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; width: 37%;">What It Looks Like</th>
+                            <th style="text-align: left; padding: 12px 18px; color: var(--xavier-gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; width: 37%;">What to Do About It</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(239,68,68,0.08);">
+                            <td style="padding: 18px 18px; vertical-align: top;">
+                                <strong style="color: #fca5a5;">&#128683; Motivation Gap</strong><br>
+                                <span style="font-size: 0.85rem; opacity: 0.75; font-style: italic;">Missing the &lsquo;Why&rsquo;</span>
+                            </td>
+                            <td style="padding: 18px 18px; vertical-align: top; opacity: 0.9;">You know <em>what</em> people do but not <em>why</em>. Your notes describe behaviors without capturing the underlying needs, frustrations, or values driving them.</td>
+                            <td style="padding: 18px 18px; vertical-align: top; opacity: 0.9;">Name it explicitly in your Narrative. Plan follow-up &ldquo;Five Whys&rdquo; interviews. Don&rsquo;t fabricate motivation &mdash; a stated gap is honest research.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(245,158,11,0.08);">
+                            <td style="padding: 18px 18px; vertical-align: top;">
+                                <strong style="color: #fcd34d;">&#9888; Critical Blindspots</strong><br>
+                                <span style="font-size: 0.85rem; opacity: 0.75; font-style: italic;">Missing Logic Model Boxes</span>
+                            </td>
+                            <td style="padding: 18px 18px; vertical-align: top; opacity: 0.9;">Entire sections of your Logic Model have no evidence at all &mdash; you never accessed stakeholders who could speak to those links (e.g., never talked to end beneficiaries).</td>
+                            <td style="padding: 18px 18px; vertical-align: top; opacity: 0.9;">Flag these as &ldquo;Data Gap&rdquo; in your Audit. List the specific stakeholders you still need to reach. This is not a failure &mdash; it is a roadmap.</td>
+                        </tr>
+                        <tr style="background: rgba(124,58,237,0.1);">
+                            <td style="padding: 18px 18px; vertical-align: top;">
+                                <strong style="color: #c4b5fd;">&#129302; Comfort Bias</strong><br>
+                                <span style="font-size: 0.85rem; opacity: 0.75; font-style: italic;">Missing Disconfirming Evidence</span>
+                            </td>
+                            <td style="padding: 18px 18px; vertical-align: top; opacity: 0.9;">All your quotes confirm your assumptions. You spoke only to supportive stakeholders, or unconsciously recorded only what aligned with your original idea.</td>
+                            <td style="padding: 18px 18px; vertical-align: top; opacity: 0.9;">Acknowledge the selection bias. Actively seek one skeptic or resistant user before submitting. Your Narrative should show you <em>looked</em> for challenge.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-top: 20px; padding: 16px 22px; background: rgba(179,163,105,0.15); border: 1px solid var(--xavier-gold); border-radius: 10px; text-align: center;">
+                    <p style="font-size: 0.97rem; color: rgba(255,255,255,0.9);">&#127942; <strong>Grading note:</strong> A student who honestly identifies their data gaps and explains what they would do next scores higher than one who papers over thin evidence with confident-sounding claims.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Reflection - Your Role as Researcher -->
+        <div class="slide bg-light content-slide" data-slide="17">
+            <h2>&#129504; Reflection: Your Role as Researcher</h2>
+            <p style="color: var(--gray-600); margin-bottom: 35px; font-size: 1.1rem;">Take 5 minutes to write brief responses to these prompts in your notes.</p>
+            <div class="grid-2" style="max-width: 1100px;">
+                <div class="reflection-card" style="background: rgba(12,35,64,0.06); border: 1px solid var(--gray-200);">
+                    <p class="prompt-num" style="color: var(--accent-blue);">Prompt 1 &mdash; Positionality</p>
+                    <p style="color: var(--xavier-blue);">"How might your background, identity, or prior assumptions have shaped <em>what you noticed</em> in the field — and what you may have filtered out?"</p>
+                </div>
+                <div class="reflection-card" style="background: rgba(12,35,64,0.06); border: 1px solid var(--gray-200);">
+                    <p class="prompt-num" style="color: var(--accent-blue);">Prompt 2 &mdash; Ambiguity</p>
+                    <p style="color: var(--xavier-blue);">"What part of your data is still genuinely unclear? What are you tempted to resolve prematurely — and why is sitting with ambiguity actually the more honest choice?"</p>
+                </div>
+                <div class="reflection-card" style="background: rgba(12,35,64,0.06); border: 1px solid var(--gray-200);">
+                    <p class="prompt-num" style="color: var(--accent-blue);">Prompt 3 &mdash; Ethical Responsibility</p>
+                    <p style="color: var(--xavier-blue);">"You are making claims about people&rsquo;s lives based on limited observation. What obligations do you have to represent your participants accurately and fairly?"</p>
+                </div>
+                <div class="reflection-card" style="background: rgba(12,35,64,0.06); border: 1px solid var(--gray-200);">
+                    <p class="prompt-num" style="color: var(--accent-blue);">Prompt 4 &mdash; The Pivot</p>
+                    <p style="color: var(--xavier-blue);">"If your fieldwork requires you to significantly revise your venture concept, how do you feel about that? What makes pivoting courageous rather than a failure?"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Assignment 3: Fieldwork Debrief & Reflection -->
+        <div class="slide bg-light content-slide" data-slide="18">
+            <h2>Assignment 3: Fieldwork Debrief &amp; Reflection</h2>
+            <ul>
+                <li><strong>Task 1 &mdash; Field Research Narrative</strong> &mdash; The messy story of your fieldwork journey: what you expected, what actually happened, and the moment that changed how you saw the problem.</li>
+                <li><strong>Task 2 &mdash; Challenging Assumptions</strong> &mdash; Present disconfirming evidence directly. Which Logic Model boxes are &ldquo;shaky&rdquo; or &ldquo;broken,&rdquo; and what specific data demands that conclusion?</li>
+                <li><strong>Task 3 &mdash; The Redesign</strong> &mdash; Identify your catalyst quote or observation, name the pivot it forces, and articulate your revised venture direction with evidence.</li>
+                <li><strong>Task 4 &mdash; Researcher Reflection</strong> &mdash; Examine your biases, your positionality, and what this process revealed about you as a researcher navigating ambiguity.</li>
+            </ul>
+            <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; max-width: 1000px; width: 100%;">
+                <div style="padding: 12px 28px; background: var(--danger); color: var(--white); border-radius: 30px; font-weight: 700; font-size: 1rem; white-space: nowrap;">
+                    Due March 19 by 1:00 PM on Canvas
+                </div>
+                <p style="color: var(--gray-600); font-size: 0.95rem; font-style: italic;">Check Canvas/Website for the Green Lunch Box example submission</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-title">Field Research Synthesis | ENTR 335 | Mar 17</div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+                <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">19</span></span>
+            </div>
+            <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Keyboard Hints -->
+    <div class="keyboard-hint">
+        <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> or <kbd>Space</kbd> to navigate
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // ===== TIMERS =====
+        const timers = {};
+
+        function startTimer(timerId, duration) {
+            if (timers[timerId] && timers[timerId].interval) return;
+            if (!timers[timerId]) {
+                timers[timerId] = { timeLeft: duration };
+            }
+            timers[timerId].interval = setInterval(() => {
+                if (timers[timerId].timeLeft > 0) {
+                    timers[timerId].timeLeft--;
+                    updateTimerDisplay(timerId);
+                } else {
+                    clearInterval(timers[timerId].interval);
+                    timers[timerId].interval = null;
+                    const display = document.getElementById(timerId);
+                    if (display) display.style.color = '#ef4444';
+                }
+            }, 1000);
+        }
+
+        function pauseTimer(timerId) {
+            if (timers[timerId] && timers[timerId].interval) {
+                clearInterval(timers[timerId].interval);
+                timers[timerId].interval = null;
+            }
+        }
+
+        function resetTimer(timerId, duration) {
+            pauseTimer(timerId);
+            timers[timerId] = { timeLeft: duration };
+            updateTimerDisplay(timerId);
+            const display = document.getElementById(timerId);
+            if (display) display.style.color = '';
+        }
+
+        function updateTimerDisplay(timerId) {
+            const display = document.getElementById(timerId);
+            if (display && timers[timerId]) {
+                const minutes = Math.floor(timers[timerId].timeLeft / 60);
+                const seconds = timers[timerId].timeLeft % 60;
+                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // Initialize timers
+        timers['timer1'] = { timeLeft: 900 }; // 15 minutes
+
+        // ===== SLIDE NAVIGATION =====
+        function showSlide(n) {
+            if (n < 0 || n >= totalSlides) return;
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            updateNav();
+        }
+
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function prevSlide() { showSlide(currentSlide - 1); }
+
+        function updateNav() {
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('totalSlides').textContent = totalSlides;
+            document.getElementById('progress').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        // ===== COPY PROMPT =====
+        function copyPrompt(promptId) {
+            const promptEl = document.getElementById(promptId);
+            const promptText = promptEl.innerText;
+            navigator.clipboard.writeText(promptText).then(() => {
+                const btn = promptEl.parentElement.querySelector('.copy-btn');
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = '&#128203; Copy Prompt to Clipboard';
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for browsers without clipboard API
+                const range = document.createRange();
+                range.selectNode(promptEl);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                const btn = promptEl.parentElement.querySelector('.copy-btn');
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = '&#128203; Copy Prompt to Clipboard';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // ===== KEYBOARD NAVIGATION =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Initialize
+        updateNav();
+    </script>
+</body>
+</html>

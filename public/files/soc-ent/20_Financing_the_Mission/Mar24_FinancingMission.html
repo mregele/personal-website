@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financing the Mission | ENTR 335 | Mar 24</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== BASE — 120% for back-of-room readability ===== */
+        html { font-size: 120%; }
+
+        :root {
+            --xavier-blue: #0C2340;
+            --xavier-gold: #B3A369;
+            --accent-blue: #0047AB;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #7c3aed;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--xavier-blue);
+            color: var(--white);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SLIDE SYSTEM ===== */
+        .presentation { width: 100vw; height: 100vh; position: relative; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 52px 90px 96px;
+            opacity: 0; visibility: hidden;
+            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .slide.active { opacity: 1; visibility: visible; transform: scale(1); }
+
+        /* ===== BACKGROUNDS ===== */
+        .bg-dark     { background: linear-gradient(135deg, var(--xavier-blue) 0%, #1a3a5c 100%); }
+        .bg-accent   { background: linear-gradient(135deg, var(--accent-blue) 0%, #0066cc 100%); }
+        .bg-light    { background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%); color: var(--xavier-blue); }
+        .bg-gradient { background: linear-gradient(135deg, #0C2340 0%, var(--accent-blue) 50%, #0077b6 100%); }
+        .bg-success  { background: linear-gradient(135deg, #065f46 0%, var(--success) 100%); }
+        .bg-purple   { background: linear-gradient(135deg, #5b21b6 0%, var(--purple) 100%); }
+
+        /* ===== TITLE SLIDE ===== */
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, var(--xavier-blue) 0%, #0a1c33 50%, var(--accent-blue) 100%);
+            position: relative; overflow: hidden;
+        }
+        .title-slide::before {
+            content: '';
+            position: absolute; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(179,163,105,0.12) 0%, transparent 70%);
+            top: -200px; right: -200px;
+        }
+        .title-slide h1 {
+            font-size: 4rem; font-weight: 800; letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; position: relative; z-index: 1;
+        }
+        .title-slide .subtitle {
+            font-size: 1.2rem; font-weight: 400; color: var(--xavier-gold);
+            margin-bottom: 48px; letter-spacing: 4px; text-transform: uppercase;
+            position: relative; z-index: 1;
+        }
+        .date-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 13px 30px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px; font-size: 1rem; color: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px); position: relative; z-index: 1;
+        }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-slide { text-align: center; }
+        .section-slide h2 {
+            font-size: 3.6rem; font-weight: 700;
+            position: relative; display: inline-block;
+        }
+        .section-slide h2::before,
+        .section-slide h2::after {
+            content: ''; position: absolute;
+            width: 80px; height: 3px; background: var(--xavier-gold);
+            top: 50%; transform: translateY(-50%);
+        }
+        .section-slide h2::before { right: calc(100% + 30px); }
+        .section-slide h2::after  { left:  calc(100% + 30px); }
+        .section-slide .section-number {
+            font-size: 1rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--xavier-gold); margin-bottom: 18px;
+        }
+
+        /* ===== CONTENT SLIDES ===== */
+        .content-slide { align-items: flex-start; text-align: left; }
+        .slide h2 { font-size: 2.3rem; font-weight: 700; margin-bottom: 34px; }
+        .content-slide h2 { position: relative; }
+        .content-slide h2::after {
+            content: ''; position: absolute; bottom: -12px; left: 0;
+            width: 60px; height: 4px; background: var(--xavier-gold); border-radius: 2px;
+        }
+        .bg-light.content-slide h2::after { background: var(--accent-blue); }
+
+        .content-slide > ul {
+            list-style: none; font-size: 1.3rem; line-height: 1.85;
+            width: 100%; max-width: 1000px;
+        }
+        .content-slide > ul > li {
+            display: block; position: relative;
+            padding-left: 30px; margin-bottom: 26px; width: 100%;
+        }
+        .content-slide > ul > li::before {
+            content: ''; width: 10px; height: 10px;
+            background: var(--xavier-gold); border-radius: 50%;
+            position: absolute; left: 0; top: 11px;
+        }
+        .bg-light.content-slide > ul > li::before { background: var(--accent-blue); }
+
+        /* ===== GRIDS ===== */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; width: 100%; max-width: 1100px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; width: 100%; max-width: 1200px; }
+
+        /* ===== KEY INSIGHT BOX ===== */
+        .insight-box {
+            background: rgba(179,163,105,0.18); border: 2px solid var(--xavier-gold);
+            border-radius: 20px; padding: 36px 48px; text-align: center; max-width: 900px;
+        }
+        .insight-box h3 { font-size: 1.4rem; margin-bottom: 16px; }
+        .insight-box p  { font-size: 1.15rem; line-height: 1.75; opacity: 0.95; }
+
+        /* ===== DISCUSSION CARDS ===== */
+        .discussion-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 24px;
+            border-left: 4px solid var(--xavier-gold);
+        }
+        .discussion-card p { font-size: 1.1rem; font-style: italic; line-height: 1.65; }
+
+        /* ===== STEP CARDS ===== */
+        .step-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 22px;
+            border-left: 4px solid var(--xavier-gold);
+        }
+        .bg-light .step-card {
+            background: var(--white); border: 1px solid var(--gray-200);
+            border-left: 4px solid var(--accent-blue);
+        }
+        .step-card h4 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .step-card p, .step-card ul { font-size: 0.92rem; opacity: 0.9; }
+        .step-card ul { list-style: none; margin-top: 8px; }
+        .step-card li { padding: 4px 0 4px 16px; position: relative; }
+        .step-card li::before { content: '›'; position: absolute; left: 0; color: var(--xavier-gold); font-weight: 700; }
+        .bg-light .step-card li::before { color: var(--accent-blue); }
+
+        /* ===== ACTIVITY BOX ===== */
+        .activity-box {
+            background: var(--white); border-radius: 20px; padding: 34px;
+            max-width: 980px; width: 100%; color: var(--xavier-blue);
+        }
+        .activity-box h3 { font-size: 1.35rem; margin-bottom: 16px; color: var(--xavier-blue); }
+
+        /* ===== PROMPT BOX ===== */
+        .prompt-box {
+            background: var(--gray-100); padding: 22px; border-radius: 12px;
+            font-family: 'Inter', monospace; font-size: 0.84rem; line-height: 1.8;
+            border-left: 4px solid var(--accent-blue);
+            margin: 16px 0; white-space: pre-wrap;
+            color: var(--xavier-blue); max-height: 340px; overflow-y: auto;
+        }
+        .copy-btn {
+            padding: 11px 26px; background: var(--accent-blue);
+            color: var(--white); border: none; border-radius: 8px;
+            font-size: 0.95rem; cursor: pointer; transition: background 0.3s;
+        }
+        .copy-btn:hover  { background: var(--xavier-blue); }
+        .copy-btn.copied { background: var(--success); }
+
+        /* ===== TIMER ===== */
+        .timer-container { text-align: center; margin: 20px 0; }
+        .timer-display {
+            font-size: 4rem; font-family: 'Inter', monospace; font-weight: 700;
+            background: var(--gray-100); padding: 14px 44px;
+            border-radius: 15px; display: inline-block; color: var(--xavier-blue);
+            transition: color 0.3s;
+        }
+        .timer-display.running { color: var(--success); }
+        .timer-display.done    { color: var(--danger); }
+        .timer-controls { display: flex; gap: 13px; justify-content: center; margin-top: 13px; }
+        .timer-btn {
+            padding: 10px 24px; border: none; border-radius: 10px;
+            font-size: 0.92rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+        }
+        .timer-btn.start { background: var(--success); color: var(--white); }
+        .timer-btn.pause { background: var(--warning); color: var(--xavier-blue); }
+        .timer-btn.reset { background: var(--gray-200); color: var(--gray-600); }
+        .timer-btn:hover { transform: scale(1.05); }
+
+        /* ===== NEXT-STEP ROWS ===== */
+        .next-step-row {
+            display: flex; align-items: center; gap: 18px;
+            padding: 15px 20px; background: var(--white);
+            border: 1px solid var(--gray-200); border-radius: 12px;
+            margin-bottom: 13px; color: var(--xavier-blue);
+        }
+        .step-num {
+            min-width: 38px; height: 38px; background: var(--accent-blue);
+            color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; flex-shrink: 0;
+        }
+        .next-step-row p { font-size: 1rem; line-height: 1.5; color: var(--xavier-blue); }
+        .due-badge {
+            margin-left: auto; padding: 5px 12px;
+            background: rgba(179,163,105,0.15); border: 1px solid var(--xavier-gold);
+            border-radius: 20px; font-size: 0.78rem;
+            color: var(--accent-blue); font-weight: 600;
+            white-space: nowrap; flex-shrink: 0;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(12,35,64,0.95); backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-title { font-size: 0.88rem; color: rgba(255,255,255,0.7); }
+        .nav-controls { display: flex; align-items: center; gap: 18px; }
+        .nav-btn {
+            width: 46px; height: 46px; border: none;
+            background: rgba(255,255,255,0.1); color: var(--white);
+            border-radius: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover:not(:disabled) { background: var(--xavier-gold); color: var(--xavier-blue); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .progress-bar {
+            width: 200px; height: 4px; background: rgba(255,255,255,0.2);
+            border-radius: 2px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: var(--xavier-gold);
+            border-radius: 2px; transition: width 0.3s ease;
+        }
+        .progress-container { display: flex; align-items: center; gap: 14px; }
+        .slide-counter { font-size: 0.92rem; font-weight: 500; min-width: 58px; text-align: center; }
+
+        /* ===== KEYBOARD HINT ===== */
+        .keyboard-hint {
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+            padding: 11px 17px; border-radius: 10px; font-size: 0.78rem;
+            color: rgba(255,255,255,0.7); opacity: 0; transition: opacity 0.3s; z-index: 100;
+        }
+        body:hover .keyboard-hint { opacity: 1; }
+        .keyboard-hint kbd {
+            background: rgba(255,255,255,0.2); padding: 3px 8px;
+            border-radius: 4px; margin: 0 3px; font-family: inherit;
+        }
+
+        /* ============================================================
+           SLIDE 4 — ANIMATED BALANCE SCALE
+        ============================================================ */
+        @keyframes tiltBeam {
+            0%, 100% { transform: rotate(-4deg); }
+            50%       { transform: rotate(4deg);  }
+        }
+        @keyframes panMission {
+            0%, 100% { transform: translateY(14px); }
+            50%       { transform: translateY(-14px); }
+        }
+        @keyframes panMoney {
+            0%, 100% { transform: translateY(-14px); }
+            50%       { transform: translateY(14px); }
+        }
+
+        .scale-stage {
+            width: 100%; max-width: 960px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 0; margin-top: 8px;
+        }
+        /* pans animate independently but are positioned above the beam */
+        .scale-pans {
+            width: 82%; display: flex;
+            justify-content: space-between;
+            align-items: flex-end; gap: 20px;
+        }
+        .scale-pan {
+            flex: 1; border-radius: 14px; padding: 22px 24px;
+            text-align: left;
+        }
+        .scale-pan.mission {
+            border: 2px solid #6ee7b7; background: rgba(16,185,129,0.12);
+            animation: panMission 4s ease-in-out infinite;
+        }
+        .scale-pan.money {
+            border: 2px solid #fcd34d; background: rgba(245,158,11,0.12);
+            animation: panMoney 4s ease-in-out infinite;
+        }
+        .scale-pan h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 12px; }
+        .scale-pan.mission h3 { color: #6ee7b7; }
+        .scale-pan.money   h3 { color: #fcd34d; }
+        .scale-pan ul { list-style: none; font-size: 0.92rem; line-height: 1.85; }
+        .scale-pan li { padding-left: 18px; position: relative; }
+        .scale-pan li::before { content: '•'; position: absolute; left: 0; }
+        .scale-pan.mission li::before { color: #6ee7b7; }
+        .scale-pan.money   li::before { color: #fcd34d; }
+        /* beam + pivot animate together */
+        .scale-fulcrum {
+            width: 82%;
+            display: flex; flex-direction: column; align-items: center;
+            animation: tiltBeam 4s ease-in-out infinite;
+            transform-origin: center top;
+        }
+        .scale-beam {
+            width: 100%; height: 7px;
+            background: var(--xavier-gold); border-radius: 4px;
+        }
+        .scale-pivot {
+            width: 12px; height: 46px;
+            background: var(--xavier-gold); border-radius: 0 0 4px 4px;
+        }
+        .scale-base {
+            width: 140px; height: 9px;
+            background: var(--xavier-gold); border-radius: 4px; margin-top: 0;
+        }
+
+        /* ============================================================
+           SLIDE 5 — FUNDING DUEL
+        ============================================================ */
+        .duel-container { display: flex; gap: 28px; width: 100%; max-width: 1100px; }
+
+        .duel-card {
+            flex: 1; border-radius: 20px; padding: 30px;
+            display: flex; flex-direction: column; align-items: center; gap: 18px;
+            border: 3px solid; transition: transform 0.3s;
+        }
+        .duel-card:hover { transform: translateY(-4px); }
+        .duel-card.offer-a { background: rgba(0,71,171,0.18); border-color: var(--accent-blue); }
+        .duel-card.offer-b { background: rgba(179,163,105,0.15); border-color: var(--xavier-gold); }
+
+        .duel-title { font-size: 1.45rem; font-weight: 800; text-align: center; line-height: 1.3; }
+        .duel-card.offer-a .duel-title { color: #93c5fd; }
+        .duel-card.offer-b .duel-title { color: var(--xavier-gold); }
+
+        .duel-amount { font-size: 3rem; font-weight: 800; color: var(--xavier-gold); }
+
+        .duel-btn {
+            padding: 13px 30px; border: none; border-radius: 12px;
+            font-size: 1rem; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; width: 100%;
+        }
+        .offer-a .duel-btn { background: var(--accent-blue); color: var(--white); }
+        .offer-b .duel-btn { background: var(--xavier-gold); color: var(--xavier-blue); }
+        .duel-btn:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+        .duel-catch {
+            display: none; width: 100%;
+            background: rgba(239,68,68,0.15); border: 2px solid var(--danger);
+            border-radius: 12px; padding: 18px 22px;
+            font-size: 0.9rem; line-height: 1.7;
+            color: #fca5a5; text-align: left;
+        }
+        .duel-catch.revealed { display: block; }
+        .duel-catch strong { color: #f87171; display: block; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .duel-catch p { margin: 0; padding: 0; line-height: 1.65; }
+
+        /* ============================================================
+           SLIDES 6-8 — REVENUE MODEL COLUMNS
+        ============================================================ */
+        .model-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; width: 100%; max-width: 1100px; margin-top: 8px; }
+
+        .model-col {
+            border-radius: 16px; padding: 28px 30px;
+            background: rgba(255,255,255,0.08);
+        }
+        .model-col-header {
+            font-size: 0.82rem; text-transform: uppercase; letter-spacing: 2.5px;
+            color: var(--xavier-gold); margin-bottom: 14px; padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .model-col-intro { font-size: 1.05rem; line-height: 1.75; margin-bottom: 18px; opacity: 0.92; color: var(--white); }
+
+        .model-col ul { list-style: none; }
+        .model-col li { font-size: 1.05rem; line-height: 1; padding: 10px 0 10px 22px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .model-col li:last-child { border-bottom: none; }
+        .model-col li::before { position: absolute; left: 0; font-weight: 700; }
+
+        .model-col.pros li::before { content: '+'; color: #6ee7b7; }
+        .model-col.cons li::before { content: '−'; color: #fca5a5; }
+        .model-col.pros li { color: #d1fae5; }
+        .model-col.cons li { color: #fee2e2; }
+
+        .model-col-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 600; }
+        .model-col.pros .model-col-label { color: #6ee7b7; }
+        .model-col.cons .model-col-label { color: #fca5a5; }
+
+        .tradeoff-col { display: flex; flex-direction: column; gap: 14px; opacity: 0; pointer-events: none; transition: opacity 0.55s ease; }
+        .tradeoff-col.visible { opacity: 1; pointer-events: auto; }
+        .tradeoff-col .model-col { flex: 1; }
+
+        .reveal-btn {
+            margin-top: 18px;
+            padding: 15px 44px;
+            background: transparent;
+            border: 2px solid var(--xavier-gold);
+            color: var(--xavier-gold);
+            border-radius: 14px;
+            font-size: 1.05rem; font-weight: 700;
+            cursor: pointer; letter-spacing: 0.5px;
+            transition: all 0.25s;
+        }
+        .reveal-btn:hover { background: var(--xavier-gold); color: var(--xavier-blue); }
+        .reveal-btn.used { display: none; }
+
+        /* ============================================================
+           SLIDE 9 — SPECTRUM
+        ============================================================ */
+        .spectrum-wrapper { width: 100%; max-width: 1060px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .spectrum-labels { display: flex; justify-content: space-between; width: 100%; font-size: 0.92rem; font-weight: 600; padding: 0 4px; }
+        .spectrum-bar {
+            width: 100%; height: 26px; border-radius: 13px;
+            background: linear-gradient(90deg, #065f46 0%, #10b981 20%, #B3A369 50%, #7c3aed 80%, #5b21b6 100%);
+        }
+        .spectrum-nodes { display: flex; justify-content: space-between; width: 100%; padding: 0 2px; }
+        .spectrum-node { display: flex; flex-direction: column; align-items: center; gap: 6px; max-width: 200px; }
+        .spectrum-node .node-dot { width: 14px; height: 14px; border-radius: 50%; border: 3px solid var(--white); }
+        .spectrum-node h4 { font-size: 0.92rem; font-weight: 700; text-align: center; }
+        .spectrum-node p  { font-size: 0.78rem; text-align: center; opacity: 0.8; line-height: 1.4; }
+        .spectrum-note {
+            margin-top: 16px; padding: 14px 26px;
+            background: rgba(179,163,105,0.18); border: 1px solid var(--xavier-gold);
+            border-radius: 12px; font-size: 0.96rem; max-width: 950px; text-align: center;
+        }
+
+        /* ============================================================
+           SLIDE 10 — HYBRID MODELS (CLICKABLE CARDS)
+        ============================================================ */
+        .hybrid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; max-width: 1100px; margin-top: 10px; }
+
+        .hybrid-card {
+            background: rgba(255,255,255,0.08); border-radius: 18px;
+            border: 2px solid rgba(255,255,255,0.15);
+            padding: 28px 24px; cursor: pointer;
+            transition: all 0.3s; text-align: left;
+        }
+        .hybrid-card:hover { background: rgba(255,255,255,0.14); border-color: var(--xavier-gold); transform: translateY(-3px); }
+        .hybrid-card.open  { background: rgba(255,255,255,0.12); border-color: var(--xavier-gold); }
+
+        .hybrid-card .card-org {
+            font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--xavier-gold); margin-bottom: 8px;
+        }
+        .hybrid-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 10px; }
+        .hybrid-card .card-teaser { font-size: 0.95rem; opacity: 0.75; line-height: 1.5; margin-bottom: 14px; font-style: italic; }
+
+        .hybrid-detail { display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 14px; margin-top: 4px; }
+        .hybrid-card.open .hybrid-detail { display: block; }
+
+        .hybrid-detail p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 8px; }
+        .hybrid-detail p strong { color: var(--xavier-gold); }
+        .hybrid-detail .hd-tension {
+            margin-top: 10px; padding: 10px 14px;
+            background: rgba(239,68,68,0.15); border-left: 3px solid var(--danger);
+            border-radius: 6px; font-size: 0.82rem; color: #fca5a5; line-height: 1.6;
+        }
+        .hybrid-click-hint {
+            font-size: 0.78rem; color: var(--xavier-gold); opacity: 0.7;
+            display: flex; align-items: center; gap: 6px; margin-top: 12px;
+        }
+
+        /* ============================================================
+           SLIDES 15-16 — PREMIUM STRATEGY SLIDES
+        ============================================================ */
+        .premium-card {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 18px; padding: 30px 32px;
+        }
+        .premium-card h3 {
+            font-size: 1.05rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--xavier-gold); margin-bottom: 14px;
+        }
+        .premium-card ul { list-style: none; }
+        .premium-card li {
+            font-size: 1.05rem; line-height: 1; padding: 9px 0 9px 22px; position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.08); opacity: 0.9;
+        }
+        .premium-card li:last-child { border-bottom: none; }
+        .premium-card li::before { content: '›'; position: absolute; left: 0; color: var(--xavier-gold); font-weight: 700; }
+        .premium-card p { font-size: 1.05rem; line-height: 1.75; opacity: 0.88; }
+
+        .bg-light .premium-card {
+            background: var(--white); border: 1px solid var(--gray-200);
+        }
+        .bg-light .premium-card h3 { color: var(--accent-blue); }
+        .bg-light .premium-card li { color: var(--xavier-blue); border-bottom-color: var(--gray-200); }
+        .bg-light .premium-card li::before { color: var(--accent-blue); }
+        .bg-light .premium-card p { color: var(--gray-600); }
+
+        /* ============================================================
+           SLIDE 17 — DEBRIEF SIMPLE LIST
+        ============================================================ */
+        .debrief-list {
+            list-style: none; max-width: 860px; width: 100%;
+            margin-top: 16px;
+        }
+        .debrief-list li {
+            font-size: 1.2rem; font-style: italic; line-height: 1.6;
+            padding: 18px 0 18px 32px; position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+        .debrief-list li:last-child { border-bottom: none; }
+        .debrief-list li::before {
+            content: ''; position: absolute;
+            left: 0; top: 28px;
+            width: 12px; height: 12px;
+            background: var(--xavier-gold); border-radius: 50%;
+        }
+
+        /* ============================================================
+           SLIDE 20 — BOLD CENTERED KEY INSIGHT
+        ============================================================ */
+        .callout-block {
+            max-width: 820px; text-align: center;
+        }
+        .callout-eyebrow {
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--xavier-gold);
+            margin-bottom: 28px; opacity: 0.85;
+        }
+        .callout-quote {
+            font-size: 2.1rem; font-weight: 800;
+            line-height: 1.4; letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 32px;
+        }
+        .callout-rule {
+            width: 80px; height: 3px; background: var(--xavier-gold);
+            border-radius: 2px; margin: 0 auto 28px;
+        }
+        .callout-sub { font-size: 1.05rem; line-height: 1.75; opacity: 0.8; font-style: italic; }
+
+        /* ============================================================
+           EXIT TICKET
+        ============================================================ */
+        .ticket-box {
+            background: var(--white); color: var(--xavier-blue);
+            border-radius: 20px; padding: 34px;
+            max-width: 1000px; width: 100%;
+        }
+        .ticket-box h3 { font-size: 1.3rem; margin-bottom: 20px; color: var(--xavier-blue); }
+        .req-row { display: flex; align-items: flex-start; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--gray-200); }
+        .req-row:last-child { border-bottom: none; }
+        .req-num {
+            min-width: 34px; height: 34px; background: var(--xavier-blue);
+            color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem; flex-shrink: 0;
+        }
+        .req-row h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; color: var(--xavier-blue); }
+        .req-row p  { font-size: 0.92rem; color: var(--gray-600); line-height: 1.55; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .slide { padding: 44px 48px 96px; }
+            .title-slide h1 { font-size: 3rem; }
+            .duel-container { flex-direction: column; max-width: 580px; }
+            .hybrid-grid { grid-template-columns: 1fr; max-width: 520px; }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 34px 22px 96px; }
+            .title-slide h1 { font-size: 2.1rem; }
+            .grid-2, .grid-3, .model-columns { grid-template-columns: 1fr; }
+            .section-slide h2 { font-size: 2.2rem; }
+            .section-slide h2::before, .section-slide h2::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation">
+
+    <!-- ====================================================
+         SLIDE 1: TITLE
+    ==================================================== -->
+    <div class="slide title-slide active" data-slide="1">
+        <h1>Financing the Mission</h1>
+        <p class="subtitle">Sustainable Models for Social Impact &nbsp;&mdash;&nbsp; ENTR 335</p>
+        <div class="date-badge">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8"  y1="2" x2="8"  y2="6"></line>
+                <line x1="3"  y1="10" x2="21" y2="10"></line>
+            </svg>
+            March 24, 2026
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 2: LEARNING OBJECTIVES
+    ==================================================== -->
+    <div class="slide bg-dark content-slide" data-slide="2">
+        <h2>Learning Objectives</h2>
+        <ul>
+            <li><strong>Distinguish</strong> among the primary funding sources available to social ventures &mdash; grants &amp; donations, earned revenue, and impact investing &mdash; and identify the trade-offs each carries</li>
+            <li><strong>Analyze</strong> the strategic tensions that arise when financial logic and mission logic pull in different directions</li>
+            <li><strong>Justify</strong> a preferred financing model for your venture by connecting it explicitly to your mission, target population, and long-term sustainability plan</li>
+        </ul>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 3: WARM-UP
+    ==================================================== -->
+    <div class="slide bg-accent" data-slide="3">
+        <div class="insight-box" style="border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.1); max-width: 840px;">
+            <h3 style="font-size: 0.88rem; text-transform: uppercase; letter-spacing: 3px; color: var(--xavier-gold);">Warm-Up &#128172;</h3>
+            <p style="font-size: 1.85rem; font-weight: 700; line-height: 1.45; color: var(--white);">
+                "What is the biggest challenge a social venture faces in securing financial resources?"
+            </p>
+            <p style="margin-top: 20px; font-size: 0.98rem; color: rgba(255,255,255,0.7);">
+                Write your answer for 60 seconds, then share with a partner.
+            </p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 4: CORE CONFLICT — ANIMATED SCALE
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="4">
+        <h2 style="text-align: center; margin-bottom: 18px;">The Core Conflict</h2>
+        <div class="scale-stage">
+            <div class="scale-pans">
+                <div class="scale-pan mission">
+                    <h3>&#127381; Mission</h3>
+                    <ul>
+                        <li>Serve the most vulnerable, regardless of ability to pay</li>
+                        <li>Accept non-paying or subsidized clients</li>
+                        <li>Prioritize long-term community impact over short-term revenue</li>
+                        <li>Maintain independence from funder agendas</li>
+                        <li>Measure success in lives changed, not dollars earned</li>
+                    </ul>
+                </div>
+                <div class="scale-pan money">
+                    <h3>&#128176; Money</h3>
+                    <ul>
+                        <li>Cover salaries, rent, and operating costs every month</li>
+                        <li>Meet grant reporting requirements and funder restrictions</li>
+                        <li>Demonstrate ROI to attract investors and renewals</li>
+                        <li>Scale to reach financial sustainability</li>
+                        <li>Measure success in revenue growth and unit economics</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Animated fulcrum (beam + pivot) -->
+            <div class="scale-fulcrum">
+                <div class="scale-beam"></div>
+                <div class="scale-pivot"></div>
+            </div>
+            <div class="scale-base"></div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 5: FUNDING DUEL (TOGGLE)
+    ==================================================== -->
+    <div class="slide bg-gradient" data-slide="5">
+        <p style="font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 4px; text-align: center;">
+            Which would you choose &mdash; and how would you defend it to your board?
+        </p>
+        <h2 style="text-align: center; margin-bottom: 6px;">&#9876;&#65039;&nbsp; The Funding Duel</h2>
+        <p style="text-align: center; margin-bottom: 6px; font-size: 1rem; color: var(--xavier-gold); font-weight: 600; letter-spacing: 0.5px;">
+            Venture Context: A free after-school reading program for elementary students in the West End.
+        </p>
+        <p style="text-align: center; opacity: 0.68; margin-bottom: 20px; font-size: 0.9rem;">
+            Two offers just arrived. Click each card to reveal the catch &mdash; then decide.
+        </p>
+        <div class="duel-container">
+            <!-- OFFER A -->
+            <div class="duel-card offer-a">
+                <div class="duel-title">Offer A: City Dept. of Human Services Grant</div>
+                <div class="duel-amount">$100,000</div>
+                <button class="duel-btn" onclick="toggleCatch('catch-a', this)">Reveal the Catch</button>
+                <div class="duel-catch" id="catch-a">
+                    <strong>The Catch</strong>
+                    <p>You must implement the city's <strong>40-page rigid curriculum</strong> verbatim and serve residents of <strong>one designated zip code only</strong>. Any deviation voids the grant and triggers a full audit.</p>
+                </div>
+            </div>
+            <!-- OFFER B -->
+            <div class="duel-card offer-b">
+                <div class="duel-title">Offer B: Regional Bank Corporate Foundation Grant</div>
+                <div class="duel-amount">$100,000</div>
+                <button class="duel-btn" onclick="toggleCatch('catch-b', this)">Reveal the Catch</button>
+                <div class="duel-catch" id="catch-b">
+                    <strong>The Catch</strong>
+                    <p>The bank requires you to <strong>co-brand all materials</strong> with their logo and host two "financial literacy" workshops per quarter that promote their products &mdash; directly to the families you serve.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 6: SOURCE 1 — GRANTS & DONATIONS
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="6">
+        <h2 style="text-align: center;">Source 1: Grants &amp; Donations</h2>
+        <div class="model-columns">
+            <!-- Left: The Structure -->
+            <div class="model-col">
+                <div class="model-col-header">&#128218; The Structure</div>
+                <p class="model-col-intro">
+                    Foundations, government agencies, and individual donors give money to support your mission &mdash; with no expectation of financial return. The funding relationship is philanthropic, not transactional.
+                </p>
+                <p style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 10px; margin-top: 4px;">Common types:</p>
+                <ul>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Foundation grants (private, family, community)</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Government contracts and federal/state/local grants</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Major individual gifts and annual fund campaigns</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0;">Corporate philanthropic giving (unrestricted or restricted)</li>
+                </ul>
+            </div>
+            <!-- Right: The Trade-offs (hidden until revealed) -->
+            <div class="tradeoff-col" id="tradeoffs-6">
+                <div class="model-col pros">
+                    <div class="model-col-header">&#43; Advantages</div>
+                    <ul>
+                        <li>Mission-aligned &mdash; funders expect impact, not profit</li>
+                        <li>No equity given up; no investor pressure on pricing</li>
+                        <li>Can fund work that markets will never pay for</li>
+                        <li>Signals credibility and community trust</li>
+                    </ul>
+                </div>
+                <div class="model-col cons">
+                    <div class="model-col-header">&#8722; Disadvantages</div>
+                    <ul>
+                        <li>Restricted use &mdash; funders dictate how money is spent</li>
+                        <li>Precarious: grants expire and priorities shift</li>
+                        <li>Time-intensive proposal and reporting cycles</li>
+                        <li>Grant dependency inhibits organizational autonomy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button class="reveal-btn" id="reveal-btn-6" onclick="revealTradeoffs(6)">&#128065; Reveal Trade-offs</button>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 7: SOURCE 2 — EARNED REVENUE
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="7">
+        <h2 style="text-align: center;">Source 2: Earned Revenue</h2>
+        <div class="model-columns">
+            <!-- Left: The Structure -->
+            <div class="model-col">
+                <div class="model-col-header">&#128200; The Structure</div>
+                <p class="model-col-intro">
+                    Your venture generates income by selling products or services &mdash; either to your beneficiaries, to a paying market that subsidizes free services, or through a commercial arm that funds the mission.
+                </p>
+                <p style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 10px; margin-top: 4px;">Common types:</p>
+                <ul>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Fee-for-service (clients pay per session or program)</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Product sales and licensing of tools, curricula, or IP</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Cross-subsidy: charge market rates to some; subsidize others</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0;">Social enterprise retail (Newman's Own model)</li>
+                </ul>
+            </div>
+            <!-- Right: The Trade-offs (hidden until revealed) -->
+            <div class="tradeoff-col" id="tradeoffs-7">
+                <div class="model-col pros">
+                    <div class="model-col-header">&#43; Advantages</div>
+                    <ul>
+                        <li>High autonomy &mdash; revenue is unrestricted</li>
+                        <li>Sustainable when unit economics work</li>
+                        <li>Aligns incentives: you earn by delivering value</li>
+                        <li>Signals market validation to funders and investors</li>
+                    </ul>
+                </div>
+                <div class="model-col cons">
+                    <div class="model-col-header">&#8722; Disadvantages</div>
+                    <ul>
+                        <li>Mission drift: optimizing revenue can displace mission</li>
+                        <li>Pricing decisions become ethically loaded</li>
+                        <li>Excludes those who can't pay without a subsidy mechanism</li>
+                        <li>Revenue volatility mirrors market conditions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button class="reveal-btn" id="reveal-btn-7" onclick="revealTradeoffs(7)">&#128065; Reveal Trade-offs</button>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 8: SOURCE 3 — IMPACT INVESTING
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="8">
+        <h2 style="text-align: center;">Source 3: Impact Investing</h2>
+        <div class="model-columns">
+            <!-- Left: The Structure -->
+            <div class="model-col">
+                <div class="model-col-header">&#128640; The Structure</div>
+                <p class="model-col-intro">
+                    Investors provide capital in exchange for both a financial return and a measurable social return. The investor accepts below-market financial returns in exchange for demonstrated impact.
+                </p>
+                <p style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 10px; margin-top: 4px;">Common types:</p>
+                <ul>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Program-related investments (PRIs) from foundations</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">Social impact bonds and pay-for-success contracts</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">CDFI loans and mission-aligned venture capital</li>
+                    <li style="color: var(--white); padding: 8px 0 8px 0;">Legal structures: PBC, L3C, B Corp certification</li>
+                </ul>
+            </div>
+            <!-- Right: The Trade-offs (hidden until revealed) -->
+            <div class="tradeoff-col" id="tradeoffs-8">
+                <div class="model-col pros">
+                    <div class="model-col-header">&#43; Advantages</div>
+                    <ul>
+                        <li>Access to larger capital than grants typically provide</li>
+                        <li>Investors bring networks, expertise, and credibility</li>
+                        <li>Enables rapid scaling of proven, replicable models</li>
+                        <li>Bridges the gap between philanthropy and markets</li>
+                    </ul>
+                </div>
+                <div class="model-col cons">
+                    <div class="model-col-header">&#8722; Disadvantages</div>
+                    <ul>
+                        <li>Investor pressure for returns competes with mission</li>
+                        <li>Governance shifts &mdash; investors may gain board influence</li>
+                        <li>Return timelines may conflict with community timelines</li>
+                        <li>Complex legal and reporting infrastructure required</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button class="reveal-btn" id="reveal-btn-8" onclick="revealTradeoffs(8)">&#128065; Reveal Trade-offs</button>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 9: THE HYBRID REALITY
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="9">
+        <h2 style="text-align: center;">The Hybrid Reality</h2>
+        <p style="text-align: center; opacity: 0.75; margin-bottom: 24px; font-size: 1.05rem;">
+            Most sustainable social ventures blend sources &mdash; mitigating the downsides of each.
+        </p>
+        <div class="spectrum-wrapper">
+            <div class="spectrum-labels">
+                <span style="color: #6ee7b7;">&#9664; Mission-First</span>
+                <span style="color: var(--xavier-gold);">Blended</span>
+                <span style="color: #c4b5fd;">Scale-First &#9654;</span>
+            </div>
+            <div class="spectrum-bar"></div>
+            <div class="spectrum-nodes">
+                <div class="spectrum-node" style="align-items: flex-start;">
+                    <div class="node-dot" style="background: #10b981;"></div>
+                    <h4 style="color: #6ee7b7;">Grants &amp; Donations</h4>
+                    <p>Mission-aligned, precarious, restricted</p>
+                </div>
+                <div class="spectrum-node">
+                    <div class="node-dot" style="background: #B3A369;"></div>
+                    <h4 style="color: var(--xavier-gold);">Earned Revenue</h4>
+                    <p>Autonomous, risks excluding the poorest</p>
+                </div>
+                <div class="spectrum-node" style="align-items: flex-end; text-align: right;">
+                    <div class="node-dot" style="background: #7c3aed;"></div>
+                    <h4 style="color: #c4b5fd;">Impact Investing</h4>
+                    <p>Scalable, investor return pressure rises</p>
+                </div>
+            </div>
+            <div class="spectrum-note">
+                &#128640;&nbsp; <strong>Venture Evolution:</strong> Most ventures move from Left (Grants) to Right (Impact Capital) as they scale &mdash; building earned revenue streams first to prove financial viability, then attracting investors with a track record of both impact and sustainability.
+            </div>
+            <div class="spectrum-note" style="background: rgba(179,163,105,0.1); border-color: rgba(179,163,105,0.4);">
+                &#128161;&nbsp; <strong>The strategic task:</strong> Identify which blend preserves your mission, serves your target population, and keeps the lights on &mdash; then design toward it deliberately.
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 10: FAMOUS HYBRID MODELS (clickable cards)
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="10">
+        <h2 style="text-align: center; margin-bottom: 8px;">Famous Hybrid Models</h2>
+        <p style="text-align: center; opacity: 0.7; margin-bottom: 22px; font-size: 0.95rem;">
+            Click each card to see how they blend sources &mdash; and the tension each carries.
+        </p>
+        <div class="hybrid-grid">
+
+            <!-- Newman's Own -->
+            <div class="hybrid-card" onclick="toggleHybrid(this)">
+                <div class="card-org">Founded 1982 &nbsp;&#183;&nbsp; USA</div>
+                <h3>Newman's Own</h3>
+                <p class="card-teaser">Salad dressing that built a philanthropic empire</p>
+                <div class="hybrid-detail">
+                    <p><strong>Model:</strong> 100% of after-tax profits donated to charity. Paul Newman refused to take personal income from the company.</p>
+                    <p><strong>Financial Mix:</strong> Pure earned revenue (food &amp; beverage sales in mainstream retail) &mdash; no grants received. The commercial engine entirely funds the philanthropy.</p>
+                    <p><strong>Scale:</strong> Over $650 million donated since founding across education, health, and humanitarian causes.</p>
+                    <div class="hd-tension">Tension: Must compete on price and shelf space against profit-driven brands with no philanthropic overhead. Mission sustainability depends entirely on commercial competitiveness.</div>
+                </div>
+                <div class="hybrid-click-hint">&#9654; Click to reveal financial mix</div>
+            </div>
+
+            <!-- TOMS -->
+            <div class="hybrid-card" onclick="toggleHybrid(this)">
+                <div class="card-org">Founded 2006 &nbsp;&#183;&nbsp; USA / Global</div>
+                <h3>TOMS</h3>
+                <p class="card-teaser">One for One &mdash; a giving model built into the product</p>
+                <div class="hybrid-detail">
+                    <p><strong>Original Model:</strong> Buy one pair of shoes, TOMS donates one pair to a child in need. The giving is embedded in the sales transaction.</p>
+                    <p><strong>Financial Mix:</strong> Primarily earned revenue (retail), with giving funded as a cost of goods sold &mdash; not from separate philanthropy. Evolved in 2019 to donating 1/3 of profits to grassroots organizations.</p>
+                    <p><strong>Tension exposed:</strong> Critics argued the model created dependency and undercut local shoe markets in recipient countries.</p>
+                    <div class="hd-tension">Tension: When the "giving" mechanism is tied to consumer sales, a market downturn directly reduces social impact &mdash; mission becomes hostage to quarterly revenue.</div>
+                </div>
+                <div class="hybrid-click-hint">&#9654; Click to reveal financial mix</div>
+            </div>
+
+            <!-- Grameen Bank -->
+            <div class="hybrid-card" onclick="toggleHybrid(this)">
+                <div class="card-org">Founded 1983 &nbsp;&#183;&nbsp; Bangladesh</div>
+                <h3>Grameen Bank</h3>
+                <p class="card-teaser">Nobel Prize-winning microfinance for the rural poor</p>
+                <div class="hybrid-detail">
+                    <p><strong>Model:</strong> Provides small collateral-free loans to rural Bangladeshis &mdash; predominantly women &mdash; to start or grow micro-businesses. Borrowers become shareholders.</p>
+                    <p><strong>Financial Mix:</strong> Earned revenue (interest income on loans) + member deposits as capital base. Early-stage donor and government subsidy helped establish scale; now largely self-sustaining.</p>
+                    <p><strong>Impact:</strong> Served over 9 million borrowers; loan recovery rate above 96%.</p>
+                    <div class="hd-tension">Tension: Interest rates on microloans, even below-market, are criticized as extractive when borrowers are in extreme poverty. Who defines "fair" return when the client has no alternatives?</div>
+                </div>
+                <div class="hybrid-click-hint">&#9654; Click to reveal financial mix</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 11: SECTION HEADER — PART 2
+    ==================================================== -->
+    <div class="slide bg-gradient section-slide" data-slide="11">
+        <p class="section-number">Part 2</p>
+        <h2>Divergent Financing</h2>
+        <p style="margin-top: 22px; font-size: 1.05rem; opacity: 0.82; max-width: 540px; text-align: center; line-height: 1.65;">
+            Using AI to generate options &mdash; and your judgment to evaluate them.
+        </p>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 12: AI AS CONSULTANT
+    ==================================================== -->
+    <div class="slide bg-dark content-slide" data-slide="12">
+        <h2>&#129302; AI as Your Financing Consultant</h2>
+        <ul>
+            <li><strong>Why use AI here?</strong> Brainstorming financing models is exactly the kind of divergent, pattern-matching work where AI excels &mdash; it can surface options across sectors and geographies faster than any search</li>
+            <li><strong>Your job is not to brainstorm.</strong> Your job is to <em>evaluate</em>: interrogate the options AI generates against your mission, your community, and your specific constraints</li>
+            <li><strong>The value you add</strong> is strategic judgment &mdash; knowing which option is defensible, which is ethically fraught, and which creates a tension you need to manage actively</li>
+            <li>AI proposes &nbsp;&#10132;&nbsp; You analyze &nbsp;&#10132;&nbsp; You decide &nbsp;&#10132;&nbsp; You justify</li>
+        </ul>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 13: INTERACTIVE — FINANCING PROMPT
+    ==================================================== -->
+    <div class="slide bg-purple" data-slide="13">
+        <h2 style="text-align: center; margin-bottom: 14px;">&#128203; Financing Prompt</h2>
+        <div class="activity-box" style="max-width: 1000px;">
+            <h3>Copy this expert consultant prompt &mdash; fill in your venture's details</h3>
+            <div class="prompt-box" id="financing-prompt">You are an expert consultant in social enterprise financing with experience across the nonprofit, hybrid, and for-profit social impact sectors.
+
+My venture is: [BRIEF DESCRIPTION — e.g., "an after-school literacy program serving low-income families in Cincinnati's West End"]
+
+My primary beneficiaries are: [WHO YOU SERVE — e.g., "children ages 6–12 whose families earn below 200% of the federal poverty line"]
+
+My current funding situation is: [CURRENT STATE — e.g., "a single two-year city grant that expires in 14 months"]
+
+Please do all three of the following:
+
+1. GENERATE three to five financing models that are specifically suited to this type of venture and mission. For each, name the model, describe how it would work in practice, and explain what trade-offs or risks I should anticipate.
+
+2. IDENTIFY the most significant strategic tension between the top two models you would recommend. Be specific: what values, stakeholder interests, or operational decisions come into direct conflict?
+
+3. ADVISE me on which model you would recommend as a primary revenue source and which as a secondary source — and explain what I would need to do in the next 12 months to pursue that path credibly.</div>
+            <button class="copy-btn" onclick="copyPrompt('financing-prompt')">&#128203; Copy Prompt to Clipboard</button>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 14: WORK TIME — 25-MIN TIMER
+    ==================================================== -->
+    <div class="slide bg-success" data-slide="14">
+        <h2 style="text-align: center; margin-bottom: 8px;">&#9203; Work Time</h2>
+        <p style="text-align: center; opacity: 0.9; font-size: 1.05rem; margin-bottom: 22px;">
+            Run your prompt &nbsp;&#8594;&nbsp; Read the output critically &nbsp;&#8594;&nbsp; Begin your analysis
+        </p>
+        <div class="activity-box" style="max-width: 940px;">
+            <div class="grid-3" style="margin-bottom: 22px; gap: 14px;">
+                <div class="step-card" style="background: rgba(12,35,64,0.07); border-left-color: var(--xavier-blue);">
+                    <h4 style="color: var(--xavier-blue);">1 &nbsp;Generate</h4>
+                    <p style="color: var(--gray-600);">Paste the prompt with your details filled in. Read the full output before reacting to any single suggestion.</p>
+                </div>
+                <div class="step-card" style="background: rgba(12,35,64,0.07); border-left-color: var(--xavier-blue);">
+                    <h4 style="color: var(--xavier-blue);">2 &nbsp;Interrogate</h4>
+                    <p style="color: var(--gray-600);">Which models fit your mission? Which sound plausible but harm your population? Flag the tension the AI names.</p>
+                </div>
+                <div class="step-card" style="background: rgba(12,35,64,0.07); border-left-color: var(--xavier-blue);">
+                    <h4 style="color: var(--xavier-blue);">3 &nbsp;Draft</h4>
+                    <p style="color: var(--gray-600);">Identify your top two models and begin articulating the tension between them for your memo.</p>
+                </div>
+            </div>
+            <div class="timer-container">
+                <div class="timer-display" id="timer1">25:00</div>
+                <div class="timer-controls">
+                    <button class="timer-btn start" onclick="startTimer('timer1', 1500)">&#9654; Start</button>
+                    <button class="timer-btn pause" onclick="pauseTimer('timer1')">&#9646;&#9646; Pause</button>
+                    <button class="timer-btn reset" onclick="resetTimer('timer1', 1500)">&#8635; Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 15: HUMAN VALUE-ADD — PREMIUM
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="15">
+        <h2 style="text-align: center; margin-bottom: 28px;">Your Human Value-Add</h2>
+        <div class="grid-2" style="max-width: 1060px; gap: 22px;">
+            <div class="premium-card">
+                <h3>&#128269; Step 1: Critique the Options</h3>
+                <ul>
+                    <li>Does this model serve your <em>target population</em> &mdash; or a more convenient one?</li>
+                    <li>Does it require capabilities or infrastructure you don't have?</li>
+                    <li>Is there an ethical cost the AI didn't name?</li>
+                    <li>What does your field research tell you about community receptivity?</li>
+                    <li>Who loses access if you pursue this model?</li>
+                </ul>
+            </div>
+            <div class="premium-card">
+                <h3>&#9878; Step 2: Name the Tension</h3>
+                <ul>
+                    <li>Where do your top two options pull in different directions?</li>
+                    <li>Mission vs. margin? Autonomy vs. scale? Access vs. quality?</li>
+                    <li>State it in one sentence: "If we pursue [A], we gain X but risk Y"</li>
+                    <li>This tension is the core of your Assignment 4: Strategic Choices &amp; Trade-Offs Memo</li>
+                </ul>
+            </div>
+            <div class="premium-card" style="grid-column: span 2; background: rgba(179,163,105,0.1); border-color: rgba(179,163,105,0.3);">
+                <h3>&#9888; AI Blind Spots to Watch For</h3>
+                <p>AI does not know your community's history with institutions, the trust deficit or surplus you start with, or the specific relationships that make some models realistic and others impossible. You hold that knowledge &mdash; and it is irreplaceable.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 16: JUSTIFYING THE PATH — PREMIUM
+    ==================================================== -->
+    <div class="slide bg-accent" data-slide="16">
+        <h2 style="text-align: center; margin-bottom: 26px;">Justifying Your Chosen Path</h2>
+        <div class="grid-2" style="max-width: 1060px; gap: 22px;">
+            <div class="premium-card" style="border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.1);">
+                <h3>&#128064; The Question You Must Answer</h3>
+                <p style="font-size: 1.1rem; font-style: italic; line-height: 1.8; color: var(--white); opacity: 1;">
+                    "My preferred model is [X]. Its main downside is [Y]. Here is how I will actively manage or mitigate that downside: [Z]."
+                </p>
+            </div>
+            <div class="premium-card" style="border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.1);">
+                <h3>&#128221; What Strong Justification Looks Like</h3>
+                <ul style="color: var(--white);">
+                    <li>Links model directly to who you serve and why</li>
+                    <li>Names the downside honestly and specifically</li>
+                    <li>Proposes a concrete mitigation strategy</li>
+                    <li>Identifies stakeholders who must buy in</li>
+                    <li>Sets a 12-month milestone to evaluate whether it's working</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top: 20px; padding: 16px 28px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; text-align: center; max-width: 860px;">
+            <p style="font-size: 1rem; line-height: 1.6;">Selecting a financing model is a <strong>strategic and ethical act</strong>. The students who earn the highest marks on the memo are those who own the downside of their choice &mdash; not those who pretend it doesn't exist.</p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 17: DEBRIEF — SIMPLE CENTERED LIST
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="17">
+        <h2 style="text-align: center; margin-bottom: 6px;">&#128260; Debrief</h2>
+        <p style="text-align: center; opacity: 0.65; margin-bottom: 10px; font-size: 0.95rem;">Share out with the class &mdash; 8 minutes</p>
+        <ul class="debrief-list">
+            <li>"What was the most <strong>surprising financing model</strong> the AI generated &mdash; one you hadn't considered before today?"</li>
+            <li>"Where did the AI's recommendation <strong>fall short</strong>? What did it miss about your venture, your community, or your constraints?"</li>
+            <li>"What is the <strong>strategic tension</strong> between your top two options? How did you state it in one sentence?"</li>
+            <li>"If you had to choose <em>right now</em>, which model would you defend &mdash; and what is the <strong>hardest part</strong> of that defense?"</li>
+        </ul>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 18: ASSIGNMENT 4 CONNECTION
+    ==================================================== -->
+    <div class="slide bg-light" data-slide="18">
+        <h2 style="color: var(--xavier-blue);">Connecting to Assignment 4: Strategic Choices &amp; Trade-Offs Memo</h2>
+        <div style="max-width: 920px; width: 100%;">
+            <div class="next-step-row">
+                <div class="step-num">1</div>
+                <p><strong>Your two finalist models</strong> become the two paths you analyze in the memo. Name them precisely &mdash; not "grants," but the specific funder type, structure, and funding mechanism.</p>
+            </div>
+            <div class="next-step-row">
+                <div class="step-num">2</div>
+                <p><strong>The tension you named today</strong> is the analytical core of the memo's Strategic Tension section &mdash; articulate it in one tight, specific paragraph.</p>
+            </div>
+            <div class="next-step-row">
+                <div class="step-num">3</div>
+                <p><strong>Your initial preference and justification</strong> from today's exit ticket become the foundation of the memo's Recommendation section.</p>
+            </div>
+            <div class="next-step-row">
+                <div class="step-num">4</div>
+                <p><strong>Your mitigation strategy</strong> for the chosen model's downside is a required element of Assignment 4: Strategic Choices &amp; Trade-Offs Memo &mdash; draft it now while it's fresh.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 19: EXIT TICKET
+    ==================================================== -->
+    <div class="slide bg-accent" data-slide="19">
+        <h2 style="text-align: center; margin-bottom: 18px;">&#127915; Exit Ticket</h2>
+        <div class="ticket-box">
+            <h3>&#128203; Before you leave, your ticket requires three things:</h3>
+            <div class="req-row">
+                <div class="req-num">1</div>
+                <div>
+                    <h4>Two Promising Models</h4>
+                    <p>Name the two financing models you are seriously considering. Be specific &mdash; name the type of funder, the structure, and how the money would flow to your venture.</p>
+                </div>
+            </div>
+            <div class="req-row">
+                <div class="req-num">2</div>
+                <div>
+                    <h4>Analysis of the Tension</h4>
+                    <p>In two to three sentences, describe the central tension between these two options. What exactly do they trade off? What value conflicts does that create for your venture?</p>
+                </div>
+            </div>
+            <div class="req-row">
+                <div class="req-num">3</div>
+                <div>
+                    <h4>Initial Preference &amp; Justification</h4>
+                    <p>State which model you would choose <em>right now</em> and why. Justify it in terms of your specific mission, your target population, and how you would manage the downside.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 20: KEY INSIGHT — BOLD CENTERED CALLOUT
+    ==================================================== -->
+    <div class="slide title-slide" data-slide="20">
+        <div class="callout-block" style="position: relative; z-index: 1;">
+            <p class="callout-eyebrow">Key Insight</p>
+            <p class="callout-quote">
+                "Financial strategy is deeply intertwined with mission."
+            </p>
+            <div class="callout-rule"></div>
+            <p class="callout-sub">
+                Every funding choice shapes
+                <strong style="-webkit-text-fill-color: var(--xavier-gold); color: var(--xavier-gold);">who you serve</strong>,
+                <strong style="-webkit-text-fill-color: var(--xavier-gold); color: var(--xavier-gold);">how you serve them</strong>,
+                and
+                <strong style="-webkit-text-fill-color: var(--xavier-gold); color: var(--xavier-gold);">who holds power over that work</strong>.
+                The question is never just "where do we get the money?" It is always: "What does accepting <em>this</em> money require us to become &mdash; and are we willing to become it?"
+            </p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 21: DEADLINE REMINDER
+    ==================================================== -->
+    <div class="slide bg-light" data-slide="21">
+        <h2 style="text-align: center; color: var(--xavier-blue); margin-bottom: 28px;">&#128197; Deadlines &amp; Next Steps</h2>
+        <div style="max-width: 880px; width: 100%;">
+            <div class="next-step-row" style="border-left: 5px solid var(--danger);">
+                <div class="step-num" style="background: var(--danger);">!</div>
+                <p><strong>Exit Ticket</strong> &mdash; Submit your three-part response on Canvas</p>
+                <div class="due-badge" style="background: rgba(239,68,68,0.1); border-color: var(--danger); color: var(--danger);">Due Tonight 11:59 PM</div>
+            </div>
+            <div class="next-step-row">
+                <div class="step-num">1</div>
+                <p>Review the <strong>Assignment 4: Strategic Choices &amp; Trade-Offs Memo</strong> prompt on Canvas &mdash; note the Strategic Tension section requirements</p>
+                <div class="due-badge">This Week</div>
+            </div>
+            <div class="next-step-row">
+                <div class="step-num">2</div>
+                <p>Return to today's AI output and begin drafting the Tension and Recommendation paragraphs</p>
+                <div class="due-badge">This Week</div>
+            </div>
+            <div class="next-step-row">
+                <div class="step-num">3</div>
+                <p><strong>Assignment 4: Strategic Choices &amp; Trade-Offs Memo</strong> &mdash; full draft due</p>
+                <div class="due-badge">April 7</div>
+            </div>
+            <p style="margin-top: 16px; text-align: center; font-size: 0.9rem; color: var(--gray-400);">Slides, the AI prompt, and the Assignment 4 rubric are posted on the course website.</p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 22: QUESTIONS
+    ==================================================== -->
+    <div class="slide title-slide" data-slide="22">
+        <h1 style="font-size: 3.4rem;">Questions?</h1>
+        <p class="subtitle">ENTR 335 &nbsp;&mdash;&nbsp; Social Entrepreneurship &amp; Innovation</p>
+        <div class="date-badge" style="font-size: 1.05rem; padding: 16px 36px; gap: 14px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            regelem@xavier.edu
+        </div>
+        <p style="margin-top: 28px; font-size: 0.92rem; color: rgba(255,255,255,0.45); position: relative; z-index: 1;">
+            Xavier University &nbsp;&#183;&nbsp; Williams College of Business
+        </p>
+    </div>
+
+</div><!-- end .presentation -->
+
+<!-- Navigation Bar -->
+<nav class="nav-bar">
+    <div class="nav-title">Financing the Mission &nbsp;|&nbsp; ENTR 335 &nbsp;|&nbsp; Mar 24</div>
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="prevSlide()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <div class="progress-container">
+            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">22</span></span>
+        </div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div class="keyboard-hint">
+    <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> or <kbd>Space</kbd> to navigate
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length; // 22
+
+    // ===== TIMERS =====
+    const timers = {};
+
+    function startTimer(timerId, duration) {
+        if (timers[timerId] && timers[timerId].interval) return;
+        if (!timers[timerId]) timers[timerId] = { timeLeft: duration };
+        const display = document.getElementById(timerId);
+        if (display) display.classList.add('running');
+        timers[timerId].interval = setInterval(() => {
+            if (timers[timerId].timeLeft > 0) {
+                timers[timerId].timeLeft--;
+                updateTimerDisplay(timerId);
+            } else {
+                clearInterval(timers[timerId].interval);
+                timers[timerId].interval = null;
+                if (display) { display.classList.remove('running'); display.classList.add('done'); }
+            }
+        }, 1000);
+    }
+
+    function pauseTimer(timerId) {
+        if (timers[timerId] && timers[timerId].interval) {
+            clearInterval(timers[timerId].interval);
+            timers[timerId].interval = null;
+            const display = document.getElementById(timerId);
+            if (display) display.classList.remove('running');
+        }
+    }
+
+    function resetTimer(timerId, duration) {
+        pauseTimer(timerId);
+        timers[timerId] = { timeLeft: duration };
+        updateTimerDisplay(timerId);
+        const display = document.getElementById(timerId);
+        if (display) display.classList.remove('running', 'done');
+    }
+
+    function updateTimerDisplay(timerId) {
+        const display = document.getElementById(timerId);
+        if (display && timers[timerId]) {
+            const m = Math.floor(timers[timerId].timeLeft / 60);
+            const s = timers[timerId].timeLeft % 60;
+            display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+    }
+
+    timers['timer1'] = { timeLeft: 1500 };
+
+    // ===== REVEAL TRADE-OFFS (Slides 6-8) =====
+    function revealTradeoffs(slideNum) {
+        const col = document.getElementById('tradeoffs-' + slideNum);
+        const btn = document.getElementById('reveal-btn-' + slideNum);
+        if (col) col.classList.add('visible');
+        if (btn) btn.classList.add('used');
+    }
+
+    // ===== FUNDING DUEL TOGGLE =====
+    function toggleCatch(catchId, btn) {
+        const el = document.getElementById(catchId);
+        if (!el) return;
+        if (el.classList.contains('revealed')) {
+            el.classList.remove('revealed');
+            btn.textContent = 'Reveal the Catch';
+        } else {
+            el.classList.add('revealed');
+            btn.textContent = 'Hide the Catch';
+        }
+    }
+
+    // ===== HYBRID MODEL CARDS =====
+    function toggleHybrid(card) {
+        const isOpen = card.classList.contains('open');
+        // close all first
+        document.querySelectorAll('.hybrid-card').forEach(c => c.classList.remove('open'));
+        if (!isOpen) card.classList.add('open');
+        // update hint text
+        document.querySelectorAll('.hybrid-click-hint').forEach(h => {
+            h.textContent = '\u25BA Click to reveal financial mix';
+        });
+        if (!isOpen) {
+            const hint = card.querySelector('.hybrid-click-hint');
+            if (hint) hint.textContent = '\u25BC Click to collapse';
+        }
+    }
+
+    // ===== SLIDE NAVIGATION =====
+    function showSlide(n) {
+        if (n < 0 || n >= totalSlides) return;
+        slides[currentSlide].classList.remove('active');
+        currentSlide = n;
+        slides[currentSlide].classList.add('active');
+        updateNav();
+    }
+
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+
+    function updateNav() {
+        document.getElementById('currentSlide').textContent = currentSlide + 1;
+        document.getElementById('totalSlides').textContent = totalSlides;
+        document.getElementById('progress').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+        document.getElementById('prevBtn').disabled = currentSlide === 0;
+        document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    // ===== COPY PROMPT =====
+    function copyPrompt(promptId) {
+        const promptEl = document.getElementById(promptId);
+        const btn = promptEl.parentElement.querySelector('.copy-btn');
+        navigator.clipboard.writeText(promptEl.innerText).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt to Clipboard'; btn.classList.remove('copied'); }, 2000);
+        }).catch(() => {
+            const range = document.createRange();
+            range.selectNode(promptEl);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt to Clipboard'; btn.classList.remove('copied'); }, 2000);
+        });
+    }
+
+    // ===== KEYBOARD NAVIGATION =====
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    });
+
+    updateNav();
+</script>
+</body>
+</html>

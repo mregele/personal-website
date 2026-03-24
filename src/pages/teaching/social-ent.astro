@@ -173,20 +173,38 @@ const modules: Module[] = [
       { label: "Interactive Plan Builder", href: `${base}/16_Field_Research_Planning_and_Practice/plan-builder.html`, tag: "Activity", format: "html" },
     ],
   },
+  {
+    number: 18,
+    title: "Field Research Synthesis Workshop",
+    files: [
+      { label: "Field Research Synthesis — Workshop Slides", href: `${base}/18_Field_Research_Synthesis_Workshop/Mar17_ResearchSynthesis.html`, tag: "Slides", format: "html" },
+    ],
+  },
+  {
+    number: 19,
+    title: "Applying Field Research to Venture Redesign",
+    files: [
+      { label: "Venture Redesign Workshop — Slides", href: `${base}/19_Applying_Field_Research_to_Venture_Redesign/Mar19_VentureRedesign.html`, tag: "Slides", format: "html" },
+    ],
+  },
+  {
+    number: 20,
+    title: "Financing the Mission",
+    files: [
+      { label: "Financing the Mission — Workshop Slides", href: `${base}/20_Financing_the_Mission/Mar24_FinancingMission.html`, tag: "Slides", format: "html" },
+    ],
+  },
 ];
 
 const upcomingModules = [
-  "Asynchronous Field Research",
-  "Field Research Synthesis Workshop",
-  "Applying Field Research to Venture Redesign",
-  "Financing the Mission",
-  "Storytelling for Social Change",
-  "Preparing for External Touchpoints",
-  "Organizational and Legal Forms",
-  "Asynchronous External Touchpoint Engagement",
-  "External Touchpoint Reflection and Design Iteration",
-  "Scaling Social Ventures",
-  "Final Presentation Workshop",
+  { number: 17, title: "Asynchronous Field Research" },
+  { number: 21, title: "Storytelling for Social Change" },
+  { number: 22, title: "Preparing for External Touchpoints" },
+  { number: 23, title: "Organizational and Legal Forms" },
+  { number: 24, title: "Asynchronous External Touchpoint Engagement" },
+  { number: 25, title: "External Touchpoint Reflection and Design Iteration" },
+  { number: 26, title: "Scaling Social Ventures" },
+  { number: 27, title: "Final Presentation Workshop" },
 ];
 ---
 
@@ -249,12 +267,12 @@ const upcomingModules = [
   <div class="mt-12">
     <h2 class="text-lg font-bold text-navy-900 mb-4">Upcoming Modules</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-      {upcomingModules.map((title, i) => (
+      {upcomingModules.map((mod) => (
         <div class="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-50 text-slate-400">
           <span class="flex-shrink-0 w-7 h-7 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold">
-            {i + 17}
+            {mod.number}
           </span>
-          <span class="text-sm">{title}</span>
+          <span class="text-sm">{mod.title}</span>
         </div>
       ))}
     </div>
