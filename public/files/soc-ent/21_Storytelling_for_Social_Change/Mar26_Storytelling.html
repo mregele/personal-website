@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storytelling for Social Change | ENTR 335 | Mar 26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== BASE — 115% for back-of-room readability ===== */
+        html { font-size: 115%; }
+
+        :root {
+            --xavier-blue: #0C2340;
+            --xavier-gold: #B3A369;
+            --accent-blue: #0047AB;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #7c3aed;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--xavier-blue);
+            color: var(--white);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SLIDE SYSTEM ===== */
+        .presentation { width: 100vw; height: 100vh; position: relative; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 52px 90px 96px;
+            opacity: 0; visibility: hidden;
+            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .slide.active { opacity: 1; visibility: visible; transform: scale(1); }
+
+        /* ===== BACKGROUNDS ===== */
+        .bg-dark     { background: linear-gradient(135deg, var(--xavier-blue) 0%, #1a3a5c 100%); }
+        .bg-accent   { background: linear-gradient(135deg, var(--accent-blue) 0%, #0066cc 100%); }
+        .bg-light    { background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%); color: var(--xavier-blue); }
+        .bg-gradient { background: linear-gradient(135deg, #0C2340 0%, var(--accent-blue) 50%, #0077b6 100%); }
+        .bg-success  { background: linear-gradient(135deg, #065f46 0%, var(--success) 100%); }
+        .bg-purple   { background: linear-gradient(135deg, #5b21b6 0%, var(--purple) 100%); }
+
+        /* ===== TITLE SLIDE ===== */
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, var(--xavier-blue) 0%, #0a1c33 50%, var(--accent-blue) 100%);
+            position: relative; overflow: hidden;
+        }
+        .title-slide::before {
+            content: '';
+            position: absolute; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(179,163,105,0.12) 0%, transparent 70%);
+            top: -200px; right: -200px;
+        }
+        .title-slide h1 {
+            font-size: 3.4rem; font-weight: 800; letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; position: relative; z-index: 1;
+        }
+        .title-slide .subtitle {
+            font-size: 1.2rem; font-weight: 400; color: var(--xavier-gold);
+            margin-bottom: 48px; letter-spacing: 4px; text-transform: uppercase;
+            position: relative; z-index: 1;
+        }
+        .date-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 13px 30px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px; font-size: 1rem; color: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px); position: relative; z-index: 1;
+        }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-slide { text-align: center; }
+        .section-slide h2 {
+            font-size: 3.6rem; font-weight: 700;
+            position: relative; display: inline-block;
+        }
+        .section-slide h2::before,
+        .section-slide h2::after {
+            content: ''; position: absolute;
+            width: 80px; height: 3px; background: var(--xavier-gold);
+            top: 50%; transform: translateY(-50%);
+        }
+        .section-slide h2::before { right: calc(100% + 30px); }
+        .section-slide h2::after  { left:  calc(100% + 30px); }
+        .section-slide .section-number {
+            font-size: 1rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--xavier-gold); margin-bottom: 18px;
+        }
+
+        /* ===== CONTENT SLIDES ===== */
+        .content-slide { align-items: flex-start; text-align: left; }
+        .slide h2 { font-size: 2.3rem; font-weight: 700; margin-bottom: 34px; }
+        .content-slide h2 { position: relative; }
+        .content-slide h2::after {
+            content: ''; position: absolute; bottom: -12px; left: 0;
+            width: 60px; height: 4px; background: var(--xavier-gold); border-radius: 2px;
+        }
+        .bg-light.content-slide h2::after { background: var(--accent-blue); }
+
+        .content-slide > ul {
+            list-style: none; font-size: 1.3rem; line-height: 1.85;
+            width: 100%; max-width: 1000px;
+        }
+        .content-slide > ul > li {
+            display: block; position: relative;
+            padding-left: 30px; margin-bottom: 26px; width: 100%;
+        }
+        .content-slide > ul > li::before {
+            content: ''; width: 10px; height: 10px;
+            background: var(--xavier-gold); border-radius: 50%;
+            position: absolute; left: 0; top: 11px;
+        }
+
+        /* ===== GRIDS ===== */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; width: 100%; max-width: 1100px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; width: 100%; max-width: 1200px; }
+
+        /* ===== INSIGHT BOX ===== */
+        .insight-box {
+            background: rgba(179,163,105,0.18); border: 2px solid var(--xavier-gold);
+            border-radius: 20px; padding: 36px 48px; text-align: center; max-width: 900px;
+        }
+        .insight-box h3 { font-size: 1.4rem; margin-bottom: 16px; }
+        .insight-box p  { font-size: 1.15rem; line-height: 1.75; opacity: 0.95; }
+
+        /* ===== STEP CARDS ===== */
+        .step-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 22px;
+            border-left: 4px solid var(--xavier-gold);
+        }
+        .step-card h4 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .step-card p, .step-card ul { font-size: 0.92rem; opacity: 0.9; }
+        .step-card ul { list-style: none; margin-top: 8px; }
+        .step-card li { padding: 4px 0 4px 16px; position: relative; }
+        .step-card li::before { content: '›'; position: absolute; left: 0; color: var(--xavier-gold); font-weight: 700; }
+
+        /* ===== ACTIVITY BOX ===== */
+        .activity-box {
+            background: var(--white); border-radius: 20px; padding: 34px;
+            max-width: 980px; width: 100%; color: var(--xavier-blue);
+        }
+        .activity-box h3 { font-size: 1.35rem; margin-bottom: 16px; color: var(--xavier-blue); }
+
+        /* ===== PROMPT BOX ===== */
+        .prompt-box {
+            background: var(--gray-100); padding: 22px; border-radius: 12px;
+            font-family: 'Inter', monospace; font-size: 0.84rem; line-height: 1.8;
+            border-left: 4px solid var(--accent-blue);
+            margin: 16px 0; white-space: pre-wrap;
+            color: var(--xavier-blue); max-height: 320px; overflow-y: auto;
+        }
+        .copy-btn {
+            padding: 11px 26px; background: var(--accent-blue);
+            color: var(--white); border: none; border-radius: 8px;
+            font-size: 0.95rem; cursor: pointer; transition: background 0.3s;
+        }
+        .copy-btn:hover  { background: var(--xavier-blue); }
+        .copy-btn.copied { background: var(--success); }
+
+        /* ===== TIMER ===== */
+        .timer-container { text-align: center; margin: 20px 0; }
+        .timer-display {
+            font-size: 4rem; font-family: 'Inter', monospace; font-weight: 700;
+            background: var(--gray-100); padding: 14px 44px;
+            border-radius: 15px; display: inline-block; color: var(--xavier-blue);
+            transition: color 0.3s;
+        }
+        .timer-display.running { color: var(--success); }
+        .timer-display.done    { color: var(--danger); }
+        .timer-controls { display: flex; gap: 13px; justify-content: center; margin-top: 13px; }
+        .timer-btn {
+            padding: 10px 24px; border: none; border-radius: 10px;
+            font-size: 0.92rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+        }
+        .timer-btn.start { background: var(--success); color: var(--white); }
+        .timer-btn.pause { background: var(--warning); color: var(--xavier-blue); }
+        .timer-btn.reset { background: var(--gray-200); color: var(--gray-600); }
+        .timer-btn:hover { transform: scale(1.05); }
+
+        /* ===== NEXT-STEP ROWS ===== */
+        .next-step-row {
+            display: flex; align-items: center; gap: 18px;
+            padding: 15px 20px; background: var(--white);
+            border: 1px solid var(--gray-200); border-radius: 12px;
+            margin-bottom: 13px; color: var(--xavier-blue);
+        }
+        .step-num {
+            min-width: 38px; height: 38px; background: var(--accent-blue);
+            color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; flex-shrink: 0;
+        }
+        .next-step-row p { font-size: 1rem; line-height: 1.5; color: var(--xavier-blue); }
+        .due-badge {
+            margin-left: auto; padding: 5px 12px;
+            background: rgba(179,163,105,0.15); border: 1px solid var(--xavier-gold);
+            border-radius: 20px; font-size: 0.78rem;
+            color: var(--accent-blue); font-weight: 600;
+            white-space: nowrap; flex-shrink: 0;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(12,35,64,0.95); backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-title { font-size: 0.88rem; color: rgba(255,255,255,0.7); }
+        .nav-controls { display: flex; align-items: center; gap: 18px; }
+        .nav-btn {
+            width: 46px; height: 46px; border: none;
+            background: rgba(255,255,255,0.1); color: var(--white);
+            border-radius: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover:not(:disabled) { background: var(--xavier-gold); color: var(--xavier-blue); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .progress-bar {
+            width: 200px; height: 4px; background: rgba(255,255,255,0.2);
+            border-radius: 2px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: var(--xavier-gold);
+            border-radius: 2px; transition: width 0.3s ease;
+        }
+        .progress-container { display: flex; align-items: center; gap: 14px; }
+        .slide-counter { font-size: 0.92rem; font-weight: 500; min-width: 58px; text-align: center; }
+
+        /* ===== KEYBOARD HINT ===== */
+        .keyboard-hint {
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+            padding: 11px 17px; border-radius: 10px; font-size: 0.78rem;
+            color: rgba(255,255,255,0.7); opacity: 0; transition: opacity 0.3s; z-index: 100;
+        }
+        body:hover .keyboard-hint { opacity: 1; }
+        .keyboard-hint kbd {
+            background: rgba(255,255,255,0.2); padding: 3px 8px;
+            border-radius: 4px; margin: 0 3px; font-family: inherit;
+        }
+
+        /* ===== EXIT TICKET ===== */
+        .ticket-box {
+            background: var(--white); color: var(--xavier-blue);
+            border-radius: 20px; padding: 34px;
+            max-width: 1000px; width: 100%;
+        }
+        .ticket-box h3 { font-size: 1.3rem; margin-bottom: 20px; color: var(--xavier-blue); }
+        .req-row { display: flex; align-items: flex-start; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--gray-200); }
+        .req-row:last-child { border-bottom: none; }
+        .req-num {
+            min-width: 34px; height: 34px; background: var(--xavier-blue);
+            color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem; flex-shrink: 0;
+        }
+        .req-row h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; color: var(--xavier-blue); }
+        .req-row p  { font-size: 0.92rem; color: var(--gray-600); line-height: 1.55; }
+
+        /* ============================================================
+           SLIDE 3 — VC VS SOCIAL PITCH
+        ============================================================ */
+        .pitch-card {
+            border-radius: 18px; padding: 28px 30px;
+        }
+        .pitch-card.vc {
+            background: rgba(239,68,68,0.1); border: 2px solid rgba(239,68,68,0.5);
+        }
+        .pitch-card.social {
+            background: rgba(16,185,129,0.1); border: 2px solid rgba(16,185,129,0.5);
+        }
+        .pitch-card h3 {
+            font-size: 1rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+        }
+        .pitch-card.vc h3 { color: #fca5a5; }
+        .pitch-card.social h3 { color: #6ee7b7; }
+        .pitch-card ul { list-style: none; }
+        .pitch-card li {
+            font-size: 1rem; padding: 9px 0 9px 24px;
+            position: relative; border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .pitch-card li:last-child { border-bottom: none; }
+        .pitch-card.vc li { color: #fee2e2; }
+        .pitch-card.social li { color: #d1fae5; }
+        .pitch-card li::before { position: absolute; left: 0; font-weight: 700; }
+        .pitch-card.vc li::before { content: '✕'; color: #f87171; }
+        .pitch-card.social li::before { content: '✓'; color: #6ee7b7; }
+
+        /* ============================================================
+           SLIDE 5 — SOCIAL PITCH STRUCTURE
+        ============================================================ */
+        .pitch-steps { width: 100%; max-width: 1060px; display: flex; flex-direction: column; gap: 12px; }
+        .pitch-step {
+            display: flex; align-items: flex-start; gap: 20px;
+            background: rgba(255,255,255,0.07); border-radius: 14px;
+            padding: 16px 22px; border-left: 4px solid var(--xavier-gold);
+        }
+        .pitch-step:hover { background: rgba(255,255,255,0.11); }
+        .pitch-step-num {
+            min-width: 38px; height: 38px;
+            background: var(--xavier-gold); color: var(--xavier-blue);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1rem; flex-shrink: 0;
+        }
+        .pitch-step-body h4 { font-size: 1rem; font-weight: 700; margin-bottom: 3px; color: var(--xavier-gold); }
+        .pitch-step-body p { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; }
+
+        /* ============================================================
+           SLIDE 6 — PROBLEM VS. INSIGHT
+        ============================================================ */
+        .pi-panel { border-radius: 18px; padding: 28px 30px; }
+        .pi-panel.problem {
+            background: rgba(239,68,68,0.1); border: 2px solid rgba(239,68,68,0.45);
+        }
+        .pi-panel.insight {
+            background: rgba(179,163,105,0.12); border: 2px solid var(--xavier-gold);
+        }
+        .pi-panel h3 {
+            font-size: 1rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 12px;
+        }
+        .pi-panel.problem h3 { color: #fca5a5; }
+        .pi-panel.insight h3 { color: var(--xavier-gold); }
+        .pi-panel p { font-size: 0.98rem; line-height: 1.7; opacity: 0.9; }
+        .pi-example {
+            font-style: italic; font-size: 1rem; line-height: 1.6;
+            padding: 13px 16px; border-radius: 10px; margin-top: 14px;
+        }
+        .pi-panel.problem .pi-example { background: rgba(239,68,68,0.12); color: #fca5a5; }
+        .pi-panel.insight .pi-example { background: rgba(179,163,105,0.15); color: var(--xavier-gold); }
+
+        /* ============================================================
+           SLIDE 7 — WHAT DO YOU ACTUALLY DO?
+        ============================================================ */
+        .compare-card { border-radius: 18px; padding: 28px 30px; }
+        .compare-card.bad {
+            background: rgba(239,68,68,0.1); border: 2px solid rgba(239,68,68,0.45);
+        }
+        .compare-card.good {
+            background: rgba(16,185,129,0.1); border: 2px solid rgba(16,185,129,0.45);
+        }
+        .compare-card h3 {
+            font-size: 1rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+        }
+        .compare-card.bad h3 { color: #fca5a5; }
+        .compare-card.good h3 { color: #6ee7b7; }
+        .example-text {
+            font-size: 1.05rem; line-height: 1.6; font-style: italic;
+            padding: 14px 18px; border-radius: 10px; margin-bottom: 14px;
+        }
+        .compare-card.bad .example-text { background: rgba(239,68,68,0.15); color: #fca5a5; }
+        .compare-card.good .example-text { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+        .compare-card p { font-size: 0.92rem; opacity: 0.8; line-height: 1.6; }
+
+        /* ============================================================
+           SLIDE 9 — THREE PERSONAS
+        ============================================================ */
+        .persona-card {
+            background: rgba(255,255,255,0.08); border-radius: 18px;
+            border: 2px solid rgba(255,255,255,0.15);
+            padding: 26px 22px; text-align: left;
+        }
+        .persona-icon { font-size: 2.2rem; margin-bottom: 10px; display: block; }
+        .persona-card h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 4px; color: var(--xavier-gold); }
+        .persona-card .persona-label {
+            font-size: 0.76rem; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.45); margin-bottom: 14px;
+        }
+        .persona-cares {
+            font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--xavier-gold); margin-bottom: 8px;
+        }
+        .persona-card ul { list-style: none; }
+        .persona-card li { font-size: 0.9rem; padding: 5px 0 5px 18px; position: relative; opacity: 0.9; line-height: 1.4; }
+        .persona-card li::before { content: '›'; position: absolute; left: 0; color: var(--xavier-gold); font-weight: 700; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .slide { padding: 44px 48px 96px; }
+            .title-slide h1 { font-size: 3rem; }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 34px 22px 96px; }
+            .title-slide h1 { font-size: 2.1rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .section-slide h2 { font-size: 2.2rem; }
+            .section-slide h2::before, .section-slide h2::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation">
+
+    <!-- ====================================================
+         SLIDE 1: TITLE
+    ==================================================== -->
+    <div class="slide title-slide active" data-slide="1">
+        <h1>Storytelling for Social Change</h1>
+        <p class="subtitle">Crafting a Clear, Credible Pitch &nbsp;&mdash;&nbsp; ENTR 335</p>
+        <div class="date-badge">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8"  y1="2" x2="8"  y2="6"></line>
+                <line x1="3"  y1="10" x2="21" y2="10"></line>
+            </svg>
+            March 26, 2026
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 2: LEARNING OBJECTIVES
+    ==================================================== -->
+    <div class="slide bg-dark content-slide" data-slide="2">
+        <h2>Learning Objectives</h2>
+        <ul>
+            <li><strong>Construct</strong> a clear narrative arc that makes your venture's purpose immediately legible to any audience</li>
+            <li><strong>Distill</strong> your idea into a core five-part social pitch structure that moves from problem to action</li>
+            <li><strong>Adapt</strong> your story for specific audiences &mdash; a funder, a beneficiary, and a corporate partner &mdash; using AI as a drafting tool and human judgment as the filter</li>
+        </ul>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 3: LIVE PITCH TEARDOWN
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="3">
+        <h2 style="text-align: center; margin-bottom: 8px;">&#127909;&nbsp; Live Pitch Teardown</h2>
+        <p style="text-align: center; opacity: 0.7; margin-bottom: 22px; font-size: 0.95rem;">Watch two real pitches via PitchCompare &mdash; evaluate each on cognitive ease and clarity.</p>
+        <div class="grid-2" style="max-width: 1060px;">
+            <div style="background: rgba(0,71,171,0.15); border: 2px solid rgba(0,71,171,0.5); border-radius: 18px; padding: 28px 30px;">
+                <p style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2.5px; color: #93c5fd; margin-bottom: 10px;">Pitch A</p>
+                <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--white); margin-bottom: 6px;">Ubongo</h3>
+                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: #93c5fd; margin-bottom: 16px;">Educational Media &mdash; East Africa</p>
+                <ul style="list-style: none; font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.85);">
+                    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: #93c5fd;">›</span>Produces multi-platform educational content in local languages</li>
+                    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: #93c5fd;">›</span>Reaches millions of children across Sub-Saharan Africa</li>
+                    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: #93c5fd;">›</span>Blended model: free content subsidized by licensing revenue</li>
+                </ul>
+            </div>
+            <div style="background: rgba(179,163,105,0.12); border: 2px solid var(--xavier-gold); border-radius: 18px; padding: 28px 30px;">
+                <p style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2.5px; color: var(--xavier-gold); margin-bottom: 10px;">Pitch B</p>
+                <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--white); margin-bottom: 6px;">RoloDoc</h3>
+                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--xavier-gold); margin-bottom: 16px;">Medical Networking &mdash; West Africa</p>
+                <ul style="list-style: none; font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.85);">
+                    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--xavier-gold);">›</span>Connects doctors, clinics, and patients via a mobile platform</li>
+                    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--xavier-gold);">›</span>Addresses fragmented medical records and referral gaps</li>
+                    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--xavier-gold);">›</span>Revenue from subscription fees paid by clinics and providers</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top: 20px; padding: 16px 28px; background: rgba(179,163,105,0.18); border: 2px solid var(--xavier-gold); border-radius: 14px; max-width: 1060px; text-align: center;">
+            <p style="font-size: 1.05rem; font-weight: 600; color: var(--xavier-gold);">&#128270; Which founder makes cognitive ease a priority? <span style="color: var(--white); font-weight: 400; font-style: italic;">Watch for clarity, structure, and the absence of jargon.</span></p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 4: THE ANTI-SILICON VALLEY PITCH
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="4">
+        <h2 style="text-align: center; margin-bottom: 24px;">The &#8220;Anti-Silicon Valley&#8221; Pitch</h2>
+        <div class="grid-2">
+            <div class="pitch-card vc">
+                <h3>&#128200; Typical VC Pitch</h3>
+                <ul>
+                    <li>Hyper-growth at all costs</li>
+                    <li>Salesy, disruption language</li>
+                    <li>Hockey-stick financial projections</li>
+                    <li>Winner-take-all market framing</li>
+                    <li>Success = exit or IPO</li>
+                </ul>
+            </div>
+            <div class="pitch-card social">
+                <h3>&#127775; Social Venture Pitch</h3>
+                <ul>
+                    <li>Systems change over time</li>
+                    <li>Empathy and community trust</li>
+                    <li>Credibility through fieldwork</li>
+                    <li>Impact metrics, not vanity metrics</li>
+                    <li>Success = lives changed</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top: 20px; padding: 15px 26px; background: rgba(179,163,105,0.12); border: 1px solid var(--xavier-gold); border-radius: 12px; max-width: 1100px; text-align: center;">
+            <p style="font-size: 0.97rem; opacity: 0.9;">You are not pitching a product. You are making a <strong style="color: var(--xavier-gold);">credible case</strong> that you understand a problem deeply enough to solve it &mdash; and that you can be trusted with resources to try.</p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 5: THE FORMAT — 5-MINUTE PAIRWISE COMPARISON
+    ==================================================== -->
+    <div class="slide bg-gradient" data-slide="5">
+        <h2 style="text-align: center; margin-bottom: 8px;">&#127909;&nbsp; The Format: 5-Minute Pairwise Video</h2>
+        <p style="text-align: center; margin-bottom: 26px; opacity: 0.75; font-size: 1rem;">Recorded YouTube video &mdash; judged head-to-head in a pairwise comparison</p>
+        <div class="grid-2" style="max-width: 1060px;">
+            <div class="step-card" style="background: rgba(255,255,255,0.1); border-left-color: var(--xavier-gold);">
+                <h4 style="color: var(--xavier-gold); font-size: 1.05rem;">&#9202; The Constraint</h4>
+                <ul>
+                    <li>Exactly 5 minutes &mdash; no more</li>
+                    <li>Recorded to YouTube (unlisted or public)</li>
+                    <li>Judges see two pitches side-by-side and pick the clearer one</li>
+                    <li>No live Q&amp;A &mdash; the video must stand alone</li>
+                </ul>
+            </div>
+            <div class="step-card" style="background: rgba(255,255,255,0.1); border-left-color: #fca5a5;">
+                <h4 style="color: #fca5a5; font-size: 1.05rem;">&#9888;&#65039; Why Cognitive Ease Wins</h4>
+                <ul>
+                    <li>Judges are not experts in your field</li>
+                    <li>Confusion is disqualifying, not forgivable</li>
+                    <li>If the judge spends 3 minutes trying to figure out what your venture actually does, you lose</li>
+                    <li>Clarity is a form of respect for your audience</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top: 20px; padding: 14px 26px; background: rgba(255,255,255,0.08); border-radius: 12px; max-width: 1060px; text-align: center;">
+            <p style="font-size: 1rem; font-weight: 600; color: var(--xavier-gold);">&#128161; The winning pitch is not the most complex one. It is the most <em style="color: var(--white);">legible</em> one.</p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 6: THE SOCIAL PITCH STRUCTURE
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="6">
+        <h2 style="text-align: center; margin-bottom: 22px;">The Social Pitch Structure</h2>
+        <div class="pitch-steps">
+            <div class="pitch-step">
+                <div class="pitch-step-num">1</div>
+                <div class="pitch-step-body">
+                    <h4>The Human Problem</h4>
+                    <p>Ground the audience in a specific, felt human experience &mdash; not just a statistic. Make them care before you make them think.</p>
+                </div>
+            </div>
+            <div class="pitch-step">
+                <div class="pitch-step-num">2</div>
+                <div class="pitch-step-body">
+                    <h4>The Fieldwork Insight</h4>
+                    <p>Share what you uniquely learned by being in the field &mdash; the non-obvious truth that others have missed.</p>
+                </div>
+            </div>
+            <div class="pitch-step">
+                <div class="pitch-step-num">3</div>
+                <div class="pitch-step-body">
+                    <h4>The Solution</h4>
+                    <p>Explain what you actually do &mdash; in plain language. No jargon. One or two concrete sentences.</p>
+                </div>
+            </div>
+            <div class="pitch-step">
+                <div class="pitch-step-num">4</div>
+                <div class="pitch-step-body">
+                    <h4>The Impact</h4>
+                    <p>Define success in measurable terms. What changes in the world if you succeed?</p>
+                </div>
+            </div>
+            <div class="pitch-step">
+                <div class="pitch-step-num">5</div>
+                <div class="pitch-step-body">
+                    <h4>Call to Action</h4>
+                    <p>Tell the audience exactly what you need from them &mdash; funding, partnership, feedback, or belief.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 7: PROBLEM VS. INSIGHT
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="7">
+        <h2 style="text-align: center; margin-bottom: 26px;">Problem vs. Insight</h2>
+        <div class="grid-2" style="max-width: 1060px;">
+            <div class="pi-panel problem">
+                <h3>&#128308; The Problem</h3>
+                <p>The macro-level issue your venture addresses &mdash; the condition that already exists in the world, documentable by data.</p>
+                <div class="pi-example">"Food insecurity affects 1 in 6 children in Hamilton County."</div>
+                <p style="margin-top: 12px; font-size: 0.88rem; opacity: 0.7;">Anyone can cite this statistic. It does not yet explain why <em>you</em>.</p>
+            </div>
+            <div class="pi-panel insight">
+                <h3>&#128161; The Fieldwork Insight</h3>
+                <p>What you uniquely discovered by being present in the community &mdash; the non-obvious truth that reshapes how the problem is understood.</p>
+                <div class="pi-example">"It is actually about time-poverty. Parents skip meals to save time, not money &mdash; a discovery that only emerged from sitting in kitchens with families."</div>
+            </div>
+        </div>
+        <div style="margin-top: 18px; padding: 13px 26px; background: rgba(179,163,105,0.12); border: 1px solid var(--xavier-gold); border-radius: 12px; max-width: 1060px; text-align: center;">
+            <p style="font-size: 0.95rem; opacity: 0.9;">The Insight is your <strong style="color: var(--xavier-gold);">competitive advantage</strong>. It is what justifies your solution and separates you from every organization that also &#8220;addresses food insecurity.&#8221;</p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 8: WHAT DO YOU ACTUALLY DO?
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="8">
+        <h2 style="text-align: center; margin-bottom: 26px;">&#129300;&nbsp; &#8220;What Do You Actually Do?&#8221;</h2>
+        <div class="grid-2" style="max-width: 1060px;">
+            <div class="compare-card bad">
+                <h3>&#10060; Jargon-Heavy</h3>
+                <div class="example-text">&#8220;We leverage synergistic paradigms to co-create scalable, human-centered solutions at the intersection of food systems and community capacity-building.&#8221;</div>
+                <p>The judge has no idea what you do. They are now skeptical of everything else you say. You have lost.</p>
+            </div>
+            <div class="compare-card good">
+                <h3>&#9989; Plain Language</h3>
+                <div class="example-text">&#8220;We deliver pre-chopped, 15-minute meal kits to working parents in the West End, priced at $2 per bag and subsidized by hospital partners.&#8221;</div>
+                <p>Who, what, where, how much &mdash; all in one sentence. The judge immediately understands your model and is ready to evaluate it.</p>
+            </div>
+        </div>
+        <div style="margin-top: 20px; padding: 13px 26px; background: rgba(255,255,255,0.07); border-radius: 12px; max-width: 1060px; text-align: center;">
+            <p style="font-size: 0.95rem; opacity: 0.9;"><strong style="color: var(--xavier-gold);">The test:</strong> Can someone who has never heard of your venture explain it back to you in one sentence? If not, rewrite.</p>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 9: SECTION HEADER — PART 2
+    ==================================================== -->
+    <div class="slide bg-gradient section-slide" data-slide="9">
+        <p class="section-number">Part 2</p>
+        <h2>Adapting the Story</h2>
+        <p style="margin-top: 22px; font-size: 1.15rem; opacity: 0.75; max-width: 600px;">The same venture, told three different ways &mdash; because the same words do not land the same way with every audience.</p>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 10: THE THREE PERSONAS
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="10">
+        <h2 style="text-align: center; margin-bottom: 26px;">The Three Personas</h2>
+        <div class="grid-3">
+            <div class="persona-card">
+                <span class="persona-icon">&#128203;</span>
+                <h3>Skeptical Foundation Officer</h3>
+                <div class="persona-label">Persona 1 &mdash; The Evaluator</div>
+                <div class="persona-cares">Cares about</div>
+                <ul>
+                    <li>Logic, evidence, and rigor</li>
+                    <li>Impact metrics and measurability</li>
+                    <li>Replicability and scale potential</li>
+                    <li>Responsible, accountable use of funds</li>
+                </ul>
+            </div>
+            <div class="persona-card" style="border-color: rgba(179,163,105,0.4);">
+                <span class="persona-icon">&#129309;</span>
+                <h3>Target Beneficiary</h3>
+                <div class="persona-label">Persona 2 &mdash; The Neighbor</div>
+                <div class="persona-cares">Cares about</div>
+                <ul>
+                    <li>Trust and lived experience</li>
+                    <li>Whether this is actually for them</li>
+                    <li>Utility: does it solve a real problem?</li>
+                    <li>Respect and dignity in the framing</li>
+                </ul>
+            </div>
+            <div class="persona-card" style="border-color: rgba(124,58,237,0.5);">
+                <span class="persona-icon">&#127970;</span>
+                <h3>Corporate Partner</h3>
+                <div class="persona-label">Persona 3 &mdash; The Brand</div>
+                <div class="persona-cares">Cares about</div>
+                <ul>
+                    <li>Brand alignment and visibility</li>
+                    <li>ESG commitments and PR value</li>
+                    <li>Low reputational risk</li>
+                    <li>Employee engagement opportunities</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 11: INTERACTIVE — AI PERSONA PROMPT
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="11">
+        <h2 style="text-align: center; margin-bottom: 8px;">&#129302;&nbsp; The AI Persona Prompt</h2>
+        <p style="text-align: center; margin-bottom: 18px; opacity: 0.7; font-size: 0.95rem;">Copy this prompt, paste your core story, and generate three tailored drafts.</p>
+        <div class="activity-box" style="max-width: 1060px;">
+            <h3 style="color: var(--xavier-blue);">&#128203; AI Prompt &mdash; Persona Rewrite</h3>
+            <div class="prompt-box" id="prompt-personas">I am pitching my social venture. Here is my core story:
+
+[PASTE 1-2 PARAGRAPHS DESCRIBING YOUR VENTURE HERE]
+
+Please rewrite this story three different times, tailored to three distinct audiences:
+
+1. A skeptical foundation program officer who cares about logic and metrics.
+
+2. A target beneficiary who cares about trust and utility.
+
+3. A potential corporate partner who cares about brand alignment.</div>
+            <button class="copy-btn" onclick="copyPrompt('prompt-personas')">&#128203; Copy Prompt to Clipboard</button>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 12: WORK TIME — 20-MINUTE TIMER
+    ==================================================== -->
+    <div class="slide bg-accent" data-slide="12">
+        <h2 style="text-align: center; margin-bottom: 6px;">&#9997;&#65039;&nbsp; Work Time</h2>
+        <p style="text-align: center; opacity: 0.8; margin-bottom: 22px; font-size: 1rem;">Use the AI prompt to generate three persona drafts &mdash; then read them critically.</p>
+        <div class="timer-container">
+            <div class="timer-display" id="timer-s11">20:00</div>
+            <div class="timer-controls">
+                <button class="timer-btn start" onclick="startTimer('timer-s11', 1200)">&#9654; Start</button>
+                <button class="timer-btn pause" onclick="pauseTimer('timer-s11')">&#9646;&#9646; Pause</button>
+                <button class="timer-btn reset" onclick="resetTimer('timer-s11', 1200)">&#8635; Reset</button>
+            </div>
+        </div>
+        <div class="step-card" style="max-width: 740px; margin-top: 20px; background: rgba(255,255,255,0.15);">
+            <h4 style="color: var(--white);">&#128161; While the timer runs, ask yourself:</h4>
+            <ul>
+                <li>Which persona draft is most persuasive &mdash; and why?</li>
+                <li>What did the AI change between versions?</li>
+                <li>Where does the AI sound generic rather than authentic?</li>
+                <li>What specific detail could only <em>you</em> add?</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 13: THE HUMAN VALUE-ADD
+    ==================================================== -->
+    <div class="slide bg-light" data-slide="13">
+        <h2 style="color: var(--xavier-blue); text-align: center; margin-bottom: 22px;">The Human Value-Add</h2>
+        <div class="activity-box" style="max-width: 1060px;">
+            <h3>&#9999;&#65039; Your Task: Critique and Rewrite</h3>
+            <p style="font-size: 0.97rem; color: var(--gray-600); margin-bottom: 18px; line-height: 1.65;">The AI has given you three competent drafts. Now your job is to make one of them <strong>actually yours</strong>.</p>
+            <div class="next-step-row">
+                <div class="step-num">1</div>
+                <p><strong>Pick ONE persona</strong> &mdash; the audience that matters most to your venture right now</p>
+            </div>
+            <p style="font-size: 0.95rem; color: var(--gray-600); margin-bottom: 12px; padding-left: 4px;"><strong>Rewrite the AI draft</strong> to add three things the AI cannot supply:</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                <div class="step-card" style="background: var(--gray-100); border-left-color: var(--accent-blue);">
+                    <h4 style="color: var(--accent-blue);">&#128205; Specific Hamilton Anecdotes</h4>
+                    <p style="color: var(--gray-600);">A real street, conversation, or moment from your fieldwork that no AI could invent</p>
+                </div>
+                <div class="step-card" style="background: var(--gray-100); border-left-color: var(--accent-blue);">
+                    <h4 style="color: var(--accent-blue);">&#127775; Authentic Phrasing</h4>
+                    <p style="color: var(--gray-600);">Language that sounds like you &mdash; not like a press release or a grant template</p>
+                </div>
+                <div class="step-card" style="background: var(--gray-100); border-left-color: var(--accent-blue);">
+                    <h4 style="color: var(--accent-blue);">&#129504; Human Nuance</h4>
+                    <p style="color: var(--gray-600);">Complexity or uncertainty that builds credibility rather than hiding it</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 14: SHARE OUT
+    ==================================================== -->
+    <div class="slide bg-dark" data-slide="14">
+        <h2 style="text-align: center; margin-bottom: 28px;">&#128483;&nbsp; Share Out</h2>
+        <div style="max-width: 860px; width: 100%; background: rgba(179,163,105,0.12); border: 2px solid var(--xavier-gold); border-radius: 18px; padding: 28px 34px; margin-bottom: 26px;">
+            <p style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 3px; color: var(--xavier-gold); margin-bottom: 14px;">Discussion Question</p>
+            <p style="font-size: 1.25rem; font-weight: 500; line-height: 1.55;">"How did your story shift when you moved from pitching to a funder versus pitching to a beneficiary? What changed &mdash; and what had to stay the same?"</p>
+        </div>
+        <div class="grid-2" style="max-width: 860px;">
+            <div style="padding: 18px 22px; background: rgba(255,255,255,0.06); border-radius: 12px; border-top: 3px solid var(--xavier-gold);">
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--xavier-gold); margin-bottom: 10px;">What typically changes</p>
+                <ul style="list-style: none; font-size: 0.95rem; line-height: 1.75;">
+                    <li style="padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: var(--xavier-gold);">›</span>Tone (authoritative vs. empathetic)</li>
+                    <li style="padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: var(--xavier-gold);">›</span>Evidence type (data vs. story)</li>
+                    <li style="padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: var(--xavier-gold);">›</span>What success looks like to them</li>
+                </ul>
+            </div>
+            <div style="padding: 18px 22px; background: rgba(255,255,255,0.06); border-radius: 12px; border-top: 3px solid #6ee7b7;">
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #6ee7b7; margin-bottom: 10px;">What must stay the same</p>
+                <ul style="list-style: none; font-size: 0.95rem; line-height: 1.75;">
+                    <li style="padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #6ee7b7;">›</span>The core facts and truthfulness</li>
+                    <li style="padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #6ee7b7;">›</span>Your values and mission framing</li>
+                    <li style="padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #6ee7b7;">›</span>Respect for the community you serve</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 15: EXIT TICKET
+    ==================================================== -->
+    <div class="slide bg-light" data-slide="15">
+        <h2 style="text-align: center; color: var(--xavier-blue); margin-bottom: 22px;">&#127915;&nbsp; Exit Ticket</h2>
+        <div class="ticket-box">
+            <h3>Submit on Canvas by <span style="color: var(--danger);">11:59 PM tonight</span> &mdash; three parts:</h3>
+            <div class="req-row">
+                <div class="req-num">1</div>
+                <div>
+                    <h4>Chosen Audience</h4>
+                    <p>Identify which of the three personas you selected (Foundation Officer, Beneficiary, or Corporate Partner) and explain in one sentence why this audience matters most to your venture right now.</p>
+                </div>
+            </div>
+            <div class="req-row">
+                <div class="req-num">2</div>
+                <div>
+                    <h4>Refined &amp; Tailored Story</h4>
+                    <p>Paste your revised, human-improved version of the AI draft &mdash; the one that includes specific anecdotes, authentic phrasing, and your own voice. This should be 1-2 paragraphs.</p>
+                </div>
+            </div>
+            <div class="req-row">
+                <div class="req-num">3</div>
+                <div>
+                    <h4>Human Nuance Added</h4>
+                    <p>In one sentence, explain what specific human nuance you added to the AI draft and why it makes the pitch more credible or compelling for your chosen audience.</p>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 12px; font-size: 0.87rem; color: var(--gray-600);">Submit directly in the Canvas assignment &mdash; no separate document needed.</p>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 16: LOOKING AHEAD — ASSIGNMENT 4
+    ==================================================== -->
+    <div class="slide bg-light" data-slide="16">
+        <h2 style="text-align: center; color: var(--xavier-blue); margin-bottom: 22px;">&#128197;&nbsp; Looking Ahead</h2>
+        <div style="max-width: 920px; width: 100%;">
+            <div class="next-step-row" style="background: rgba(12,35,64,0.04); border: 2px solid var(--xavier-gold); margin-bottom: 18px;">
+                <div class="step-num" style="background: var(--xavier-blue);">A4</div>
+                <p><strong>Assignment 4: Strategic Choices &amp; Trade-Offs Memo</strong></p>
+                <div class="due-badge" style="background: rgba(239,68,68,0.1); border-color: var(--danger); color: var(--danger);">April 7 &mdash; 1:00 PM</div>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 16px; padding-left: 4px;">The memo must address all four required components:</p>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
+                <div class="step-card" style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--accent-blue);">
+                    <h4 style="color: var(--xavier-blue);">&#128200; Model Evolution</h4>
+                    <p style="color: var(--gray-600);">How has your revenue or financing model evolved since your initial pitch, and why?</p>
+                </div>
+                <div class="step-card" style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--danger);">
+                    <h4 style="color: var(--xavier-blue);">&#128181; Critical Cost</h4>
+                    <p style="color: var(--gray-600);">What is the single most critical cost in your model, and what happens if it increases by 20%?</p>
+                </div>
+                <div class="step-card" style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--warning);">
+                    <h4 style="color: var(--xavier-blue);">&#9878;&#65039; Legal Tension</h4>
+                    <p style="color: var(--gray-600);">What legal or structural tension exists between your mission and your financing approach?</p>
+                </div>
+                <div class="step-card" style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--purple);">
+                    <h4 style="color: var(--xavier-blue);">&#128640; Scaling Tension</h4>
+                    <p style="color: var(--gray-600);">What breaks if you scale to 10&times; your current size? What would you need to redesign?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         SLIDE 17: QUESTIONS?
+    ==================================================== -->
+    <div class="slide title-slide" data-slide="17">
+        <h1 style="font-size: 3.4rem;">Questions?</h1>
+        <p class="subtitle">ENTR 335 &nbsp;&mdash;&nbsp; Social Entrepreneurship &amp; Innovation</p>
+        <div class="date-badge" style="font-size: 1.05rem; padding: 16px 36px; gap: 14px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            regelem@xavier.edu
+        </div>
+        <p style="margin-top: 28px; font-size: 0.92rem; color: rgba(255,255,255,0.45); position: relative; z-index: 1;">
+            Xavier University &nbsp;&#183;&nbsp; Williams College of Business
+        </p>
+    </div>
+
+</div><!-- end .presentation -->
+
+<!-- Navigation Bar -->
+<nav class="nav-bar">
+    <div class="nav-title">Storytelling for Social Change &nbsp;|&nbsp; ENTR 335 &nbsp;|&nbsp; Mar 26</div>
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="prevSlide()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <div class="progress-container">
+            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">16</span></span>
+        </div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div class="keyboard-hint">
+    <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> or <kbd>Space</kbd> to navigate
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length; // 17
+
+    // ===== TIMERS =====
+    const timers = {};
+
+    function startTimer(timerId, duration) {
+        if (timers[timerId] && timers[timerId].interval) return;
+        if (!timers[timerId]) timers[timerId] = { timeLeft: duration };
+        const display = document.getElementById(timerId);
+        if (display) display.classList.add('running');
+        timers[timerId].interval = setInterval(() => {
+            if (timers[timerId].timeLeft > 0) {
+                timers[timerId].timeLeft--;
+                updateTimerDisplay(timerId);
+            } else {
+                clearInterval(timers[timerId].interval);
+                timers[timerId].interval = null;
+                if (display) { display.classList.remove('running'); display.classList.add('done'); }
+            }
+        }, 1000);
+    }
+
+    function pauseTimer(timerId) {
+        if (timers[timerId] && timers[timerId].interval) {
+            clearInterval(timers[timerId].interval);
+            timers[timerId].interval = null;
+            const display = document.getElementById(timerId);
+            if (display) display.classList.remove('running');
+        }
+    }
+
+    function resetTimer(timerId, duration) {
+        pauseTimer(timerId);
+        timers[timerId] = { timeLeft: duration };
+        updateTimerDisplay(timerId);
+        const display = document.getElementById(timerId);
+        if (display) display.classList.remove('running', 'done');
+    }
+
+    function updateTimerDisplay(timerId) {
+        const display = document.getElementById(timerId);
+        if (display && timers[timerId]) {
+            const m = Math.floor(timers[timerId].timeLeft / 60);
+            const s = timers[timerId].timeLeft % 60;
+            display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+    }
+
+    timers['timer-s11'] = { timeLeft: 1200 };
+
+    // ===== COPY PROMPT =====
+    function copyPrompt(promptId) {
+        const promptEl = document.getElementById(promptId);
+        const btn = promptEl.parentElement.querySelector('.copy-btn');
+        navigator.clipboard.writeText(promptEl.innerText).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt to Clipboard'; btn.classList.remove('copied'); }, 2000);
+        }).catch(() => {
+            const range = document.createRange();
+            range.selectNode(promptEl);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt to Clipboard'; btn.classList.remove('copied'); }, 2000);
+        });
+    }
+
+    // ===== SLIDE NAVIGATION =====
+    function showSlide(n) {
+        if (n < 0 || n >= totalSlides) return;
+        slides[currentSlide].classList.remove('active');
+        currentSlide = n;
+        slides[currentSlide].classList.add('active');
+        updateNav();
+    }
+
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+
+    function updateNav() {
+        document.getElementById('currentSlide').textContent = currentSlide + 1;
+        document.getElementById('totalSlides').textContent = totalSlides;
+        document.getElementById('progress').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+        document.getElementById('prevBtn').disabled = currentSlide === 0;
+        document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    // ===== KEYBOARD NAVIGATION =====
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    });
+
+    updateNav();
+</script>
+</body>
+</html>
