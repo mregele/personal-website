@@ -2,6 +2,7 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 
 const tagStyle: Record<string, string> = {
+  PRESENTATION: "bg-navy-100 text-navy-800",
   Slides: "bg-navy-100 text-navy-800",
   Reading: "bg-slate-100 text-slate-700",
   Activity: "bg-gold-400/20 text-gold-600",
@@ -201,11 +202,17 @@ const modules: Module[] = [
       { label: "Storytelling and Narrative Workshop", href: `${base}/21_Storytelling_for_Social_Change/Mar26_Storytelling.html`, tag: "Slides", format: "html" },
     ],
   },
+  {
+    number: 22,
+    title: "Preparing for External Touchpoints",
+    files: [
+      { label: "External Touchpoints Workshop", href: `${base}/22_External_Touchpoints/Mar31_ExternalTouchpoints.html`, tag: "PRESENTATION", format: "html" },
+    ],
+  },
 ];
 
 const upcomingModules = [
   { number: 17, title: "Asynchronous Field Research" },
-  { number: 22, title: "Preparing for External Touchpoints" },
   { number: 23, title: "Organizational and Legal Forms" },
   { number: 24, title: "Asynchronous External Touchpoint Engagement" },
   { number: 25, title: "External Touchpoint Reflection and Design Iteration" },
