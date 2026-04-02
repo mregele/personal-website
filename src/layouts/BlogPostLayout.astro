@@ -37,6 +37,14 @@ const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
           )}
         </div>
       </header>
+      {image && (
+        <img
+          src={image}
+          alt={title}
+          class="rounded-lg mb-8 object-cover mx-auto block"
+          style="max-width: 55%; height: auto;"
+        />
+      )}
       <div class="prose prose-slate prose-headings:font-serif prose-headings:text-navy-900 prose-a:text-navy-600 hover:prose-a:text-navy-800 max-w-none">
         <slot />
       </div>
