@@ -2,9 +2,12 @@
 title: "Misimagining Higher Education"
 description: "America is not just underfunding higher education. It is shrinking its idea of what higher education is for."
 pubDate: 2026-04-21
+image: "/images/hollowed-out-university.png"
 author: "Matthew D. Regele"
 tags: ["higher-ed", "policy", "strategy", "education"]
 ---
+
+![A classical university building being hollowed out by gears and coins](/images/hollowed-out-university.png)
 
 ## Misimagining Higher Education
 
