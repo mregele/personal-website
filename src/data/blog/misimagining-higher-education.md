@@ -7,8 +7,6 @@ author: "Matthew D. Regele"
 tags: ["higher-ed", "policy", "strategy", "education"]
 ---
 
-![A classical university building being hollowed out by gears and coins](/images/hollowed-out-university.png)
-
 ## Misimagining Higher Education
 
 America is not just underfunding higher education. It is misimagining it.
