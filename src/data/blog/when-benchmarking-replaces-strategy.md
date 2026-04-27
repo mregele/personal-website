@@ -1,0 +1,38 @@
+---
+title: "When Benchmarking Replaces Strategy"
+description: "Benchmarking is supposed to inform strategy, but in higher education it often becomes a substitute for it, producing expensive sameness instead of distinctive choice."
+pubDate: 2026-04-27
+image: "/images/benchmark_universities.jpeg"
+author: "Matthew D. Regele"
+tags: ["Higher Education", "Strategy"]
+---
+
+![Illustration of benchmarking trap](/images/benchmark_universities.jpeg)
+
+Universities love benchmarking. They benchmark peer institutions, aspirational peers, competitors, market leaders, and sometimes institutions that have almost nothing in common with them except prestige. The exercise is usually presented as serious and strategic. It sounds disciplined. It sounds data-driven. It sounds like responsible leadership. Often it is nothing of the sort. At its best, benchmarking can be useful. It can help an institution understand its position, identify blind spots, and avoid insularity. But in higher education, benchmarking often becomes a way of looking sideways instead of thinking clearly. It encourages universities to ask what other institutions are doing rather than what their own situation actually requires.
+
+That is a problem because strategy is not supposed to begin with imitation. Richard Rumelt makes the point clearly in [Good Strategy/Bad Strategy](https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239). Good strategy starts with a real diagnosis of the challenge, then a guiding policy, and then coherent action. In other words, strategy is supposed to be selective, fitted to context, and rooted in a clear understanding of the organization's actual problem. It is not supposed to be a list of fashionable initiatives or an effort to keep up with peer institutions.
+
+Benchmarking can quietly distort that process. Instead of diagnosing their own challenges, universities often begin by asking what peer and aspirational institutions are doing. What programs are they launching? How are they organizing student success? What kinds of centers, amenities, branding efforts, assessment systems, online offerings, AI initiatives, or retention strategies are they building? Which features seem to signal seriousness, competitiveness, or upward momentum?
+
+Those questions are understandable. They are also dangerous. They encourage universities to treat legitimacy as strategy. If enough peer institutions are doing something, the move starts to look prudent almost by definition. The problem is that what looks prudent across a field is not always what makes sense for a specific institution.
+
+[DiMaggio and Powell's classic 1983 article on institutional isomorphism](https://www.jstor.org/stable/2095101) helps explain why. Their argument is that organizations in the same field often become more alike over time. That happens not simply because leaders are lazy, but because uncertainty, professional norms, and outside pressures push them toward similar forms. When organizations are unsure what to do, copying legitimate-looking peers feels safer than choosing a more distinctive path.
+
+That is the benchmarking trap. Under uncertainty, universities look sideways. They compare themselves to peer institutions. They absorb the same language, the same strategic categories, the same markers of seriousness, and the same expensive solutions. They end up competing for market share using similar tactics while calling the result strategy. But if every institution is benchmarking the same peers and chasing the same indicators of legitimacy, then benchmarking is not producing differentiation. It is producing convergence.
+
+The comparison group itself is also rarely as neutral as it appears. Institutions can benchmark against different peers depending on what question they are asking and what kind of case they are trying to make. That does not always mean leaders are acting cynically. But it does create strong incentives for selective comparison. Institutions can look upward when they want to justify more spending, sideways when they want to show competitiveness, or downward when they want to make current performance look acceptable. In that sense, benchmarking can easily become less an exercise in objective diagnosis than a way of lending external support to choices leaders are already inclined to make.
+
+That may still be useful politically. It gives leaders something to show boards, accreditors, donors, and campus stakeholders. It gives decisions the appearance of external validation. "Our peers are doing this" is one of the safest sentences in academic administration. It is also one of the least strategic.
+
+A university does not gain advantage merely by demonstrating that it knows what everyone else is doing. It gains advantage by understanding its own strengths, weaknesses, constraints, and opportunities better than its competitors do, and by making choices that fit those realities. Benchmarking often pushes in the opposite direction. It encourages institutions to copy the visible moves of other universities rather than build from what is distinctive in their own mission, faculty strengths, regional position, student population, cost structure, or culture. It favors externally legible strategies over internally grounded ones.
+
+That is one reason higher education so often feels trapped in expensive forms of sameness. Institutions chase the same kinds of students, build the same kinds of programs, adopt the same administrative language, and invest in the same high-visibility initiatives. A decade ago, that meant an arms race for luxury student centers and [lazy rivers](https://www.forbes.com/sites/caranewlon/2014/07/31/the-college-amenities-arms-race/). There is some [economic evidence](https://www.nber.org/papers/w18745) that amenities do attract students to less-selective institutions, making the arms race somewhat rational for certain schools. Today, however, the trend often looks like a rush to launch identical data science certificates and build [multimillion-dollar esports arenas](https://businessnc.com/esports-gets-millions-in-new-nc-budget/). The specific trends change, but the dynamic remains the same. Then universities wonder why genuine strategic advantage is so elusive.
+
+To be fair, some similarity is rational. Not every problem is unique. Universities do face shared pressures. And benchmarking can help leaders avoid provincial thinking. But that is not the same as saying it is strategy.
+
+Higher education is not the only place this happens. Benchmarking can distort strategy in other sectors too, especially where leaders face uncertainty, want defensible decisions, and operate under strong legitimacy pressures. But universities are a particularly clear case because they talk so much about distinctiveness while constantly looking sideways at peers for cues about what seriousness is supposed to look like.
+
+Some institutions avoid this trap better than others. Usually that is because they have a clearer sense of mission and identity, or a niche that makes indiscriminate comparison less tempting. They may still benchmark, but they are less likely to confuse peer imitation with strategy because they have a stronger internal basis for deciding what fits.
+
+Too often, however, benchmarking becomes a way to avoid the hardest part of strategy, which is making uncomfortable, context-specific choices that look nothing like what peers are doing. It functions less as a tool of strategy than as a substitute for it. Universities can spend heavily and speak constantly about innovation and transformation, but as long as they are looking sideways for validation, they will only become more expensive versions of the same thing.
