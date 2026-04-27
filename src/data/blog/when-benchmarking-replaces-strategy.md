@@ -7,8 +7,6 @@ author: "Matthew D. Regele"
 tags: ["Higher Education", "Strategy"]
 ---
 
-![Illustration of benchmarking trap](/images/benchmark_universities.jpeg)
-
 Universities love benchmarking. They benchmark peer institutions, aspirational peers, competitors, market leaders, and sometimes institutions that have almost nothing in common with them except prestige. The exercise is usually presented as serious and strategic. It sounds disciplined. It sounds data-driven. It sounds like responsible leadership. Often it is nothing of the sort. At its best, benchmarking can be useful. It can help an institution understand its position, identify blind spots, and avoid insularity. But in higher education, benchmarking often becomes a way of looking sideways instead of thinking clearly. It encourages universities to ask what other institutions are doing rather than what their own situation actually requires.
 
 That is a problem because strategy is not supposed to begin with imitation. Richard Rumelt makes the point clearly in [Good Strategy/Bad Strategy](https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239). Good strategy starts with a real diagnosis of the challenge, then a guiding policy, and then coherent action. In other words, strategy is supposed to be selective, fitted to context, and rooted in a clear understanding of the organization's actual problem. It is not supposed to be a list of fashionable initiatives or an effort to keep up with peer institutions.
