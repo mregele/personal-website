@@ -1,8 +1,10 @@
 ---
 title: "When Universities Measure Ownership Instead of Education"
+description: "Universities say they value breadth and interdisciplinarity, but their budget and curriculum systems quietly reward departments for owning students rather than educating them."
 pubDate: "2026-05-06"
 tags: ["Higher Education", "Strategy"]
 image: "/images/measuring_ownership.png"
+author: "Matthew D. Regele"
 ---
 
 ![Measuring Ownership](/images/measuring_ownership.png)
