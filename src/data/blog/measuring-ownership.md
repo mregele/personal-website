@@ -7,8 +7,6 @@ image: "/images/measuring_ownership.png"
 author: "Matthew D. Regele"
 ---
 
-![Measuring Ownership](/images/measuring_ownership.png)
-
 # When Universities Measure Ownership Instead of Education
 
 A new academic program launches with five students. A year later, it has fifteen.
