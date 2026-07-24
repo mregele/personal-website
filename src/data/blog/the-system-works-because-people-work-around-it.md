@@ -31,7 +31,7 @@ The factory suggests that this need for experimentation is not limited to softwa
 
 Experimentation was already happening. The only question was whether the organization would learn from it. Whether it did depended on what the organization assumed when employees departed from the official process. Were they making mistakes? Or were they discovering something the process itself had missed?
 
-Douglas McGregor made a similar point decades ago in his distinction between [Theory X and Theory Y](https://betterworld.mit.edu/theory-x-theory-y/). His larger argument was that management systems inevitably reflect assumptions about employees. Organizations that assume people cannot be trusted tend to design work very differently from organizations that assume people are capable of exercising judgment.
+Douglas McGregor made a similar point decades ago in his distinction between [Theory X and Theory Y](https://mitsloan.mit.edu/institute-work-and-employment-research/douglas-m-mcgregor). His larger argument was that management systems inevitably reflect assumptions about employees. Organizations that assume people cannot be trusted tend to design work very differently from organizations that assume people are capable of exercising judgment.
 
 Organizations also tend to reserve this kind of trust for a relatively narrow category of workers. Autonomy is celebrated when it is given to software engineers, scientists, or product designers. In many other occupations, professional judgment is increasingly supplemented, and sometimes displaced, by procedures and metrics that make performance easier for outsiders to monitor.
 
