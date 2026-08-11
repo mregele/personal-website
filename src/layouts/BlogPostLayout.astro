@@ -8,14 +8,16 @@ interface Props {
   description: string;
   pubDate: string;
   image?: string;
+  imageAlt?: string;
   tags?: string[];
 }
 
-const { title, description, pubDate, image, tags } = Astro.props;
+const { title, description, pubDate, image, imageAlt, tags } = Astro.props;
 const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
   year: "numeric",
   month: "long",
   day: "numeric",
+  timeZone: "UTC",
 });
 ---
 
@@ -40,7 +42,7 @@ const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
       {image && (
         <img
           src={image}
-          alt={title}
+          alt={imageAlt || title}
           class="rounded-lg mb-8 object-cover mx-auto block"
           style="max-width: 55%; height: auto;"
         />
