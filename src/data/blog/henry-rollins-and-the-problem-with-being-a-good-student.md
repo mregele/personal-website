@@ -1,0 +1,41 @@
+---
+title: "Henry Rollins and the Problem with Being a Good Student"
+description: "Henry Rollins spent only one semester in college, yet he's spent decades educating himself. What can his intellectual curiosity teach us about the purpose of higher education?"
+pubDate: 2026-10-08
+image: "/images/punk_rock_reader.png"
+imageAlt: "A tattooed punk rocker in a leather jacket reading a book in a study surrounded by literature."
+author: "Matthew D. Regele"
+tags: ["Higher Education", "Education", "Lifelong Learning"]
+---
+
+I've enjoyed punk rock since I was a kid. Lately, I've been listening to more of it than usual, partly because my five-year-old daughter has developed a taste for some of the music, and partly because it makes a pretty good soundtrack for riding my Harley. My renewed interest also led me to watch several documentaries about punk's history, including [*The Decline of Western Civilization*](https://declinemovies.com/) trilogy and [*Punk: Attitude*](https://www.donletts.com/documentaries). I was interested in the music, but I was also wondering whether there might be an interesting research project somewhere in the story.[^1]
+
+One person who kept catching my attention was [Henry Rollins](https://www.henryrollins.com/), the former frontman of [Black Flag](https://www.encyclopedia.com/education/news-wires-white-papers-and-books/black-flag). Rollins has had a remarkably varied career since his hardcore punk days, but what I find especially interesting about him is his intellectual curiosity. He's extraordinarily well read, particularly in literature, history, and politics. He's traveled extensively, written numerous books, and seems genuinely interested in understanding the world.
+
+Rollins also spent only one semester in college. He enrolled at American University in 1979, dropped out, and never earned a degree. Yet he's spent much of his adult life doing something I believe a college education should prepare people to do. He reads widely, investigates unfamiliar subjects, and continues learning without anyone assigning readings or administering exams. He's also demonstrated a remarkable entrepreneurial streak, establishing his own publishing company, [2.13.61](https://www.twothirteensixtyone.com/), and building a career that extends well beyond music. His life reflects both a desire to learn and a willingness to venture into unfamiliar territory and figure things out for himself.
+
+As a college professor, I find something both inspiring and a little depressing about that. I teach plenty of students who are bright, hardworking, and genuinely interested in learning. But I also encounter many who seem largely indifferent to the ideas we're discussing. Their questions tend to concern what they need to know for the exam, how many points something is worth, or exactly what an assignment requires. Sometimes it feels like their primary objective is simply to get through the course.
+
+I realize this sounds like a familiar complaint about students these days. And I recognize that someone who seems disengaged in my management class might be deeply curious about music, cars, or something else. But I do think many students have learned to approach education primarily as a process of completing requirements rather than an opportunity to understand something new.
+
+We really can't blame students for this perspective. By the time they reach college, they've spent roughly thirteen years learning how to succeed in school. They've learned to meet expectations, complete assignments, earn grades, and advance to the next level. As educational psychologist [Carole Ames](https://doi.org/10.1037/0022-0663.84.3.261) argued more than thirty years ago, the way classrooms are organized and students are evaluated can influence whether students focus on learning or demonstrating their performance. This isn't a criticism of K–12 teachers, who often have to work within requirements they had little role in creating. But it does suggest that students can become very good at being students without necessarily developing much interest in learning for its own sake.
+
+Colleges themselves do little to discourage this approach to education. We promote higher education in terms of career preparation, employment outcomes, and the economic value of a degree. I've [written before](https://matthewregele.substack.com/p/when-the-credits-outrun-the-learning) about how our emphasis on credits and credentials can shape what schools prioritize. But those same incentives also shape how students approach their education. When we emphasize the credential and its economic value, we shouldn't be surprised when students focus on obtaining it as efficiently as possible.
+
+I recognize that students have good reasons to approach college this way, particularly given its cost. My own perspective is undoubtedly shaped by having attended [Bowdoin College](https://www.bowdoin.edu/about/the-offer/index.html), a highly selective liberal arts college where intellectual exploration was an important part of the experience and the institution's reputation provided advantages in the labor market. Students without those advantages have every reason to be concerned about what their degrees will enable them to do.
+
+I see a related tension in my own work. As my college's director of assessment, I spend considerable time helping define what students should learn, measuring whether they've learned it, and documenting the results. Some of this is driven by accreditation requirements, while some reflects our own efforts to improve teaching. I rely on many of these same practices in my courses. Assessing student learning is important, but I've become increasingly concerned that we devote much more attention to documenting what students have learned than to whether they're developing the curiosity and ability to continue learning independently.
+
+Rollins's own educational experience offers an interesting contrast. He attended the Bullis School, a private preparatory school in Maryland. In a [2020 interview with Inverse](https://www.inverse.com/entertainment/henry-rollins-interview-dreamland-awkward-phase), Rollins recalled an English teacher named Mr. Klinger who discovered that he'd already read many of the assigned books and began giving him more challenging literature, including Steinbeck's *The Grapes of Wrath*. Years after Klinger's death, Rollins learned that his former teacher had been using some of his self-published books in class. Rollins described the discovery as one of the biggest sources of encouragement he'd ever received.
+
+Rollins was already an enthusiastic reader, but Klinger recognized his interest and encouraged him to pursue it further. I don't expect every student to share Rollins's appetite for learning, but I'd like to think we can help students discover interests they'll want to keep exploring after they leave our classrooms.
+
+That ambition extends well beyond encouraging students to read more books or explore subjects that interest them. In my own courses, I introduce students to theories and frameworks intended to help them understand organizations and make better decisions. I expect them to understand and apply those ideas. But twenty years from now, I'm much less concerned about whether they remember the details of a particular management theory than whether they can recognize a problem, question their assumptions, evaluate evidence, and make thoughtful decisions in unfamiliar situations.
+
+We can't possibly anticipate everything our students will need to know over the course of their careers, much less their lives. They'll encounter new problems, assume different responsibilities, and work in fields that may change dramatically. Whatever they learn in college, they'll need to recognize what they don't know and figure out how to learn it. And they'll need enough curiosity and initiative to do that without someone telling them to.
+
+I want my students to leave college with knowledge and skills that will serve them well in their careers. But I also want them to be willing and able to keep learning long after they've left our classrooms.
+
+---
+
+[^1]: No research project has emerged yet, but if anyone wants to study punk rock with me, I'm all ears.
